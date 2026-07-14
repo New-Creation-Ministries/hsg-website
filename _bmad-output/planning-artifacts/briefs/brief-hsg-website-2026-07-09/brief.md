@@ -2,7 +2,7 @@
 title: HSG Church Website Product Brief
 status: draft
 created: 2026-07-09
-updated: 2026-07-09
+updated: 2026-07-14
 ---
 
 # Product Brief: HSG Church Website
@@ -71,16 +71,17 @@ The launch is working if:
 - Members use the site as a reliable source for announcements, events, testimonies, and giving.
 - Church teams can publish or update events, testimonies, announcements, and media-led content without developer intervention for routine changes.
 - Giving works reliably through Razorpay with the required categories, receipts, recurring options, anonymous flow, and finance exports.
+- The production website maintains at least 99.9% monthly uptime, as measured by automated external monitoring, with alerts enabled. Planned maintenance is excluded from the uptime calculation.
 - The site can be tested end to end and deployed through an agent-friendly CI/CD workflow.
 - The architecture can later support other regions using the same UI patterns with region-specific content.
 
 ## Open Questions
 
 - What content approval workflow is needed before testimonies, announcements, events, or images go live?
-- Should prayer requests go to email, a private admin queue, a WhatsApp flow, or a pastoral-care tool?
-- What donor receipt format and finance export fields are legally/operationally required for India?
+- Should prayer requests go to email, a private admin queue, a WhatsApp flow, or a pastoral-care tool? - email to configured IDs
+- What donor receipt format and finance export fields are legally/operationally required for India? - capture form data + transaction ID in the DB
 - Should the Instagram feed be embedded directly, curated through the CMS, or linked out to avoid reliability/privacy issues?
-- What is the required launch date and who signs off on design, content, giving, and deployment?
+- What is the required launch date and who signs off on design, content, giving, and deployment? - Target date is 15 September
 
 ## Vision
 

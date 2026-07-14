@@ -20,6 +20,7 @@ This addendum captures details that should inform PRD, UX, and architecture work
 - Launch geography is India only.
 - The system should be designed for future regional content reuse without a full rebuild.
 - The delivery workflow should be end-to-end testable and deployable via agents.
+- The production availability target is at least 99.9% monthly uptime, as measured by automated external monitoring, with alerts enabled; planned maintenance is excluded from the uptime calculation.
 - High-change content includes background images, testimonies, event pages, announcements, and media embeds/links.
 - Likely integration anchors include Razorpay for giving, Google Calendar or equivalent calendar sync for events, and YouTube for live/recent services.
 
@@ -32,4 +33,4 @@ This addendum captures details that should inform PRD, UX, and architecture work
 - Testimony consent: explicit consent capture for names, photos, and videos, especially for minors or sensitive stories.
 - Media strategy: embed live social content versus curate selected posts/videos into the site for reliability and brand control.
 - Roles: who can draft, review, publish, archive, and delete content?
-- Observability: what uptime, monitoring, error alerting, and payment failure reporting are expected for launch?
+- Observability: what monitoring coverage, error-alerting thresholds, escalation paths, and payment-failure reporting are expected for launch?
