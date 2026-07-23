@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRD Validation: HSG Website Product Requirements Document</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --verdict-strong: #16a34a;
+    --verdict-adequate: #65a30d;
+    --verdict-thin: #d97706;
+    --verdict-broken: #dc2626;
+    --sev-low: #64748b;
+    --sev-medium: #ca8a04;
+    --sev-high: #ea580c;
+    --sev-critical: #dc2626;
+    --grade-exc: #16a34a;
+    --grade-good: #65a30d;
+    --grade-fair: #d97706;
+    --grade-poor: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.report-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .title h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .title .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    overflow-wrap: anywhere;
+  }
+  .grade {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: white;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .grade-excellent { background: var(--grade-exc); }
+  .grade-good { background: var(--grade-good); }
+  .grade-fair { background: var(--grade-fair); }
+  .grade-poor { background: var(--grade-poor); }
+  .synthesis {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--muted);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 15.5px;
+  }
+  .synthesis p { margin: 0 0 10px; }
+  .synthesis p:last-child { margin-bottom: 0; }
+  .dimension-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .dim-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .dim-card .dim-name { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .dim-card .dim-verdict { font-size: 14px; font-weight: 600; text-transform: capitalize; }
+  section.dimension, section.reviewer-section { margin-bottom: 14px; }
+  section.dimension details, section.reviewer-section details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  section summary {
+    padding: 14px 20px;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  section summary::-webkit-details-marker { display: none; }
+  section summary::before {
+    content: "▸";
+    display: inline-block;
+    color: var(--muted);
+    transition: transform 0.15s ease;
+  }
+  section details[open] summary::before { transform: rotate(90deg); }
+  section summary h2 {
+    display: inline;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    flex: 1;
+  }
+  .verdict-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: white;
+  }
+  .verdict-strong { background: var(--verdict-strong); }
+  .verdict-adequate { background: var(--verdict-adequate); }
+  .verdict-thin { background: var(--verdict-thin); }
+  .verdict-broken { background: var(--verdict-broken); }
+  .dim-body { padding: 4px 20px 18px; }
+  .dim-judgment { color: var(--text); font-size: 14.5px; }
+  .dim-judgment p { margin: 0 0 10px; }
+  .findings-list { padding: 0 20px 4px; }
+  article.finding {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  article.finding:first-child { border-top: none; }
+  article.finding header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .badge {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .badge-sev-low { background: rgba(100, 116, 139, 0.12); color: var(--sev-low); }
+  .badge-sev-medium { background: rgba(202, 138, 4, 0.14); color: var(--sev-medium); }
+  .badge-sev-high { background: rgba(234, 88, 12, 0.14); color: var(--sev-high); }
+  .badge-sev-critical { background: rgba(220, 38, 38, 0.14); color: var(--sev-critical); }
+  .finding-title { margin: 0; font-size: 15px; font-weight: 500; flex: 1; min-width: 200px; }
+  .finding-location {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .finding-note, .finding-fix { margin-top: 6px; font-size: 14px; }
+  .finding-fix strong { color: var(--muted); font-weight: 500; }
+  .reviewer-source {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .mechanical {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 24px;
+    font-size: 14px;
+  }
+  .mechanical h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .mechanical ul { margin: 0; padding-left: 20px; }
+  .mechanical li { margin-bottom: 4px; color: var(--text); }
+  footer.report-footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  footer .meta { display: flex; gap: 24px; flex-wrap: wrap; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="report-header">
+      <div class="title">
+        <h1>HSG Website Product Requirements Document — Validation Report</h1>
+        <div class="subtitle">/Users/udeetgulati/Projects/hsg-website/_bmad-output/planning-artifacts/prds/prd-hsg-website-2026-07-18/prd.md</div>
+      </div>
+      <div class="grade grade-fair">Fair</div>
+    </header>
+
+    <div class="synthesis">
+      <p>This is a product-specific, coherent PRD with credible user journeys, explicit launch exclusions, unusually good counter-metrics, and a clean separation between product requirements and technical handoffs. It is ready to guide early UX exploration, but it is not yet safe as a green-light-to-build contract: several policy and ownership decisions that shape data, payments, publishing, and launch operations remain deferred, while many functional outcomes still depend on subjective words rather than observable completion conditions.</p>
+      <p>The product/UX and delivery parties found no critical defect and did not recommend restarting the PRD. They did show that downstream teams would have to invent product policy around source-of-truth, sensitive-data, offerings, editorial governance, security, recovery, and launch ownership. UX and architecture discovery may proceed conditionally; implementation-ready stories for those flows should remain blocked until the high findings are resolved.</p>
+    </div>
+
+    <div class="dimension-summary">
+      <div class="dim-card"><div class="dim-name">Decision-readiness</div><div class="dim-verdict" style="color: var(--verdict-thin)">thin</div></div>
+      <div class="dim-card"><div class="dim-name">Substance over theater</div><div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div></div>
+      <div class="dim-card"><div class="dim-name">Strategic coherence</div><div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div></div>
+      <div class="dim-card"><div class="dim-name">Done-ness clarity</div><div class="dim-verdict" style="color: var(--verdict-thin)">thin</div></div>
+      <div class="dim-card"><div class="dim-name">Scope honesty</div><div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div></div>
+      <div class="dim-card"><div class="dim-name">Downstream usability</div><div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div></div>
+      <div class="dim-card"><div class="dim-name">Shape fit</div><div class="dim-verdict" style="color: var(--verdict-adequate)">adequate</div></div>
+    </div>
+
+    <section class="dimension">
+      <details open>
+        <summary><h2>Decision-readiness</h2><span class="verdict-pill verdict-thin">thin</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>The PRD makes real launch decisions and useful exclusions, but Questions 2–7 defer the content authority model, source of truth, sensitive-data lifecycle, testimony consent, offering policy, monitoring, and incident ownership. Those decisions shape UX, data models, permissions, integration boundaries, estimates, and release approval.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Deferred blockers have no decision contract</h3><span class="finding-location">§10 Questions 1–7</span></header>
+            <div class="finding-note">The questions have no owner, decision date, dependency gate, or required evidence; even the target date lacks a year and final approver.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Record an owner, resolve-by milestone, affected downstream work, required output, and explicit gate for each question.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Sensitive-data and offering policies are deferred too late</h3><span class="finding-location">FR-7, FR-10, FR-14, FR-15; NFR-5</span></header>
+            <div class="finding-note">Forms, publishing states, access roles, retention, consent, anonymity, receipts, refunds, and audit evidence cannot be designed safely without a minimum policy contract.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define or link authoritative policy before architecture sign-off for the affected flows.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary><h2>Substance over theater</h2><span class="verdict-pill verdict-adequate">adequate</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>The healing-card journey, Powerhouse privacy boundary, one-time offering distinction, external event-registration boundary, editable visit information, and no-specific-healing-outcome metric are distinctly HSG-specific. The principal weak spots are an unbounded future-readiness aspiration and a primary audience that changes no product decision.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Future readiness is unbounded</h3><span class="finding-location">NFR-7</span></header>
+            <div class="finding-note">“Support future regional experiences” is not testable and may invite speculative architecture for out-of-scope regions.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Remove it from launch scope or define minimum observable region/locale invariants.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-low">low</span><h3 class="finding-title">Associated pastors do not drive a distinct decision</h3><span class="finding-location">§1; §2.1</span></header>
+            <div class="finding-note">No journey, requirement, or metric differs for this named primary audience.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add the distinctive outcome or reclassify them as a secondary beneficiary.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary><h2>Strategic coherence</h2><span class="verdict-pill verdict-adequate">adequate</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>The official-digital-home thesis is clear, feature groups follow it, and success metrics test visit planning, healing clarity, content independence, offering integrity, and reliability. The broad launch has no internal priority or principled cut line, and content trust is only partially measured.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Launch scope has no priority or cut line</h3><span class="finding-location">§4.1; §6</span></header>
+            <div class="finding-note">All seven capability groups appear equally launch-critical despite policy, integration, content-readiness, and schedule risk.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Mark must-ship versus deferrable capabilities and the evidence that triggers each cut.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Content trust is only partially measured</h3><span class="finding-location">§1; SM-6</span></header>
+            <div class="finding-note">Publishing approved changes before a service does not detect incorrect, contradictory, ownerless, or stale critical information.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add accuracy and staleness measures for service, location, parking, and healing-card content.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details open>
+        <summary><h2>Done-ness clarity</h2><span class="verdict-pill verdict-thin">thin</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>The FR structure is readable and some outcomes are concrete, but subjective terms and incomplete flow states leave downstream teams to invent acceptance rules. Performance, fallback, recovery, and critical-test conditions are also not reproducible.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Subjective outcomes lack verifiable completion conditions</h3><span class="finding-location">FR-1, FR-2, FR-4, FR-8, FR-11, FR-18</span></header>
+            <div class="finding-note">“Easy,” “prominent,” “relevant,” “clear,” and “coherent” do not identify what an acceptance test observes.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Give every FR an observable content, task, state, time/step, or usability consequence.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Stateful workflows omit material transitions</h3><span class="finding-location">FR-3, FR-7, FR-10, FR-12–FR-17</span></header>
+            <div class="finding-note">Validation, delivery, duplication, review, approval, denial, publication, expiry, retry, correction, and recovery behavior is incomplete.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Specify the product-significant happy, failure, denied, duplicate, interrupted, recovery, and expiry states.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">NFR measurement contracts are incomplete</h3><span class="finding-location">NFR-2–NFR-4; NFR-8</span></header>
+            <div class="finding-note">“Typical 4G,” “become usable,” “clear fallback,” “protected,” and “critical journeys” are not reproducible definitions.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define test profiles, semantic outcomes, recovery objectives, and the authoritative critical-check set.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary><h2>Scope honesty</h2><span class="verdict-pill verdict-adequate">adequate</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>Launch exclusions are explicit, mechanisms are correctly separated into the addendum, and unresolved decisions are visible. The main contradiction is a finance export promised in scope but absent from the FRs; “practical help” also implies a broader service than is defined.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Finance export is promised without a functional requirement</h3><span class="finding-location">§4.1; FR-14–FR-15</span></header>
+            <div class="finding-note">Story creation could legitimately omit an export that finance operations and the addendum assume.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add an implementation-neutral reconciliation export requirement or remove exports from launch scope.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">“Practical help” is an undefined service boundary</h3><span class="finding-location">§2.3; FR-7</span></header>
+            <div class="finding-note">The phrase may imply pastoral care, financial help, emergencies, health crises, or safeguarding duties.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define supported categories, response promises, urgent routing, and excluded help types.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary><h2>Downstream usability</h2><span class="verdict-pill verdict-adequate">adequate</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>UJ, FR, NFR, and SM identifiers are stable and extractable, all UJs have named protagonists, and the glossary covers the core domain terms. The main extraction risk is that currentness and publication semantics are not canonical.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Currentness semantics are not canonical</h3><span class="finding-location">FR-4, FR-6, FR-17, FR-18; SM-6</span></header>
+            <div class="finding-note">“Current,” “today,” “next,” “recent,” and “Today” can diverge across UX, scheduling, time zones, livestream state, and tests.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define time zone, ordering, expiry, stale state, override behavior, source, and owner per content class.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="dimension">
+      <details>
+        <summary><h2>Shape fit</h2><span class="verdict-pill verdict-adequate">adequate</span></summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p>The public, multi-audience, UX-heavy shape is appropriate, and the Experience and Tone section earns its place. The operational half of the thesis is underrepresented: non-developer publishing is a launch capability and primary metric, but operational users have no journey.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">The load-bearing publishing workflow has no user journey</h3><span class="finding-location">§2.2; §6.6; SM-3</span></header>
+            <div class="finding-note">Receiving a change, finding content, previewing, approval, publishing, verification, correction, and expiry are left to inference.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add a concise named operational journey for normal publishing and a time-critical correction.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="reviewer-section">
+      <details>
+        <summary>
+          <h2>📋 📊 🎨 Product, Requirements, and UX Party</h2>
+          <span class="reviewer-source">review-party-product-ux.md</span>
+        </summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p><strong>Promising but not yet decision-ready.</strong> John challenged the unprioritised launch, Mary traced unresolved operating contracts back to the sources, and Sally exposed fragmented journeys, authoring accessibility, and the risk of placing giving immediately after a vulnerable healing interaction. Their full, unsmoothed exchange is preserved in the source review.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Launch scope is not prioritised against a real deadline</h3><span class="finding-location">§4; §6; §10 Q1</span></header>
+            <div class="finding-note">Eighteen FRs across content, live media, sensitive forms, authoring, and payments have no must-ship/contingent cut or go/no-go authority.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Confirm the launch date and authority, then define evidence-triggered scope cuts and dependency gates.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">The journey set omits the riskiest work</h3><span class="finding-location">§3; §6.5–§6.6</span></header>
+            <div class="finding-note">Offering uncertainty, publisher operations, urgent correction, and finance reconciliation have no coherent end-to-end journey.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Split multi-purpose journeys and add publisher, finance, and failure-state episodes with independent pass criteria.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Healing follow-up and giving need stronger separation</h3><span class="finding-location">UJ-2; FR-10; SM-C1</span></header>
+            <div class="finding-note">An optional offering path immediately after healing-status or testimony submission may still feel coercive to a vulnerable visitor.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Use a separate, non-blocking path and test perceived independence from prayer and follow-up.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">Authoring accessibility is missing</h3><span class="finding-location">FR-16; NFR-1; SM-3</span></header>
+            <div class="finding-note">The operational UI that sustains public accessibility has no keyboard, screen-reader, status, alt-text, crop, or contrast requirements.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add an accessible authoring baseline and representative editor acceptance tasks.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <section class="reviewer-section">
+      <details>
+        <summary>
+          <h2>🏗️ 🧪 💻 🔒 Delivery and Downstream Party</h2>
+          <span class="reviewer-source">review-party-delivery.md</span>
+        </summary>
+        <div class="dim-body"><div class="dim-judgment">
+          <p><strong>Conditionally ready for UX exploration and architecture discovery; not ready for implementation acceptance.</strong> Winston argued for architecture discovery, Amelia separated decomposable public work from policy-dependent flows, Murat challenged the unnamed release gate, and Vex demanded verifiable negative security boundaries.</p>
+        </div></div>
+        <div class="findings-list">
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Offering integrity is underspecified</h3><span class="finding-location">FR-14–FR-15; SM-4; §10 Q6</span></header>
+            <div class="finding-note">Confirmation authority, replay/duplicate behavior, retries, receipt identity, reconciliation exceptions, retention, and audit evidence remain undefined.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define the offering state model and invariants without prescribing the provider implementation.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">Security lacks testable negative boundaries</h3><span class="finding-location">NFR-5; FR-16–FR-17</span></header>
+            <div class="finding-note">“Authorised people” omits principal classes, allowed and denied actions, stronger authentication, draft isolation, abuse controls, audit scope, revocation, and compromise response.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Add platform-neutral identity, access, denial, audit, abuse, credential, and incident-response outcomes.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-high">high</span><h3 class="finding-title">SLO and recovery contracts are not measurable</h3><span class="finding-location">NFR-3–NFR-4; SM-5–SM-6</span></header>
+            <div class="finding-note">Performance, semantic availability, publish-to-visible freshness, safe-stale limits, RTO/RPO, and witnessed restore criteria are incomplete.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Define reproducible profiles, semantic SLIs, freshness targets, and separate recovery objectives by asset class.</div>
+          </article>
+          <article class="finding">
+            <header><span class="badge badge-sev-medium">medium</span><h3 class="finding-title">The release gate names categories, not tests</h3><span class="finding-location">NFR-8</span></header>
+            <div class="finding-note">“Critical journeys” is circular until cases, environments, fixtures, cleanup, and evidence are enumerated.</div>
+            <div class="finding-fix"><strong>Fix:</strong> Create a risk-to-evidence matrix including happy, failure, denied, duplicate, interrupted, stale, accessibility, and recovery cases.</div>
+          </article>
+        </div>
+      </details>
+    </section>
+
+    <div class="mechanical">
+      <h3>Mechanical notes</h3>
+      <ul>
+        <li>UJ-1 through UJ-3 are contiguous and unique; every journey has a named protagonist.</li>
+        <li>FR-1 through FR-18 are contiguous and unique; explicit UJ, FR, and NFR cross-references resolve.</li>
+        <li>SM-1 through SM-7 and SM-C1 through SM-C3 use consistent schemes.</li>
+        <li>No assumption-index roundtrip mismatch exists; the launch-date assumption appears as Open Question 1.</li>
+        <li>Minor terminology drift remains around “welcome team,” “Newcomer Volunteer Team,” “Today,” and “Pastor.”</li>
+        <li>The chain-top sections are present, and technical mechanisms are appropriately separated into the addendum.</li>
+      </ul>
+    </div>
+
+    <footer class="report-footer">
+      <div class="meta">
+        <span>Rubric: /Users/udeetgulati/Projects/hsg-website/.agents/skills/bmad-prd/assets/prd-validation-checklist.md</span>
+        <span>Generated: 2026-07-23T06:08:47Z</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

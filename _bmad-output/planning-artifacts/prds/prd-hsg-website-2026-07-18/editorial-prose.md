@@ -1,0 +1,7 @@
+| Original Text | Revised Text | Changes |
+|---------------|--------------|---------|
+| welcome-team contact | Newcomer Volunteer Team contact | Normalised the canonical team name. |
+| A refund or correction preserves the original record, records the reason, approver, amount, provider reference, and time, and issues an updated receipt or correction notice. | A refund or correction preserves the original record and records the reason, approver, amount, provider reference, and time. The system issues an updated receipt or correction notice. | Removed the ambiguous subject that implied a refund itself issues a receipt. |
+| The authoring workflow meets the same keyboard, screen-reader, visible status, labelled error, heading, alt-text, and contrast-baseline expectations required for its representative acceptance tasks. | Representative authoring tasks meet the keyboard, screen-reader, visible-status, labelled-error, heading, alt-text, and contrast requirements in NFR-1. | Shortened a dense sentence and made the reference explicit. |
+| At least 90% of routine update scenarios can be completed by designated Volunteer Teams without developer help. | Designated Volunteer Team participants complete at least 90% of routine update scenarios without developer help. | Made people, rather than scenarios, the actor. |
+| HSG leadership gives final launch approval | An HSG leadership designee gives final launch approval | Reconciled collective ownership with the requirement to name one final approver. |
