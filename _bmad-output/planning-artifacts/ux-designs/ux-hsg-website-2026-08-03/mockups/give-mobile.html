@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSG — Give Offering (Mobile Mock)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface-base: #0C0C12; --surface-raised: #16161F; --surface-overlay: #1E1E2A;
+      --ink-primary: #F4F4F8; --ink-secondary: #9B9BA8; --accent: #E5A84B; --border: #2A2A38;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: #1a1a22; display: flex; justify-content: center; padding: 24px;
+      font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink-primary); }
+    .phone { width: 390px; height: 844px; background: var(--surface-base);
+      border-radius: 40px; border: 8px solid #2a2a32; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .top-nav { height: 56px; padding: 0 16px; display: flex; align-items: center; gap: 12px;
+      background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+    .back { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface-overlay); display: flex; align-items: center; justify-content: center; }
+    .top-nav h1 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 18px; }
+    .scroll { flex: 1; overflow-y: auto; padding: 16px; }
+    .trust-note {
+      background: var(--surface-overlay); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; margin-bottom: 20px;
+      font-size: 13px; color: var(--ink-secondary); line-height: 1.45;
+    }
+    .label {
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-secondary);
+      margin-bottom: 10px;
+    }
+    .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .category {
+      padding: 14px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface-raised); font-size: 14px; font-weight: 500; text-align: center;
+    }
+    .category.selected {
+      border-color: var(--accent);
+      background: rgba(229,168,75,0.1);
+      color: var(--accent);
+    }
+    .amount-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .chip {
+      padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface-raised); font-size: 14px; font-weight: 500;
+    }
+    .chip.selected { border-color: var(--accent); background: rgba(229,168,75,0.12); }
+    .amount-input {
+      width: 100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface-overlay); font-size: 24px; font-weight: 600;
+      color: var(--ink-primary); margin-bottom: 20px;
+    }
+    .amount-input::placeholder { color: var(--ink-secondary); font-weight: 400; font-size: 16px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; color: var(--ink-secondary); margin-bottom: 6px; }
+    .field input {
+      width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface-overlay); color: var(--ink-primary); font-size: 15px;
+    }
+    .checkbox-row {
+      display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;
+      font-size: 13px; color: var(--ink-secondary); line-height: 1.4;
+    }
+    .checkbox {
+      width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border);
+      background: var(--surface-overlay); flex-shrink: 0; margin-top: 2px;
+    }
+    .summary {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; margin-bottom: 16px;
+    }
+    .summary-row {
+      display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0;
+    }
+    .summary-row.total {
+      font-weight: 600; font-size: 16px; border-top: 1px solid var(--border);
+      margin-top: 8px; padding-top: 12px;
+    }
+    .btn-primary {
+      width: 100%; background: var(--accent); color: #0C0C12;
+      font-weight: 600; font-size: 15px; padding: 16px; border: none; border-radius: 8px;
+    }
+    .fine-print { font-size: 11px; color: var(--ink-secondary); margin-top: 12px; line-height: 1.45; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="top-nav">
+      <div class="back">←</div>
+      <h1>Give an offering</h1>
+    </div>
+    <main class="scroll">
+      <div class="trust-note">
+        Giving is voluntary. Your offering supports HSG ministry. Prayer, follow-up, and church information are never tied to giving.
+      </div>
+
+      <div class="label">Offering category</div>
+      <div class="category-grid">
+        <div class="category selected">General offering</div>
+        <div class="category">Building fund</div>
+        <div class="category">Mission</div>
+        <div class="category">Thanksgiving</div>
+      </div>
+
+      <div class="label">Amount (INR)</div>
+      <div class="amount-row">
+        <div class="chip">₹500</div>
+        <div class="chip">₹1,000</div>
+        <div class="chip">₹2,000</div>
+        <div class="chip">₹5,000</div>
+      </div>
+      <input class="amount-input" type="text" placeholder="Enter custom amount" value="">
+
+      <div class="field">
+        <label for="name">Name (optional for anonymous giving)</label>
+        <input id="name" type="text" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="email">Email (for receipt)</label>
+        <input id="email" type="email" placeholder="email@example.com">
+      </div>
+
+      <div class="checkbox-row">
+        <div class="checkbox"></div>
+        <span>Give anonymously — no public attribution or donor follow-up beyond receipt support.</span>
+      </div>
+
+      <div class="summary">
+        <div class="summary-row"><span>Category</span><span>General offering</span></div>
+        <div class="summary-row"><span>Amount</span><span>—</span></div>
+        <div class="summary-row total"><span>Total</span><span>₹0</span></div>
+      </div>
+
+      <button class="btn-primary" type="button">Review & pay</button>
+      <p class="fine-print">Offerings are normally final. Refunds for duplicates or errors may be requested within 7 days. Payment processed via Razorpay.</p>
+    </main>
+  </div>
+</body>
+</html>
