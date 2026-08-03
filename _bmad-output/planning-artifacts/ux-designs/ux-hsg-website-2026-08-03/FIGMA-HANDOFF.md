@@ -1,6 +1,6 @@
 # HSG Website — Figma Mock Handoff
 
-This document maps PRD requirements and local HTML mocks to a Figma design file structure. Use it when building frames in Figma via `use_figma` or manual design.
+Responsive **website** mocks only — no native mobile app screens. Mobile frames represent mobile **browser** viewports (390px), not app chrome.
 
 **Source PRD:** `_bmad-output/planning-artifacts/prds/prd-hsg-website-2026-07-18/prd.md`
 
@@ -16,8 +16,8 @@ This document maps PRD requirements and local HTML mocks to a Figma design file 
 |---|---|
 | File name | `HSG Website — Launch Mocks` |
 | Editor type | Design (`figma.com/design/...`) |
-| Primary frame width | 390px (mobile) |
-| Desktop frame width | 1440px |
+| Primary desktop frame | 1440px |
+| Mobile web viewport mock | 390px (browser, not phone app) |
 | Default mode | Dark |
 
 ---
@@ -46,11 +46,19 @@ This document maps PRD requirements and local HTML mocks to a Figma design file 
 - Spacing variables: 4, 8, 12, 16, 24, 32, 48, 64
 - Radius variables: 8, 12, 16, 999
 
-### 2. Mobile — Core (390 × 844)
+### 2. Desktop — Core (1440)
 
 | Frame name | PRD | HTML mock | Key content |
 |---|---|---|---|
-| `Home / Today` | FR-4, FR-19 | `home-mobile.html` | Live banner, quick actions, announcements, events preview, tab bar |
+| `Home / Today` | FR-4, FR-19 | `home-desktop.html` | Top nav, hero today banner, quick actions row, two-column announcements + events |
+| `Plan a Visit` | FR-2 | — | Service times, map, parking, accessibility, newcomer CTA |
+| `Give Offering` | FR-14 | — | Category, amount, review panel |
+
+### 3. Mobile web — Core (390 viewport)
+
+| Frame name | PRD | HTML mock | Key content |
+|---|---|---|---|
+| `Home / Today` | FR-4, FR-19 | `home-mobile.html` | Header + menu, today banner, quick actions, footer — **no bottom tab bar** |
 | `Plan a Visit` | FR-2 | `visit-plan-mobile.html` | Service times IST, map, parking, children, accessibility, newcomer CTA |
 | `Healing Prayer` | FR-8, FR-9 | `healing-mobile.html` | Belief intro, 3-step card process, logistics links, stories list |
 | `Give Offering` | FR-14 | `give-mobile.html` | Category grid, amount chips, anonymous option, review summary |
@@ -58,18 +66,20 @@ This document maps PRD requirements and local HTML mocks to a Figma design file 
 | `Give — Pending` | FR-15 | — | Verify-before-retry guidance |
 | `Watch — Live` | FR-6 | `watch-mobile.html` | Player, live badge, title/meta |
 | `Watch — Fallback` | FR-6 | `watch-mobile.html` | Next service + recent list + YouTube link |
+| `Mobile nav — open` | — | — | Full-screen menu panel with all page links |
 | `Events List` | FR-5 | — | IST-ordered rows, cancelled state variant |
 | `Event Detail` | FR-5 | — | Full fields + external registration CTA + calendar export |
 | `Prayer Request` | FR-7 | — | Intent selector, consent notice, urgent guidance |
 | `About HSG` | FR-1 | — | Story, beliefs, pastors, ministries, languages |
 | `Contact` | FR-19 | — | Verified routes with purpose + owning team |
-| `More Menu` | — | — | Grow, Powerhouse, Serve, About, Contact |
 
-### 3. Mobile — Components
+### 4. Components (web)
 
 Build as component sets where variants apply:
 
-- `TabBar` — 5 items, active state
+- `SiteHeader` — desktop (inline nav) / mobile web (menu button)
+- `MobileNavPanel` — open / closed
+- `SiteFooter` — service time + contact links
 - `QuickActionTile` — default / pressed
 - `PrimaryButton` — default / disabled
 - `SecondaryButton`
@@ -82,16 +92,11 @@ Build as component sets where variants apply:
 - `CategoryChip` — selected / unselected
 - `AmountChip` — selected / unselected
 - `LiveBadge`
-- `SiteHeader` — logo + menu
+- `SiteHeader` — desktop variant
 
-### 4. Desktop — Home (1440)
+### 5. Desktop — Home detail
 
-Extend `Home / Today` to 1440px:
-
-- Horizontal nav instead of tab bar (Home, Watch, Events, Give, About, Visit, Prayer, Contact)
-- Hero with today banner + quick actions in single row
-- Two-column: announcements + events sidebar
-- Footer with contact routes
+Already covered in section 2. Extend other key pages to 1440px using the same header/footer components.
 
 ---
 

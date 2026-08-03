@@ -1,6 +1,6 @@
 ---
 name: HSG Website
-description: Holy Spirit Generation Church — official India digital home. Youth-forward, dark-first, welcoming doorway for newcomers and dependable hub for members.
+description: Holy Spirit Generation Church — responsive website (no native app). Official India digital home. Youth-forward, dark-first.
 status: draft
 colors:
   surface-base: '#0C0C12'
@@ -57,7 +57,7 @@ spacing:
   '8': 64px
 components:
   nav-bar-height: 56px
-  tab-bar-height: 64px
+  nav-bar-height-desktop: 64px
   touch-target-min: 44px
   card-padding: 16px
   section-gap: 24px
@@ -103,13 +103,13 @@ Minimum body size on mobile: 16px. Line height never below 1.4 for body text. WC
 
 Scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 px.
 
-- Mobile content margins: 16px horizontal.
+- Mobile web content margins: 16px horizontal.
 - Desktop max content width: 1200px centered; hero may full-bleed.
 - Section vertical gap: 24px (mobile), 32px (desktop).
 - Card internal padding: 16px.
 - Quick-action tiles: 2-column grid, 12px gap.
 
-Breakpoints (CSS pixels): 320 (minimum), 390 (primary mobile mock), 768 (tablet), 1024, 1440 (desktop mock).
+Breakpoints (CSS pixels): 320 (minimum), 390 (mobile web mock), 768 (tablet), 1024 (desktop nav), 1440 (desktop mock).
 
 ## Elevation & Depth
 
@@ -128,8 +128,9 @@ Visual specs; behavioral rules live in `EXPERIENCE.md`.
 
 | Component | Visual |
 |---|---|
-| **Site header** | `surface-raised`, 56px height, logo left, menu icon right |
-| **Tab bar** | `surface-raised`, 5 items: Home, Watch, Events, Give, More |
+| **Site header** | `surface-raised`, 56px (mobile web) / 64px (desktop), logo left, nav links or menu button right |
+| **Mobile nav panel** | Full-height overlay; list of page links; closes on selection — not a bottom tab bar |
+| **Site footer** | Service time strip, contact links, social icons, copyright |
 | **Live banner** | `accent-secondary` left border or pill badge + `live-indicator` dot |
 | **Quick action tile** | `surface-raised`, icon + label, `rounded/md`, min 88px height |
 | **Announcement card** | Title `heading`, date `meta` in IST, optional urgency stripe |
@@ -145,6 +146,7 @@ Visual specs; behavioral rules live in `EXPERIENCE.md`.
 
 | Do | Don't |
 |---|---|
+| Use web header + footer on every page | Mimic native app bottom tab bars or app-only navigation |
 | Lead with today's service state and next action | Hide service times behind video or social embeds |
 | Separate prayer follow-up from giving visually | Place thanksgiving offering on same screen as testimony submit |
 | Label every contact route with purpose + owning team | Show private addresses or unverified accounts |

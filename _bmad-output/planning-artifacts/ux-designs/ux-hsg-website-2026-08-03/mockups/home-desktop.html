@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSG — Home / Today (Desktop Web Mock)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Spine: EXPERIENCE.md — responsive website, desktop 1440 */
+    :root {
+      --surface-base: #0C0C12; --surface-raised: #16161F; --surface-overlay: #1E1E2A;
+      --ink-primary: #F4F4F8; --ink-secondary: #9B9BA8; --accent: #E5A84B;
+      --accent-violet: #7C6CF0; --live: #34D399; --border: #2A2A38;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      background: #1a1a22; display: flex; justify-content: center; padding: 24px;
+      font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink-primary);
+    }
+    .browser-window {
+      width: 1440px; background: var(--surface-base);
+      border-radius: 12px; border: 1px solid #2a2a32;
+      overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .browser-bar {
+      height: 40px; padding: 10px 16px; background: #1e1e26;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; color: var(--ink-secondary);
+    }
+    .browser-dots { display: flex; gap: 6px; }
+    .browser-dots span { width: 10px; height: 10px; border-radius: 50%; background: #3a3a44; }
+    .url-bar {
+      flex: 1; max-width: 480px; background: var(--surface-overlay);
+      border-radius: 6px; padding: 6px 12px; font-size: 12px;
+    }
+    .site-header {
+      height: 64px; padding: 0 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface-raised); border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 28px; align-items: center;
+      font-size: 14px; font-weight: 500; color: var(--ink-secondary);
+    }
+    .nav-links .active { color: var(--ink-primary); }
+    .nav-give {
+      background: var(--accent); color: #0C0C12;
+      font-weight: 600; padding: 10px 20px; border-radius: 8px;
+    }
+    .hero {
+      padding: 48px; display: grid;
+      grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: center;
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, #2a2040 0%, var(--surface-raised) 70%);
+      border: 1px solid var(--border); border-radius: 16px; padding: 32px;
+    }
+    .live-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(52,211,153,0.15); color: var(--live);
+      font-size: 12px; font-weight: 600; padding: 4px 12px;
+      border-radius: 999px; margin-bottom: 16px;
+    }
+    .live-dot { width: 8px; height: 8px; background: var(--live); border-radius: 50%; }
+    .hero-title {
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: 40px; line-height: 1.1; margin-bottom: 12px;
+    }
+    .hero-meta { font-size: 16px; color: var(--ink-secondary); margin-bottom: 24px; }
+    .hero-meta strong { color: var(--ink-primary); }
+    .btn-row { display: flex; gap: 12px; }
+    .btn-primary {
+      background: var(--accent); color: #0C0C12;
+      font-weight: 600; font-size: 15px; padding: 14px 24px;
+      border: none; border-radius: 8px;
+    }
+    .btn-secondary {
+      background: transparent; color: var(--ink-primary);
+      font-weight: 500; font-size: 15px; padding: 14px 24px;
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .quick-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .quick-tile {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .quick-icon { font-size: 24px; margin-bottom: 10px; }
+    .quick-label { font-weight: 500; font-size: 14px; }
+    .content {
+      padding: 0 48px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    }
+    .section-label {
+      font-family: 'Outfit', sans-serif; font-weight: 600;
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--ink-secondary); margin-bottom: 16px;
+    }
+    .announce-card {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; margin-bottom: 12px;
+    }
+    .announce-date { font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+    .announce-title {
+      font-family: 'Outfit', sans-serif; font-weight: 600;
+      font-size: 18px; margin-bottom: 8px;
+    }
+    .announce-body { font-size: 14px; color: var(--ink-secondary); line-height: 1.5; }
+    .event-row {
+      display: flex; gap: 16px; padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .event-date-box {
+      width: 56px; text-align: center; background: var(--surface-overlay);
+      border-radius: 8px; padding: 10px 6px; flex-shrink: 0;
+    }
+    .event-day { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px; }
+    .event-month { font-size: 11px; color: var(--ink-secondary); text-transform: uppercase; }
+    .event-info h4 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+    .event-info p { font-size: 14px; color: var(--ink-secondary); }
+    .site-footer {
+      background: var(--surface-raised); border-top: 1px solid var(--border);
+      padding: 32px 48px; display: flex; justify-content: space-between;
+      font-size: 13px; color: var(--ink-secondary);
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links span { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="browser-window" role="img" aria-label="HSG Home desktop web mock">
+    <div class="browser-bar">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="url-bar">holyspiritgeneration.org</div>
+    </div>
+    <header class="site-header">
+      <div class="logo">HSG <span>Church</span></div>
+      <nav class="nav-links" aria-label="Primary">
+        <span class="active">Home</span>
+        <span>About</span>
+        <span>Visit</span>
+        <span>Watch</span>
+        <span>Events</span>
+        <span>Prayer</span>
+        <span>Grow</span>
+        <span>Contact</span>
+        <span class="nav-give">Give</span>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-banner">
+        <div class="live-pill"><span class="live-dot"></span> Live now</div>
+        <h1 class="hero-title">Sunday Worship Service</h1>
+        <p class="hero-meta"><strong>10:00 AM IST</strong> · HSG Main Campus, Bangalore</p>
+        <div class="btn-row">
+          <button class="btn-primary" type="button">Watch live</button>
+          <button class="btn-secondary" type="button">Plan your visit</button>
+        </div>
+      </div>
+      <div class="quick-row">
+        <div class="quick-tile"><div class="quick-icon">📍</div><div class="quick-label">Plan a visit</div></div>
+        <div class="quick-tile"><div class="quick-icon">▶</div><div class="quick-label">Watch services</div></div>
+        <div class="quick-tile"><div class="quick-icon">🙏</div><div class="quick-label">Request prayer</div></div>
+        <div class="quick-tile"><div class="quick-icon">♥</div><div class="quick-label">Give offering</div></div>
+      </div>
+    </section>
+
+    <div class="content">
+      <div>
+        <div class="section-label">Announcements</div>
+        <article class="announce-card">
+          <div class="announce-date">Today · 3 Aug 2026</div>
+          <div class="announce-title">Parking update for Sunday</div>
+          <div class="announce-body">Use the north gate entrance. Overflow parking is available at the community hall across the street.</div>
+        </article>
+        <article class="announce-card">
+          <div class="announce-date">2 Aug 2026</div>
+          <div class="announce-title">Youth Night this Friday</div>
+          <div class="announce-body">Registration opens on the Events page. All teens welcome.</div>
+        </article>
+      </div>
+      <div>
+        <div class="section-label">Upcoming events</div>
+        <div class="event-row">
+          <div class="event-date-box"><div class="event-day">9</div><div class="event-month">Aug</div></div>
+          <div class="event-info"><h4>Youth Night</h4><p>6:30 PM IST · Main hall · Registration required</p></div>
+        </div>
+        <div class="event-row">
+          <div class="event-date-box"><div class="event-day">15</div><div class="event-month">Aug</div></div>
+          <div class="event-info"><h4>Newcomer Lunch</h4><p>12:30 PM IST · After second service</p></div>
+        </div>
+        <div class="event-row">
+          <div class="event-date-box"><div class="event-day">22</div><div class="event-month">Aug</div></div>
+          <div class="event-info"><h4>Powerhouse Connect</h4><p>7:00 PM IST · Midweek gatherings</p></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div>
+        <strong style="color:var(--ink-primary)">Next service · Sunday 10:00 AM IST</strong><br>
+        HSG Main Campus, Bangalore
+      </div>
+      <div class="footer-links">
+        <span>Contact</span><span>YouTube</span><span>Instagram</span><span>Privacy</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
