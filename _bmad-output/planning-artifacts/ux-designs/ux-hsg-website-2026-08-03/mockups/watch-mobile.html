@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSG — Watch Services (Mobile Mock)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface-base: #0C0C12; --surface-raised: #16161F; --surface-overlay: #1E1E2A;
+      --ink-primary: #F4F4F8; --ink-secondary: #9B9BA8; --accent: #E5A84B;
+      --live: #34D399; --violet: #7C6CF0; --border: #2A2A38;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: #1a1a22; display: flex; justify-content: center; padding: 24px;
+      font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink-primary); }
+    .phone { width: 390px; height: 844px; background: var(--surface-base);
+      border-radius: 40px; border: 8px solid #2a2a32; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .header { height: 56px; padding: 0 16px; display: flex; align-items: center;
+      justify-content: space-between; background: var(--surface-raised);
+      border-bottom: 1px solid var(--border); }
+    .header h1 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 18px; }
+    .scroll { flex: 1; overflow-y: auto; }
+    .player {
+      aspect-ratio: 16/9; background: #0a0a10;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; border-bottom: 1px solid var(--border);
+    }
+    .player-inner {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(124,108,240,0.3); border: 2px solid var(--violet);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: var(--ink-primary);
+    }
+    .live-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(52,211,153,0.2); color: var(--live);
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .live-badge::before {
+      content: ""; width: 8px; height: 8px; background: var(--live); border-radius: 50%;
+    }
+    .player-meta { padding: 16px; }
+    .player-meta h2 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 6px; }
+    .player-meta p { font-size: 14px; color: var(--ink-secondary); }
+    .section { padding: 16px; }
+    .section-label {
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-secondary);
+      margin-bottom: 12px;
+    }
+    .fallback-card {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; margin-bottom: 16px;
+    }
+    .fallback-card p { font-size: 14px; color: var(--ink-secondary); margin-bottom: 10px; line-height: 1.45; }
+    .fallback-card strong { color: var(--ink-primary); }
+    .link { color: var(--accent); font-size: 14px; font-weight: 500; }
+    .sermon-card {
+      display: flex; gap: 12px; margin-bottom: 14px;
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px;
+    }
+    .thumb {
+      width: 100px; height: 64px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2a2040, #16161f);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--violet);
+    }
+    .sermon-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .sermon-info p { font-size: 12px; color: var(--ink-secondary); }
+    .tab-bar {
+      height: 64px; background: var(--surface-raised); border-top: 1px solid var(--border);
+      display: flex; padding: 8px 4px 12px;
+    }
+    .tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--ink-secondary); padding-top: 4px; }
+    .tab.active { color: var(--accent); }
+    .tab-icon { width: 24px; height: 24px; border-radius: 6px; background: var(--surface-overlay);
+      display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .tab.active .tab-icon { background: rgba(229,168,75,0.2); }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="header"><h1>Watch</h1><span style="color:var(--ink-secondary)">YouTube ↗</span></header>
+    <main class="scroll">
+      <div class="player">
+        <div class="live-badge">Live</div>
+        <div class="player-inner">▶</div>
+      </div>
+      <div class="player-meta">
+        <h2>Sunday Worship Service</h2>
+        <p>Live · 10:00 AM IST · 3 Aug 2026</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">When not live</div>
+        <div class="fallback-card">
+          <p>No stream active. <strong>Next service: Sunday 10:00 AM IST</strong> at HSG Main Campus.</p>
+          <a class="link" href="#">Watch on YouTube channel →</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Recent services</div>
+        <div class="sermon-card">
+          <div class="thumb">▶</div>
+          <div class="sermon-info">
+            <h4>The Power of Faith</h4>
+            <p>Apostle P. S Rambabu · 27 Jul 2026</p>
+          </div>
+        </div>
+        <div class="sermon-card">
+          <div class="thumb">▶</div>
+          <div class="sermon-info">
+            <h4>Sunday Worship · Full service</h4>
+            <p>20 Jul 2026 · 1h 32m</p>
+          </div>
+        </div>
+        <div class="sermon-card">
+          <div class="thumb">▶</div>
+          <div class="sermon-info">
+            <h4>Healing & Hope</h4>
+            <p>Pastor Vinita Rambabu · 13 Jul 2026</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <nav class="tab-bar">
+      <div class="tab"><div class="tab-icon">⌂</div>Home</div>
+      <div class="tab active"><div class="tab-icon">▶</div>Watch</div>
+      <div class="tab"><div class="tab-icon">◷</div>Events</div>
+      <div class="tab"><div class="tab-icon">♥</div>Give</div>
+      <div class="tab"><div class="tab-icon">⋯</div>More</div>
+    </nav>
+  </div>
+</body>
+</html>

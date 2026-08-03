@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSG — Healing Prayer (Mobile Mock)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface-base: #0C0C12; --surface-raised: #16161F; --surface-overlay: #1E1E2A;
+      --ink-primary: #F4F4F8; --ink-secondary: #9B9BA8; --accent: #E5A84B;
+      --accent-violet: #7C6CF0; --border: #2A2A38;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: #1a1a22; display: flex; justify-content: center; padding: 24px;
+      font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink-primary); }
+    .phone { width: 390px; height: 844px; background: var(--surface-base);
+      border-radius: 40px; border: 8px solid #2a2a32; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .top-nav { height: 56px; padding: 0 16px; display: flex; align-items: center; gap: 12px;
+      background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+    .back { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface-overlay); display: flex; align-items: center; justify-content: center; }
+    .top-nav h1 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 18px; }
+    .scroll { flex: 1; overflow-y: auto; padding: 16px; }
+    .intro {
+      background: linear-gradient(135deg, rgba(124,108,240,0.12), transparent);
+      border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 20px;
+    }
+    .intro h2 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px; margin-bottom: 10px; }
+    .intro p { font-size: 14px; color: var(--ink-secondary); line-height: 1.55; }
+    .disclaimer {
+      font-size: 12px; color: var(--ink-secondary); margin-top: 12px;
+      padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.45;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-secondary);
+      margin-bottom: 12px;
+    }
+    .step {
+      display: flex; gap: 14px; margin-bottom: 16px;
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px;
+    }
+    .step-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: rgba(124,108,240,0.2); color: var(--accent-violet);
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .step h4 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+    .step p { font-size: 13px; color: var(--ink-secondary); line-height: 1.45; }
+    .logistics {
+      background: var(--surface-overlay); border-radius: 12px; padding: 16px; margin-bottom: 20px;
+    }
+    .logistics h4 { font-weight: 600; margin-bottom: 10px; font-size: 14px; }
+    .logistics a { color: var(--accent); font-size: 14px; display: block; margin-bottom: 6px; }
+    .story-card {
+      display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .thumb {
+      width: 80px; height: 56px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, #3a3050, #1e1e2a);
+    }
+    .story-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .story-card p { font-size: 12px; color: var(--ink-secondary); }
+    .actions { display: flex; gap: 8px; margin-top: 16px; }
+    .btn-primary {
+      flex: 1; background: var(--accent); color: #0C0C12;
+      font-weight: 600; font-size: 14px; padding: 14px; border: none; border-radius: 8px;
+    }
+    .btn-secondary {
+      flex: 1; background: transparent; color: var(--ink-primary);
+      font-weight: 500; font-size: 14px; padding: 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="top-nav">
+      <div class="back">←</div>
+      <h1>Healing prayer</h1>
+    </div>
+    <main class="scroll">
+      <div class="intro">
+        <h2>Receive prayer on Sunday</h2>
+        <p>HSG believes in healing through faith and the power of God. On Sundays, healing cards are created before the service so the Pastor and healing teams can pray for you.</p>
+        <p class="disclaimer">We do not promise a specific healing outcome. Prayer is offered freely and is not connected to giving.</p>
+      </div>
+
+      <div class="section-title">Sunday healing-card process</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Arrive before service</h4>
+          <p>Come 30–45 minutes early to the healing desk near the main entrance.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Create your healing card</h4>
+          <p>A volunteer helps you write your prayer need on a healing card.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Receive prayer in service</h4>
+          <p>The Pastor and healing teams pray for you during the Sunday worship service.</p>
+        </div>
+      </div>
+
+      <div class="logistics">
+        <h4>Next Sunday logistics</h4>
+        <a href="#">10:00 AM IST · Main service →</a>
+        <a href="#">Directions & parking →</a>
+        <a href="#">Wheelchair support →</a>
+      </div>
+
+      <div class="section-title">Healing stories</div>
+      <div class="story-card">
+        <div class="thumb"></div>
+        <div>
+          <h4>Testimony: restored mobility</h4>
+          <p>Shared with consent · Jun 2026</p>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="thumb"></div>
+        <div>
+          <h4>Sermon: faith for healing</h4>
+          <p>Apostle P. S Rambabu · May 2026</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" type="button">Plan my visit</button>
+        <button class="btn-secondary" type="button">Share update</button>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
