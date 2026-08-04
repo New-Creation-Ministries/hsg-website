@@ -1,0 +1,40 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for visual-first-ux.
+# Team overrides:     {project-root}/_bmad/custom/visual-first-ux.toml
+# Personal overrides: {project-root}/_bmad/custom/visual-first-ux.user.toml
+# Merge: scalars override; ordinary arrays append.
+
+[workflow]
+
+activation_steps_prepend = []
+activation_steps_append = []
+persistent_facts = ["file:{project-root}/**/project-context.md"]
+on_complete = ""
+
+prototype_output_path = "{project-root}/_bmad-output/planning-artifacts/ux-prototypes"
+run_folder_pattern = "prototype-{project_name}-{date}"
+
+# Lavish is a required runtime dependency, not a selectable review surface.
+# Override only to point at a compatible installed executable or newer pinned release.
+lavish_cli = "env LAVISH_AXI_STATE_DIR={project-root}/_bmad-output/.lavish-axi lavish-axi"
+lavish_artifact = "prototype/index.html"
+lavish_export = "exports/approved-prototype.html"
+
+prototype_brief_template = "assets/prototype-brief-template.md"
+screen_inventory_template = "assets/screen-inventory-template.md"
+visual_decision_log_template = "assets/visual-decision-log-template.md"
+approved_screen_template = "assets/approved-screen-template.md"
+freeze_record_template = "assets/prototype-freeze-template.md"
+design_template = "assets/design-template.md"
+experience_template = "assets/experience-template.md"
+component_template = "assets/component-template.md"
+story_inputs_template = "assets/story-inputs-template.md"
+
+doc_standards = [
+  "skill:bmad-editorial-review-structure",
+  "skill:bmad-editorial-review-prose",
+]
+finalize_reviewers = []
+external_sources = []
+external_handoffs = []

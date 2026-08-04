@@ -1,0 +1,30 @@
+{
+  "name": "vux",
+  "owner": {
+    "name": "Udeet"
+  },
+  "license": "UNLICENSED",
+  "homepage": "",
+  "repository": "",
+  "keywords": [
+    "bmad",
+    "prototype",
+    "ux",
+    "visual-design"
+  ],
+  "plugins": [
+    {
+      "name": "vux",
+      "source": "./",
+      "description": "Prototype-led UX exploration with mandatory Lavish review and prototype-derived handoff documentation.",
+      "version": "1.1.0",
+      "author": {
+        "name": "Udeet"
+      },
+      "skills": [
+        "./visual-first-ux",
+        "./lavish"
+      ]
+    }
+  ]
+}

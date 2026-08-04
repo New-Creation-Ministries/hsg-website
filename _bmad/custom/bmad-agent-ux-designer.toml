@@ -1,0 +1,21 @@
+[agent]
+
+[[agent.menu]]
+code = "VP"
+description = "Start or resume the Visual-First UX Prototype Flow"
+skill = "visual-first-ux"
+
+[[agent.menu]]
+code = "VI"
+description = "Iterate visually on the current screen"
+prompt = "Invoke visual-first-ux with intent visual-iterate."
+
+[[agent.menu]]
+code = "VN"
+description = "Prototype the next screen in the approved journey"
+prompt = "Invoke visual-first-ux with intent visual-next-screen."
+
+[[agent.menu]]
+code = "VF"
+description = "Freeze the prototype and derive UX handoff documentation"
+prompt = "Invoke visual-first-ux with intent visual-finalize-ux."

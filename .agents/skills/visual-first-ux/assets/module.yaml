@@ -1,0 +1,7 @@
+code: vux
+name: "Visual-First UX"
+description: "Prototype-led UX exploration with mandatory Lavish review, approval-aware iteration, and prototype-derived handoff documentation."
+module_version: 1.1.0
+default_selected: false
+module_greeting: >
+  Visual-First UX with Lavish review is ready. Start with one journey and one anchor screen; approvals flow through Lavish while the frozen prototype remains authoritative through architecture and story creation.

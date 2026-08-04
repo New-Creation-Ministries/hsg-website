@@ -1,49 +1,66 @@
 installation:
   version: 6.10.0
   installDate: 2026-07-09T15:40:38.206Z
-  lastUpdated: 2026-07-09T15:40:38.206Z
+  lastUpdated: 2026-08-01T16:46:48.149Z
 modules:
   - name: core
     version: 6.10.0
     installDate: 2026-07-09T15:40:37.862Z
-    lastUpdated: 2026-07-09T15:40:38.200Z
+    lastUpdated: 2026-08-01T16:46:48.142Z
     source: built-in
     npmPackage: null
     repoUrl: null
   - name: bmm
     version: 6.10.0
     installDate: 2026-07-09T15:40:37.831Z
-    lastUpdated: 2026-07-09T15:40:38.200Z
+    lastUpdated: 2026-08-01T16:46:48.142Z
     source: built-in
     npmPackage: null
     repoUrl: null
+  - name: bmb
+    version: v2.1.0
+    installDate: 2026-08-01T15:06:07.813Z
+    lastUpdated: 2026-08-01T16:46:48.144Z
+    source: external
+    npmPackage: bmad-builder
+    repoUrl: https://github.com/bmad-code-org/bmad-builder
+    channel: stable
+    sha: d54981a8ba3b990148256455ccf4e6c1cb4918f0
   - name: bmad-loop
-    version: v0.8.1
+    version: v0.9.0
     installDate: 2026-07-09T15:40:37.874Z
-    lastUpdated: 2026-07-09T15:40:38.202Z
+    lastUpdated: 2026-08-01T16:46:48.145Z
     source: external
     npmPackage: null
     repoUrl: https://github.com/bmad-code-org/bmad-loop
     channel: stable
-    sha: 9aefd40268e72edb492d6bc809dff8bf420953e6
+    sha: 72551742617b4e1c9cb72d2038dc67ce973f7eea
   - name: tea
-    version: v1.19.0
+    version: v1.19.1
     installDate: 2026-07-09T15:40:38.127Z
-    lastUpdated: 2026-07-09T15:40:38.204Z
+    lastUpdated: 2026-08-01T16:46:48.146Z
     source: external
     npmPackage: bmad-method-test-architecture-enterprise
     repoUrl: https://github.com/bmad-code-org/bmad-method-test-architecture-enterprise
     channel: stable
-    sha: 8734d51f24071ddbcb3617390b5fcddb4128ef77
+    sha: 74cf6e6adf5a6f46614788f184f340ea58336157
   - name: cis
     version: v0.2.1
     installDate: 2026-07-09T15:40:38.145Z
-    lastUpdated: 2026-07-09T15:40:38.206Z
+    lastUpdated: 2026-08-01T16:46:48.148Z
     source: external
     npmPackage: bmad-creative-intelligence-suite
     repoUrl: https://github.com/bmad-code-org/bmad-module-creative-intelligence-suite
     channel: stable
     sha: 07a8dd03d196a762f21c241d985293fe5b0f90e7
+  - name: vux
+    version: 1.1.0
+    installDate: 2026-08-01T15:23:28.685Z
+    lastUpdated: 2026-08-01T16:46:48.149Z
+    source: custom
+    npmPackage: null
+    repoUrl: null
+    localPath: /Users/udeetgulati/Projects/hsg-website/skills
 ides:
   - codex
   - cursor
