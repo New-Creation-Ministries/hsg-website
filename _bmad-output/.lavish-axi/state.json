@@ -4,7 +4,7 @@
       "key": "be79cf8ece9e80b9",
       "file": "/Users/udeetgulati/Projects/hsg-website/_bmad-output/planning-artifacts/ux-prototypes/prototype-hsg-website-2026-08-04/prototype/index.html",
       "url": "http://127.0.0.1:4387/session/be79cf8ece9e80b9",
-      "status": "ended",
+      "status": "open",
       "pending_prompts": 0,
       "prompts": [],
       "layout_warnings": [
@@ -91,9 +91,774 @@
           ],
           "resolved_at": "2026-08-04T15:06:37.152Z",
           "resolved_revision": 2
+        },
+        {
+          "id": "11a5dcec7d054568",
+          "fingerprint": "11a5dcec7d054568",
+          "rule": "clipped-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "nav#main-menu > ul > li:nth-of-type(2)",
+          "component": "li",
+          "axis": "vertical",
+          "overflow_px": 257,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:41:04.509Z",
+          "last_seen_revision": 10,
+          "observation_count": 8,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 2,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:25:20.589Z",
+              "revision": 6,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:27:19.452Z",
+              "revision": 8,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:40:14.481Z",
+              "revision": 9,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:41:04.509Z",
+              "revision": 10,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:41:37.899Z",
+              "revision": 11,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:41:37.899Z",
+          "resolved_revision": 11
+        },
+        {
+          "id": "63829c4200a5d4c2",
+          "fingerprint": "63829c4200a5d4c2",
+          "rule": "clipped-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "nav#main-menu > ul > li:nth-of-type(3)",
+          "component": "li",
+          "axis": "vertical",
+          "overflow_px": 257,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:41:04.509Z",
+          "last_seen_revision": 10,
+          "observation_count": 13,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 2,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:25:20.589Z",
+              "revision": 6,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:27:19.452Z",
+              "revision": 8,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:40:14.481Z",
+              "revision": 9,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:41:04.509Z",
+              "revision": 10,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:41:37.899Z",
+              "revision": 11,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:41:37.899Z",
+          "resolved_revision": 11
+        },
+        {
+          "id": "cc5f2e88c21caa1b",
+          "fingerprint": "cc5f2e88c21caa1b",
+          "rule": "clipped-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "nav#main-menu > ul > li:nth-of-type(4)",
+          "component": "li",
+          "axis": "vertical",
+          "overflow_px": 298,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:41:04.509Z",
+          "last_seen_revision": 10,
+          "observation_count": 10,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 2,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:25:20.589Z",
+              "revision": 6,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:27:19.452Z",
+              "revision": 8,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:40:14.481Z",
+              "revision": 9,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:41:04.509Z",
+              "revision": 10,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:41:37.899Z",
+              "revision": 11,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:41:37.899Z",
+          "resolved_revision": 11
+        },
+        {
+          "id": "f9f5ed57aa19cd5c",
+          "fingerprint": "f9f5ed57aa19cd5c",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(2) > details > ul > li:nth-of-type(1) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "5ed6704a1ddb44a9",
+          "fingerprint": "5ed6704a1ddb44a9",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(2) > details > ul > li:nth-of-type(2) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "cab386fdfa5286ae",
+          "fingerprint": "cab386fdfa5286ae",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(2) > details > ul > li:nth-of-type(4) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "e1f3eb4bfcde8eed",
+          "fingerprint": "e1f3eb4bfcde8eed",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(3) > details > ul > li:nth-of-type(1) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "caa803393a14ebd2",
+          "fingerprint": "caa803393a14ebd2",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(3) > details > ul > li:nth-of-type(2) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "6e0e723977f37c57",
+          "fingerprint": "6e0e723977f37c57",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(3) > details > ul > li:nth-of-type(4) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "6bdbd3b8c7be252d",
+          "fingerprint": "6bdbd3b8c7be252d",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(4) > details > ul > li:nth-of-type(1) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "bee1c827f06745ff",
+          "fingerprint": "bee1c827f06745ff",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(4) > details > ul > li:nth-of-type(2) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "47104dc2c2061bca",
+          "fingerprint": "47104dc2c2061bca",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "div > aside > div:nth-of-type(2) > div > span:nth-of-type(1)",
+          "component": "span",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:46.138Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:46.138Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:46.138Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "d8be6c65990d9bcf",
+          "fingerprint": "d8be6c65990d9bcf",
+          "rule": "clipped-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "nav#main-menu > ul > li:nth-of-type(1)",
+          "component": "li",
+          "axis": "vertical",
+          "overflow_px": 276,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:50.285Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:41:04.509Z",
+          "last_seen_revision": 10,
+          "observation_count": 9,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 2,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:50.285Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:25:20.589Z",
+              "revision": 6,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:27:19.452Z",
+              "revision": 8,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:40:14.481Z",
+              "revision": 9,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:41:04.509Z",
+              "revision": 10,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:41:37.899Z",
+              "revision": 11,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:41:37.899Z",
+          "resolved_revision": 11
+        },
+        {
+          "id": "25c7fc984a74f50b",
+          "fingerprint": "25c7fc984a74f50b",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(1) > details > ul > li:nth-of-type(1) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:50.285Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:50.285Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:50.285Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "c90beebf2a493989",
+          "fingerprint": "c90beebf2a493989",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(1) > details > ul > li:nth-of-type(2) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:50.285Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:50.285Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:50.285Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "fb57860f04019e52",
+          "fingerprint": "fb57860f04019e52",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(1) > details > ul > li:nth-of-type(3) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:50.285Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:50.285Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:50.285Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "6cbb66314d7bfdce",
+          "fingerprint": "6cbb66314d7bfdce",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "li:nth-of-type(1) > details > ul > li:nth-of-type(4) > a",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:00:50.285Z",
+          "first_seen_revision": 5,
+          "last_seen_at": "2026-08-04T17:00:50.285Z",
+          "last_seen_revision": 5,
+          "observation_count": 1,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 0,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:00:50.285Z",
+              "revision": 5,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:21:36.775Z",
+              "revision": 6,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:21:36.775Z",
+          "resolved_revision": 6
+        },
+        {
+          "id": "8d3af5c625376f7b",
+          "fingerprint": "8d3af5c625376f7b",
+          "rule": "clipped-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "nav#main-menu > ul > li:nth-of-type(5)",
+          "component": "li",
+          "axis": "vertical",
+          "overflow_px": 216,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T17:38:01.649Z",
+          "first_seen_revision": 9,
+          "last_seen_at": "2026-08-04T17:41:04.509Z",
+          "last_seen_revision": 10,
+          "observation_count": 3,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T17:38:01.649Z",
+              "revision": 9,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T17:40:14.481Z",
+              "revision": 9,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T17:41:04.509Z",
+              "revision": 10,
+              "event": "recurring",
+              "note": "still present after a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T17:41:37.899Z",
+              "revision": 11,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T17:41:37.899Z",
+          "resolved_revision": 11
         }
       ],
-      "artifact_revision": 2,
+      "artifact_revision": 14,
       "artifact_failures": [],
       "dom_snapshot": "",
       "chat": [
@@ -116,10 +881,44 @@
           "role": "agent",
           "text": "I checked the installed Lavish Editor: this version has no collapse/expand control for the Conversation panel, and the sandboxed prototype cannot modify the parent review chrome. For a larger canvas, widen the browser window or reduce browser zoom; the HSG page itself is responsive. Please continue reviewing and send any UI changes or approval here.",
           "at": "2026-08-04T15:09:04.502Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 2 is restored for review. Start with the first viewport: does the editorial navy-and-gold direction feel right for HSG, and is the next-service card prominent enough? Annotate any changes, or explicitly approve SCR-001 when the full landing page feels ready.",
+          "at": "2026-08-04T16:53:54.795Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 3 updates only the header: the logo now explicitly returns to the homepage, the navigation stays visible while scrolling, and About, Events, Testimonies, and Healing Ministry open real list-based submenus alongside Watch and Give. Please check desktop dropdown clarity and the compact Menu behavior, then annotate revisions or explicitly approve SCR-001.",
+          "at": "2026-08-04T17:00:11.786Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 4 removes the menu button completely. About, Events, Testimonies, Healing Ministry, Watch, and Give now remain top-level items on the sticky navigation bar at every width. Please check the 1080px desktop bar first, then the narrow-width horizontal navigation; annotate any revision or explicitly approve SCR-001.",
+          "at": "2026-08-04T17:21:40.075Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 5 applies the full queued batch: navigation is centered at 1080px, chevrons and dropdown edges align with their headers, opening one list closes the others, dropdown content is viewport-positioned to prevent clipping, and the yellow accent is now a deeper metallic gold. Please re-check the Layout issues inbox after diagnostics, then annotate another revision or explicitly approve SCR-001.",
+          "at": "2026-08-04T17:27:09.009Z"
+        },
+        {
+          "role": "user",
+          "text": "Make sure the menu item text is not cutoff by container and make the font size one size bigger",
+          "at": "2026-08-04T17:36:42.353Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 6 now shows About, Events, Healing Ministry, Connect, Watch, and Give as the top-level bar. Connect and Watch contain the requested lists, menu type is one size larger with safe wrapping, headers use pointer feedback, and bright yellow is restored for text while metallic gold remains on chevrons, buttons, borders, and other controls. Please inspect the full navigation and either annotate another change or explicitly approve SCR-001.",
+          "at": "2026-08-04T17:38:14.873Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 7 replaces nested dropdowns with separate controlled panels, so menu-item text no longer overflows its 44px container. Real nav buttons now force pointer cursors, each panel is positioned while invisible before being shown to prevent the corner flash, and the hero is 140px shorter with the service card centered. Please let the 1080px diagnostic finish, then check cursor, first-open position, hero spacing, and the Layout issues inbox.",
+          "at": "2026-08-04T17:42:14.794Z"
         }
       ],
-      "updated_at": "2026-08-04T15:12:57.564Z",
-      "ended_by": "user"
+      "updated_at": "2026-08-04T17:44:39.906Z"
     }
   }
 }
