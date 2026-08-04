@@ -4,7 +4,7 @@
       "key": "be79cf8ece9e80b9",
       "file": "/Users/udeetgulati/Projects/hsg-website/_bmad-output/planning-artifacts/ux-prototypes/prototype-hsg-website-2026-08-04/prototype/index.html",
       "url": "http://127.0.0.1:4387/session/be79cf8ece9e80b9",
-      "status": "open",
+      "status": "ended",
       "pending_prompts": 0,
       "prompts": [],
       "layout_warnings": [
@@ -858,7 +858,7 @@
           "resolved_revision": 11
         }
       ],
-      "artifact_revision": 14,
+      "artifact_revision": 16,
       "artifact_failures": [],
       "dom_snapshot": "",
       "chat": [
@@ -916,9 +916,20 @@
           "role": "agent",
           "text": "Iteration 7 replaces nested dropdowns with separate controlled panels, so menu-item text no longer overflows its 44px container. Real nav buttons now force pointer cursors, each panel is positioned while invisible before being shown to prevent the corner flash, and the hero is 140px shorter with the service card centered. Please let the 1080px diagnostic finish, then check cursor, first-open position, hero spacing, and the Layout issues inbox.",
           "at": "2026-08-04T17:42:14.794Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 8 replaces the single hero card with a stacked three-event deck. It advances every six seconds unless reduced motion is enabled, pauses during hover or keyboard focus, supports previous/next arrows and direct dots, and uses a short event description instead of the visit-details link. Please review the deck motion, controls, card density, and event copy, then annotate another revision or explicitly approve SCR-001.",
+          "at": "2026-08-04T17:51:44.608Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 9 makes the deck unmistakably stacked: the back cards now have larger offsets, stronger rotations, higher visibility, and distinct gold/blue edges. The stage is taller while media and body spacing are tighter, giving every event description enough room. Please check all three cards with both arrows and verify that no description clips.",
+          "at": "2026-08-04T17:56:08.970Z"
         }
       ],
-      "updated_at": "2026-08-04T17:44:39.906Z"
+      "updated_at": "2026-08-04T18:05:21.912Z",
+      "ended_by": "user"
     }
   }
 }

@@ -90,18 +90,33 @@
     .trust-line span { display: inline-flex; align-items: center; gap: 8px; }
     .trust-line span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
 
-    .today-card { position: relative; align-self: center; margin-bottom: 0; padding: 11px; border: 1px solid rgba(255,255,255,.17); border-radius: 28px; background: rgba(2,6,23,.54); box-shadow: var(--shadow); backdrop-filter: blur(18px); }
-    .today-visual { position: relative; min-height: 272px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 19px; background: radial-gradient(circle at 48% 40%, rgba(47,99,219,.65), transparent 27%), linear-gradient(135deg, #030817, #0d2e79); }
+    .today-card { position: relative; align-self: center; min-width: 0; margin-bottom: 0; padding: 0 38px 0 0; }
+    .deck-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 10px 13px 2px; color: var(--accent-text); font-size: .72rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .deck-counter { color: #b7c1d9; font-variant-numeric: tabular-nums; }
+    .deck-stage { position: relative; min-height: 540px; }
+    .event-card { position: absolute; inset: 0 36px 36px 0; overflow: hidden; padding: 11px; border: 1px solid rgba(255,255,255,.17); border-radius: 28px; background: rgba(2,6,23,.96); box-shadow: var(--shadow); opacity: 0; transform: translate3d(42px, 36px, 0) scale(.9); pointer-events: none; transition: transform .52s cubic-bezier(.22,.8,.22,1), opacity .38s ease, border-color .38s ease; backdrop-filter: blur(18px); }
+    .event-card.is-active { z-index: 3; opacity: 1; transform: translate3d(0, 0, 0) scale(1); border-color: rgba(255,255,255,.2); pointer-events: auto; }
+    .event-card.is-next-1 { z-index: 2; opacity: .78; transform: translate3d(17px, 16px, 0) scale(.97) rotate(1.15deg); border-color: rgba(212,175,55,.55); background: #0a1838; }
+    .event-card.is-next-2 { z-index: 1; opacity: .52; transform: translate3d(33px, 31px, 0) scale(.94) rotate(2.2deg); border-color: rgba(47,99,219,.7); background: #10275d; }
+    .today-visual { position: relative; min-height: 225px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 19px; background: radial-gradient(circle at 48% 40%, rgba(47,99,219,.65), transparent 27%), linear-gradient(135deg, #030817, #0d2e79); }
+    .event-card:nth-child(2) .today-visual { background: radial-gradient(circle at 35% 30%, rgba(212,175,55,.48), transparent 25%), linear-gradient(145deg, #07122e, #173f91); }
+    .event-card:nth-child(3) .today-visual { background: radial-gradient(circle at 65% 35%, rgba(47,99,219,.72), transparent 28%), linear-gradient(145deg, #120a2b, #071a4c); }
     .today-visual::before { content: ""; position: absolute; width: 280px; height: 280px; border: 1px solid rgba(247,214,66,.25); border-radius: 50%; box-shadow: 0 0 50px rgba(47,99,219,.38); }
     .today-visual img { position: relative; z-index: 2; width: min(84%, 310px); filter: saturate(.93) contrast(1.03); }
     .sample-chip { position: absolute; top: 14px; left: 14px; z-index: 3; padding: 7px 10px; border: 1px solid rgba(255,255,255,.17); border-radius: 999px; background: rgba(2,6,23,.72); color: #dce3f3; font-size: .67rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-    .today-body { padding: 23px 20px 19px; }
+    .today-body { padding: 19px 18px 20px; }
     .today-topline { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--accent-text); font-size: .74rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
     .today-status { display: inline-flex; align-items: center; gap: 7px; }
     .today-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 5px rgba(247,214,66,.1); }
-    .today-body h2 { margin: 13px 0 7px; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; font-weight: 500; line-height: 1.03; }
+    .today-body h2 { margin: 11px 0 7px; font-family: Georgia, "Times New Roman", serif; font-size: 1.82rem; font-weight: 500; line-height: 1.04; }
     .today-details { margin: 0; color: #d0d8ea; font-size: .92rem; }
-    .today-link { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding-top: 17px; border-top: 1px solid var(--line); color: var(--white); font-weight: 800; text-decoration: none; }
+    .today-description { margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: #c5cee0; font-size: .82rem; line-height: 1.42; }
+    .deck-controls { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 12px; padding-right: 2px; }
+    .deck-button { display: inline-grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(212,175,55,.42); border-radius: 50%; background: rgba(2,6,23,.72); color: var(--gold-soft); font: inherit; font-size: 1.1rem; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .deck-button:hover { background: rgba(212,175,55,.16); transform: translateY(-1px); }
+    .deck-dots { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .deck-dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.28); cursor: pointer; transition: width .22s ease, background .22s ease; }
+    .deck-dot[aria-current="true"] { width: 24px; border-radius: 999px; background: var(--gold); }
 
     .ticker { position: relative; z-index: 3; overflow: hidden; border-block: 1px solid rgba(247,214,66,.16); background: #07102a; }
     .ticker-track { display: flex; width: 100%; flex-wrap: wrap; justify-content: center; gap: 12px 30px; padding: 17px 20px; color: #f9e875; font-size: .75rem; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
@@ -223,6 +238,11 @@
       .today-visual { min-height: 215px; }
       .today-visual img { width: 78%; }
       .today-body h2 { font-size: 1.65rem; }
+      .today-card { padding-right: 30px; }
+      .deck-stage { min-height: 510px; }
+      .event-card { inset: 0 28px 30px 0; }
+      .event-card.is-next-1 { transform: translate3d(13px, 13px, 0) scale(.97) rotate(1deg); }
+      .event-card.is-next-2 { transform: translate3d(25px, 25px, 0) scale(.94) rotate(1.8deg); }
       .welcome, .service, .stories, .cta { padding-block: 90px; }
       .paths { padding-bottom: 90px; }
       .welcome-grid { gap: 50px; }
@@ -331,16 +351,54 @@
           </div>
         </div>
 
-        <aside class="today-card" aria-labelledby="next-service-title">
-          <div class="today-visual">
-            <span class="sample-chip">Prototype content</span>
-            <img src="hsg_logo.png" alt="" role="presentation">
+        <aside class="today-card" aria-labelledby="upcoming-events-title">
+          <div class="deck-heading"><span id="upcoming-events-title">Upcoming at HSG</span><span class="deck-counter" aria-live="polite">1 of 3</span></div>
+          <div class="deck-stage">
+            <article class="event-card is-active" data-event-slide aria-hidden="false">
+              <div class="today-visual">
+                <span class="sample-chip">Prototype content</span>
+                <img src="hsg_logo.png" alt="" role="presentation">
+              </div>
+              <div class="today-body">
+                <div class="today-topline"><span class="today-status">Coming up</span><span>Sunday</span></div>
+                <h2>Sunday Celebration Service</h2>
+                <p class="today-details">10:00 AM IST · Bengaluru venue</p>
+                <p class="today-description">A joyful morning of worship, practical teaching, prayer, and community for every generation.</p>
+              </div>
+            </article>
+            <article class="event-card is-next-1" data-event-slide aria-hidden="true">
+              <div class="today-visual">
+                <span class="sample-chip">Prototype content</span>
+                <img src="hsg_logo.png" alt="" role="presentation">
+              </div>
+              <div class="today-body">
+                <div class="today-topline"><span class="today-status">Next week</span><span>Friday</span></div>
+                <h2>Powerhouse Youth Night</h2>
+                <p class="today-details">6:30 PM IST · Bengaluru venue</p>
+                <p class="today-description">An energetic evening for young people to worship, build friendships, and grow in bold faith.</p>
+              </div>
+            </article>
+            <article class="event-card is-next-2" data-event-slide aria-hidden="true">
+              <div class="today-visual">
+                <span class="sample-chip">Prototype content</span>
+                <img src="hsg_logo.png" alt="" role="presentation">
+              </div>
+              <div class="today-body">
+                <div class="today-topline"><span class="today-status">This month</span><span>Saturday</span></div>
+                <h2>Healing &amp; Prayer Gathering</h2>
+                <p class="today-details">5:00 PM IST · Bengaluru venue</p>
+                <p class="today-description">A focused gathering to receive biblical encouragement, personal prayer, and ministry in faith.</p>
+              </div>
+            </article>
           </div>
-          <div class="today-body">
-            <div class="today-topline"><span class="today-status">Coming up</span><span>Sunday</span></div>
-            <h2 id="next-service-title">Sunday Celebration Service</h2>
-            <p class="today-details">10:00 AM IST · Bengaluru venue</p>
-            <a class="today-link" href="#visit"><span>See visit details</span><span aria-hidden="true">↗</span></a>
+          <div class="deck-controls" aria-label="Upcoming event controls">
+            <button class="deck-button" type="button" data-event-prev aria-label="Previous event">←</button>
+            <div class="deck-dots" aria-label="Choose an event">
+              <button class="deck-dot" type="button" data-event-dot="0" aria-label="Show Sunday Celebration Service" aria-current="true"></button>
+              <button class="deck-dot" type="button" data-event-dot="1" aria-label="Show Powerhouse Youth Night" aria-current="false"></button>
+              <button class="deck-dot" type="button" data-event-dot="2" aria-label="Show Healing and Prayer Gathering" aria-current="false"></button>
+            </div>
+            <button class="deck-button" type="button" data-event-next aria-label="Next event">→</button>
           </div>
         </aside>
       </div>
@@ -536,6 +594,57 @@
     });
     window.addEventListener('resize', repositionOpenDropdown);
     mainMenu.addEventListener('scroll', repositionOpenDropdown, { passive: true });
+
+    const eventDeck = document.querySelector('.today-card');
+    const eventSlides = [...document.querySelectorAll('[data-event-slide]')];
+    const eventDots = [...document.querySelectorAll('[data-event-dot]')];
+    const eventCounter = document.querySelector('.deck-counter');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let activeEvent = 0;
+    let eventTimer;
+
+    function showEvent(index) {
+      activeEvent = (index + eventSlides.length) % eventSlides.length;
+      eventSlides.forEach((slide, slideIndex) => {
+        const distance = (slideIndex - activeEvent + eventSlides.length) % eventSlides.length;
+        slide.classList.toggle('is-active', distance === 0);
+        slide.classList.toggle('is-next-1', distance === 1);
+        slide.classList.toggle('is-next-2', distance === 2);
+        slide.setAttribute('aria-hidden', String(distance !== 0));
+      });
+      eventDots.forEach((dot, dotIndex) => dot.setAttribute('aria-current', String(dotIndex === activeEvent)));
+      eventCounter.textContent = `${activeEvent + 1} of ${eventSlides.length}`;
+    }
+
+    function stopEventTimer() {
+      window.clearInterval(eventTimer);
+    }
+
+    function startEventTimer() {
+      stopEventTimer();
+      if (!reducedMotion.matches) eventTimer = window.setInterval(() => showEvent(activeEvent + 1), 6000);
+    }
+
+    document.querySelector('[data-event-prev]').addEventListener('click', () => {
+      showEvent(activeEvent - 1);
+      startEventTimer();
+    });
+    document.querySelector('[data-event-next]').addEventListener('click', () => {
+      showEvent(activeEvent + 1);
+      startEventTimer();
+    });
+    eventDots.forEach((dot) => dot.addEventListener('click', () => {
+      showEvent(Number(dot.dataset.eventDot));
+      startEventTimer();
+    }));
+    eventDeck.addEventListener('mouseenter', stopEventTimer);
+    eventDeck.addEventListener('mouseleave', startEventTimer);
+    eventDeck.addEventListener('focusin', stopEventTimer);
+    eventDeck.addEventListener('focusout', (event) => {
+      if (!eventDeck.contains(event.relatedTarget)) startEventTimer();
+    });
+    reducedMotion.addEventListener('change', startEventTimer);
+    startEventTimer();
   </script>
 </body>
 </html>
