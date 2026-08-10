@@ -50,6 +50,7 @@
     .btn-primary { background: linear-gradient(125deg, #a56d12 0%, #f1d47a 36%, #c99622 68%, #ffe7a1 100%); color: #11172a; box-shadow: 0 10px 36px rgba(212,175,55,.24), inset 0 1px rgba(255,255,255,.42); }
     .btn-secondary { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.055); color: var(--white); backdrop-filter: blur(14px); }
     .arrow { font-size: 1.1em; }
+    .visit-icon { width: 17px; height: 17px; flex: 0 0 auto; }
 
     .site-header { position: fixed; inset: 0 0 auto; z-index: 20; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.1); background: rgba(2,6,23,.88); box-shadow: 0 12px 35px rgba(0,0,0,.18); backdrop-filter: blur(18px); }
     .nav { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 24px; }
@@ -72,7 +73,6 @@
     .submenu a { display: block; padding: 11px 12px; border-radius: 10px; color: #dce3f3; font-size: .88rem; font-weight: 650; line-height: 1.35; text-decoration: none; white-space: normal; overflow-wrap: anywhere; }
     .submenu a:hover, .submenu a:focus-visible { background: rgba(255,255,255,.08); color: var(--accent-text); }
     .nav-actions { display: flex; justify-content: flex-end; align-items: center; gap: 14px; }
-    .nav-prayer { color: #e4e9f4; font-size: .88rem; font-weight: 700; text-decoration: none; }
 
     .hero { position: relative; min-height: 760px; overflow: hidden; background:
       radial-gradient(circle at 77% 31%, rgba(34,79,186,.66), transparent 28%),
@@ -82,13 +82,16 @@
     .hero::after { content: ""; position: absolute; inset: auto -8% 0; height: 180px; background: linear-gradient(180deg, transparent, var(--ink)); pointer-events: none; }
     .hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(370px, .7fr); min-height: 760px; align-items: center; gap: clamp(50px, 7vw, 110px); padding-top: 118px; padding-bottom: 52px; }
     .hero-copy { padding-top: 22px; }
-    .hero h1 { margin: 0; max-width: 790px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(4.5rem, 8.4vw, 8.2rem); font-weight: 500; letter-spacing: -.068em; line-height: .82; }
-    .hero h1 em { display: block; color: var(--accent-text); font-weight: 500; }
+    .hero h1 { margin: 0; max-width: 790px; font-weight: 500; }
+    .church-name { display: block; font-family: Georgia, "Times New Roman", serif; font-size: clamp(4rem, 7.2vw, 7rem); letter-spacing: -.062em; line-height: .84; }
+    .leadership-line { display: block; max-width: 720px; margin-top: 28px; color: #d8deec; font-size: clamp(1rem, 1.65vw, 1.35rem); font-weight: 650; letter-spacing: -.01em; line-height: 1.35; }
+    .leadership-line strong { color: var(--accent-text); font-family: Georgia, "Times New Roman", serif; font-size: 1.32em; font-weight: 500; }
     .hero-intro { max-width: 620px; margin: 32px 0 0; color: #d8deec; font-size: clamp(1.05rem, 1.7vw, 1.28rem); }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
     .trust-line { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-top: 36px; color: var(--muted); font-size: .8rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
-    .trust-line span { display: inline-flex; align-items: center; gap: 8px; }
-    .trust-line span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+    .trust-line a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: color .2s ease; }
+    .trust-line a::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+    .trust-line a:hover, .trust-line a:focus-visible { color: var(--accent-text); }
 
     .today-card { position: relative; align-self: center; min-width: 0; margin-bottom: 0; padding: 0 38px 0 0; }
     .deck-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 10px 13px 2px; color: var(--accent-text); font-size: .72rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
@@ -98,9 +101,12 @@
     .event-card.is-active { z-index: 3; opacity: 1; transform: translate3d(0, 0, 0) scale(1); border-color: rgba(255,255,255,.2); pointer-events: auto; }
     .event-card.is-next-1 { z-index: 2; opacity: .78; transform: translate3d(17px, 16px, 0) scale(.97) rotate(1.15deg); border-color: rgba(212,175,55,.55); background: #0a1838; }
     .event-card.is-next-2 { z-index: 1; opacity: .52; transform: translate3d(33px, 31px, 0) scale(.94) rotate(2.2deg); border-color: rgba(47,99,219,.7); background: #10275d; }
+    .event-card > * { transition: opacity .18s ease; }
+    .event-card:not(.is-active) > * { opacity: 0; }
     .today-visual { position: relative; min-height: 225px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 19px; background: radial-gradient(circle at 48% 40%, rgba(47,99,219,.65), transparent 27%), linear-gradient(135deg, #030817, #0d2e79); }
     .event-card:nth-child(2) .today-visual { background: radial-gradient(circle at 35% 30%, rgba(212,175,55,.48), transparent 25%), linear-gradient(145deg, #07122e, #173f91); }
     .event-card:nth-child(3) .today-visual { background: radial-gradient(circle at 65% 35%, rgba(47,99,219,.72), transparent 28%), linear-gradient(145deg, #120a2b, #071a4c); }
+    .event-card:nth-child(4) .today-visual { background: radial-gradient(circle at 38% 32%, rgba(247,214,66,.42), transparent 27%), linear-gradient(145deg, #160a25, #0a245b); }
     .today-visual::before { content: ""; position: absolute; width: 280px; height: 280px; border: 1px solid rgba(247,214,66,.25); border-radius: 50%; box-shadow: 0 0 50px rgba(47,99,219,.38); }
     .today-visual img { position: relative; z-index: 2; width: min(84%, 310px); filter: saturate(.93) contrast(1.03); }
     .sample-chip { position: absolute; top: 14px; left: 14px; z-index: 3; padding: 7px 10px; border: 1px solid rgba(255,255,255,.17); border-radius: 999px; background: rgba(2,6,23,.72); color: #dce3f3; font-size: .67rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
@@ -124,33 +130,38 @@
     .ticker-track span::after { content: "✦"; font-size: .8rem; }
     .ticker-track span:nth-child(n+6) { display: none; }
 
-    .welcome { position: relative; padding: 140px 0 130px; background: var(--ink); }
-    .welcome-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, .68fr); gap: clamp(60px, 10vw, 150px); align-items: end; }
-    .welcome-mark { margin-top: 52px; color: #17234a; font-family: Georgia, "Times New Roman", serif; font-size: clamp(6rem, 16vw, 13rem); letter-spacing: -.09em; line-height: .55; white-space: nowrap; user-select: none; }
+    .welcome { position: relative; padding: 96px 0 88px; background: var(--ink); }
+    .welcome-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, .68fr); gap: clamp(46px, 7vw, 100px); align-items: end; }
+    .welcome-mark { max-width: 760px; margin-top: 38px; color: #17234a; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.6rem, 6vw, 5.7rem); letter-spacing: -.055em; line-height: .88; text-wrap: balance; user-select: none; }
     .welcome-quote { padding: 8px 0 8px 28px; border-left: 2px solid var(--gold); }
     .welcome-quote p { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.45rem, 2.5vw, 2.3rem); line-height: 1.18; }
     .welcome-quote cite { display: block; margin-top: 18px; color: var(--muted); font-size: .8rem; font-style: normal; letter-spacing: .1em; text-transform: uppercase; }
 
-    .paths { padding: 0 0 140px; background: var(--ink); }
-    .paths-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 44px; }
+    .paths { padding: 0 0 96px; background: var(--ink); }
+    .paths-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 32px; }
     .paths-head p { max-width: 470px; margin: 0; color: var(--muted); }
     .path-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .path-card { position: relative; min-height: 420px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: #08122d; text-decoration: none; transition: transform .25s ease, border-color .25s ease; }
+    .path-card { position: relative; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: #08122d; text-decoration: none; transition: transform .25s ease, border-color .25s ease; }
     .path-card:hover { transform: translateY(-6px); border-color: rgba(247,214,66,.45); }
     .path-card::after { content: ""; position: absolute; width: 300px; height: 300px; right: -160px; bottom: -160px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; }
     .path-card:nth-child(2) { background: var(--gold); color: #10172a; }
     .path-card:nth-child(2)::after { border-color: rgba(4,9,25,.2); }
     .path-card:nth-child(3) { background: linear-gradient(145deg, #0c245f, #07142f); }
+    .path-card:nth-child(4) { background: radial-gradient(circle at 82% 18%, rgba(212,175,55,.25), transparent 24%), #081633; }
+    .path-card:nth-child(5) { background: linear-gradient(145deg, #172554, #08122d 72%); }
+    .path-card:nth-child(6) { background: radial-gradient(circle at 78% 22%, rgba(47,99,219,.52), transparent 26%), #06102a; }
     .path-number { font-size: .73rem; font-weight: 900; letter-spacing: .18em; opacity: .72; }
     .path-bottom { position: relative; z-index: 2; }
-    .path-card h3 { margin: 0 0 13px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 3vw, 3rem); font-weight: 500; line-height: 1; }
+    .path-card h3 { margin: 0 0 11px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.75rem, 2.4vw, 2.45rem); font-weight: 500; line-height: 1; }
     .path-card p { max-width: 320px; margin: 0; color: inherit; opacity: .76; }
-    .path-arrow { position: absolute; top: 25px; right: 25px; font-size: 1.55rem; }
+    .path-icon { position: absolute; top: 20px; right: 20px; display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; color: var(--gold-soft); }
+    .path-icon svg { width: 19px; height: 19px; }
+    .path-card:nth-child(2) .path-icon { border-color: rgba(4,9,25,.25); color: #10172a; }
 
-    .service { padding: 120px 0; background: var(--paper); color: #0b1020; }
-    .service-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .7fr); gap: clamp(55px, 9vw, 120px); align-items: center; }
-    .service .eyebrow { color: #234fae; }
-    .service .section-copy { color: #4d566b; }
+    .service { padding: 96px 0; background: #050d24; color: var(--white); }
+    .service-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .7fr); gap: clamp(48px, 7vw, 92px); align-items: center; }
+    .service .eyebrow { color: var(--accent-text); }
+    .service .section-copy { color: #c5cee0; }
     .service-media { position: relative; min-height: 560px; overflow: hidden; border-radius: 28px; background: radial-gradient(circle at 50% 35%, rgba(247,214,66,.78), transparent 20%), linear-gradient(150deg, #102d73, #030817 80%); box-shadow: 0 30px 70px rgba(7,18,46,.24); }
     .service-media::before, .service-media::after { content: ""; position: absolute; border: 1px solid rgba(255,255,255,.17); border-radius: 50%; }
     .service-media::before { width: 500px; height: 500px; left: calc(50% - 250px); top: 35px; }
@@ -160,6 +171,12 @@
     .service-poster span { display: block; margin-top: 20px; color: #dbe3f6; font-size: .75rem; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
     .service-label { position: absolute; left: 22px; bottom: 22px; right: 22px; display: flex; justify-content: space-between; gap: 20px; padding: 17px 18px; border: 1px solid rgba(255,255,255,.16); border-radius: 14px; background: rgba(2,6,23,.67); color: #fff; backdrop-filter: blur(12px); }
     .service-label small { color: #b9c4dc; }
+    .series-list { display: grid; margin-top: 38px; border-top: 1px solid rgba(255,255,255,.16); }
+    .series-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.16); text-decoration: none; }
+    .series-number { color: var(--accent-text); font-size: .7rem; font-weight: 850; letter-spacing: .12em; }
+    .series-item h3 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; font-weight: 500; }
+    .series-item p { margin: 3px 0 0; color: var(--muted); font-size: .82rem; }
+    .series-play { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(212,175,55,.42); border-radius: 50%; color: var(--gold-soft); }
     .service-facts { display: grid; gap: 0; margin-top: 38px; border-top: 1px solid #d4d7de; }
     .fact { display: grid; grid-template-columns: 126px 1fr; gap: 25px; padding: 19px 0; border-bottom: 1px solid #d4d7de; }
     .fact dt { color: #6b7282; font-size: .72rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
@@ -167,8 +184,8 @@
     .service-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .service .btn-secondary { border-color: #bfc4ce; background: transparent; color: #0b1020; }
 
-    .stories { padding: 130px 0; background: #06102a; }
-    .stories-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 50px; }
+    .stories { padding: 96px 0; background: #06102a; }
+    .stories-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 36px; }
     .story-grid { display: grid; grid-template-columns: 1.18fr .82fr; gap: 16px; }
     .story { position: relative; min-height: 520px; display: flex; flex-direction: column; justify-content: end; overflow: hidden; padding: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(circle at 70% 20%, rgba(47,99,219,.58), transparent 25%), linear-gradient(145deg, #0a1b4a, #030817 75%); text-decoration: none; }
     .story:nth-child(2) { min-height: 380px; background: radial-gradient(circle at 60% 30%, rgba(247,214,66,.32), transparent 24%), linear-gradient(145deg, #182554, #050916 75%); }
@@ -177,20 +194,25 @@
     .story h3 { position: relative; z-index: 2; max-width: 680px; margin: 13px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4vw, 4.2rem); font-weight: 500; line-height: 1; }
     .story-meta { position: relative; z-index: 2; margin-top: 18px; color: var(--muted); font-size: .86rem; }
 
-    .cta { padding: 130px 0; background: var(--gold); color: #0a1020; text-align: center; }
-    .cta-inner { max-width: 940px; margin: auto; }
-    .cta .eyebrow { color: #1f4597; }
-    .cta h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.7rem, 9vw, 8.5rem); font-weight: 500; letter-spacing: -.065em; line-height: .84; }
-    .cta p { max-width: 600px; margin: 28px auto 0; font-size: 1.1rem; }
-    .cta .btn { margin-top: 30px; background: #08122d; color: #fff; }
+    .social-strip { border-block: 1px solid rgba(247,214,66,.16); background: #07102a; }
+    .social-inner { display: flex; align-items: center; justify-content: center; gap: 28px; padding-block: 22px; }
+    .social-links { display: flex; align-items: center; gap: 12px; }
+    .social-link { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid rgba(212,175,55,.38); border-radius: 50%; color: var(--gold-soft); transition: background .2s ease, transform .2s ease; }
+    .social-link:hover { background: rgba(212,175,55,.14); transform: translateY(-2px); }
+    .social-link svg { width: 22px; height: 22px; fill: currentColor; }
 
-    footer { padding: 54px 0 30px; background: #020513; }
-    .footer-top { display: grid; grid-template-columns: 1fr auto; gap: 45px; align-items: start; }
+    footer { padding: 42px 0 26px; background: #020513; }
+    .footer-top { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(250px, .72fr); gap: 45px; align-items: start; }
     .footer-logo { width: 180px; }
-    .footer-links { display: grid; grid-template-columns: repeat(3, auto); gap: 20px 55px; }
+    .footer-links { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; gap: 20px 55px; }
     .footer-links strong { display: block; margin-bottom: 13px; color: var(--accent-text); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
     .footer-links a { display: block; margin: 8px 0; color: #c8d0e2; font-size: .88rem; text-decoration: none; }
-    .footer-bottom { display: flex; justify-content: space-between; gap: 25px; margin-top: 50px; padding-top: 22px; border-top: 1px solid var(--line); color: #8995ad; font-size: .75rem; }
+    .footer-links a:hover { color: var(--accent-text); }
+    .footer-address strong { display: block; margin-bottom: 13px; color: var(--accent-text); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+    .footer-address address { color: #c8d0e2; font-size: .88rem; font-style: normal; line-height: 1.65; }
+    .footer-map { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--gold-soft); font-size: .85rem; font-weight: 750; text-decoration: none; }
+    .footer-map svg { width: 16px; height: 16px; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 25px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); color: #8995ad; font-size: .75rem; }
 
     @media (max-width: 1160px) {
       .nav { grid-template-columns: 112px minmax(0, 1fr) 112px; gap: 18px; }
@@ -208,9 +230,8 @@
       .hero h1 { max-width: 780px; }
       .today-card { max-width: 620px; width: 100%; margin: 0; justify-self: end; }
       .welcome-grid, .service-grid { grid-template-columns: 1fr; }
-      .welcome-mark { font-size: clamp(5rem, 22vw, 10rem); }
+      .welcome-mark { font-size: clamp(2.5rem, 9vw, 5.2rem); }
       .path-grid { grid-template-columns: 1fr 1fr; }
-      .path-card:last-child { grid-column: 1 / -1; }
       .service-media { min-height: 480px; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-links { justify-content: start; }
@@ -230,7 +251,8 @@
       .hero::before { width: 450px; height: 450px; right: -280px; top: 90px; }
       .hero-inner { gap: 42px; padding-top: 185px; }
       .hero-copy { padding-top: 0; }
-      .hero h1 { font-size: clamp(4rem, 21vw, 6.2rem); }
+      .church-name { font-size: clamp(3.2rem, 15vw, 5.2rem); }
+      .leadership-line { margin-top: 22px; font-size: 1rem; }
       .hero-intro { margin-top: 24px; font-size: 1rem; }
       .hero-actions { align-items: stretch; }
       .hero-actions .btn { width: 100%; }
@@ -243,16 +265,16 @@
       .event-card { inset: 0 28px 30px 0; }
       .event-card.is-next-1 { transform: translate3d(13px, 13px, 0) scale(.97) rotate(1deg); }
       .event-card.is-next-2 { transform: translate3d(25px, 25px, 0) scale(.94) rotate(1.8deg); }
-      .welcome, .service, .stories, .cta { padding-block: 90px; }
-      .paths { padding-bottom: 90px; }
-      .welcome-grid { gap: 50px; }
-      .welcome-mark { margin-top: 38px; font-size: 25vw; }
+      .welcome, .service, .stories, .cta { padding-block: 68px; }
+      .paths { padding-bottom: 68px; }
+      .welcome-grid { gap: 38px; }
+      .welcome-mark { margin-top: 30px; font-size: clamp(2.2rem, 12vw, 4rem); }
       .paths-head, .stories-head { display: block; }
       .paths-head p { margin-top: 22px; }
       .path-grid, .story-grid { grid-template-columns: 1fr; }
-      .path-card, .story, .story:nth-child(2) { min-height: 340px; }
-      .path-card:last-child { grid-column: auto; }
-      .service-grid { gap: 45px; }
+      .path-card { min-height: 290px; }
+      .story, .story:nth-child(2) { min-height: 340px; }
+      .service-grid { gap: 36px; }
       .service-media { min-height: 390px; }
       .service-label { display: block; }
       .service-label small { display: block; margin-top: 4px; }
@@ -274,7 +296,7 @@
   <header class="site-header">
     <div class="container nav" aria-label="Primary navigation">
       <a class="brand" href="index.html#top" aria-label="Holy Spirit Generation home">
-        <img src="hsg_logo.png" alt="Holy Spirit Generation">
+        <img src="hsg_logo_web.png" alt="Holy Spirit Generation">
       </a>
       <nav class="nav-links" id="main-menu" aria-label="Main menu">
         <ul class="nav-list">
@@ -291,44 +313,39 @@
             <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="connect-menu">Connect</button>
           </li>
           <li class="nav-item">
-            <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="watch-menu">Watch</button>
+            <a href="watch.html">Watch</a>
           </li>
-          <li class="nav-item"><a href="#give">Give</a></li>
         </ul>
         <ul class="submenu" id="about-menu" aria-label="About" hidden>
           <li><a href="#welcome">New Creation Ministries</a></li>
-          <li><a href="#welcome">Pastor P. S. Rambabu and Vinita Rambabu</a></li>
+          <li><a href="#welcome">Pastors</a></li>
           <li><a href="#welcome">Beliefs</a></li>
-          <li><a href="#paths">Kainos</a></li>
+          <li><a href="#paths">Kainos HSG</a></li>
+          <li><a href="branch-churches.html">Locations</a></li>
         </ul>
         <ul class="submenu" id="events-menu" aria-label="Events" hidden>
           <li><a href="#paths">Conferences</a></li>
           <li><a href="#paths">Youth</a></li>
-          <li><a href="#prayer">Prayer</a></li>
-          <li><a href="#visit">Services</a></li>
+          <li><a href="events.html#prayer">Prayer</a></li>
+          <li><a href="visit.html">Services</a></li>
         </ul>
         <ul class="submenu" id="healing-menu" aria-label="Healing Ministry" hidden>
-          <li><a href="#prayer">Jesus Heals</a></li>
-          <li><a href="#prayer">How can I receive my healing?</a></li>
+          <li><a href="healing.html">Jesus Heals</a></li>
+          <li><a href="healing.html#receive">How can I receive my healing?</a></li>
           <li><a href="#stories">Testimonies</a></li>
           <li><a href="#stories">Sermons</a></li>
         </ul>
         <ul class="submenu" id="connect-menu" aria-label="Connect" hidden>
           <li><a href="#paths">New to HSG</a></li>
-          <li><a href="#prayer">Prayer Request</a></li>
+          <li><a href="prayer-request.html">Prayer Request</a></li>
           <li><a href="#paths">Discipleship</a></li>
           <li><a href="#paths">Powerhouse</a></li>
           <li><a href="#paths">Serve</a></li>
-        </ul>
-        <ul class="submenu" id="watch-menu" aria-label="Watch" hidden>
-          <li><a href="#stories">Testimonies</a></li>
-          <li><a href="#stories">Sermons</a></li>
-          <li><a href="#stories">Worship</a></li>
+          <li><a href="#contact">Contact Us</a></li>
         </ul>
       </nav>
       <div class="nav-actions">
-        <a class="nav-prayer" href="#paths">Request prayer</a>
-        <a class="btn btn-primary" href="#visit">Plan your visit <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-primary" href="#give">Give</a>
       </div>
     </div>
   </header>
@@ -337,66 +354,81 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="container hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow">Holy Spirit Generation · Bengaluru</p>
-          <h1 id="hero-title">Faith for <em>this generation.</em></h1>
-          <p class="hero-intro">A Word-based, Spirit-filled church where you can know Jesus, grow in faith, find your people, and step into purpose.</p>
+          <h1 id="hero-title"><span class="church-name">Holy Spirit Generation</span><span class="leadership-line">Led by Apostle Of Uncompromising Faith — <strong>Apostle Dr. P.S. Rambabu</strong></span></h1>
+          <p class="hero-intro">A Word-based, Spirit-filled church that is large enough to have you and small enough to know you.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#visit">Plan your first visit <span class="arrow" aria-hidden="true">↗</span></a>
-            <a class="btn btn-secondary" href="#stories">Watch a recent service <span aria-hidden="true">▶</span></a>
+            <a class="btn btn-primary" href="visit.html">Visit HSG <svg class="visit-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6-5.15 6-11a6 6 0 1 0-12 0c0 5.85 6 11 6 11Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.25" fill="currentColor"/></svg></a>
+            <a class="btn btn-secondary" href="#series">Recent Sermons <svg class="visit-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5c2.7 0 5.4.6 8 2v12c-2.6-1.4-5.3-2-8-2v-12Zm16 0c-2.7 0-5.4.6-8 2v12c2.6-1.4 5.3-2 8-2v-12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
+            <a class="btn btn-secondary" href="watch.html#worship-highlights">Worship Highlights <span aria-hidden="true">▶</span></a>
           </div>
-          <div class="trust-line" aria-label="Church qualities">
-            <span>Everyone is welcome</span>
-            <span>English service</span>
-            <span>Children’s church</span>
+          <div class="trust-line" aria-label="HSG branch churches">
+            <a href="branch-churches.html#bengaluru">Bengaluru</a>
+            <a href="branch-churches.html#pune">Pune</a>
+            <a href="branch-churches.html#mysore">Mysore</a>
+            <a href="branch-churches.html#navi-mumbai">Navi Mumbai</a>
+            <a href="branch-churches.html#new-delhi">New Delhi</a>
           </div>
         </div>
 
         <aside class="today-card" aria-labelledby="upcoming-events-title">
-          <div class="deck-heading"><span id="upcoming-events-title">Upcoming at HSG</span><span class="deck-counter" aria-live="polite">1 of 3</span></div>
+          <div class="deck-heading"><span id="upcoming-events-title">Upcoming at HSG</span><span class="deck-counter" aria-live="polite">1 of 4</span></div>
           <div class="deck-stage">
             <article class="event-card is-active" data-event-slide aria-hidden="false">
               <div class="today-visual">
                 <span class="sample-chip">Prototype content</span>
-                <img src="hsg_logo.png" alt="" role="presentation">
+                <img src="hsg_logo_web.png" alt="" role="presentation">
               </div>
               <div class="today-body">
-                <div class="today-topline"><span class="today-status">Coming up</span><span>Sunday</span></div>
-                <h2>Sunday Celebration Service</h2>
-                <p class="today-details">10:00 AM IST · Bengaluru venue</p>
-                <p class="today-description">A joyful morning of worship, practical teaching, prayer, and community for every generation.</p>
+                <div class="today-topline"><span class="today-status">Coming up</span><span>Youth</span></div>
+                <h2>Together — Youth Night</h2>
+                <p class="today-details">Date, time &amp; venue · To be confirmed</p>
+                <p class="today-description">A high-energy gathering where young people can worship, build real friendships, and grow together in faith.</p>
               </div>
             </article>
             <article class="event-card is-next-1" data-event-slide aria-hidden="true">
               <div class="today-visual">
                 <span class="sample-chip">Prototype content</span>
-                <img src="hsg_logo.png" alt="" role="presentation">
+                <img src="hsg_logo_web.png" alt="" role="presentation">
               </div>
               <div class="today-body">
-                <div class="today-topline"><span class="today-status">Next week</span><span>Friday</span></div>
-                <h2>Powerhouse Youth Night</h2>
-                <p class="today-details">6:30 PM IST · Bengaluru venue</p>
-                <p class="today-description">An energetic evening for young people to worship, build friendships, and grow in bold faith.</p>
+                <div class="today-topline"><span class="today-status">New format</span><span>All ages</span></div>
+                <h2>AI Powered Multilingual Service</h2>
+                <p class="today-details">Date, time &amp; venue · To be confirmed</p>
+                <p class="today-description">A technology-enabled service designed to help people follow worship and teaching in the language they understand best.</p>
               </div>
             </article>
             <article class="event-card is-next-2" data-event-slide aria-hidden="true">
               <div class="today-visual">
                 <span class="sample-chip">Prototype content</span>
-                <img src="hsg_logo.png" alt="" role="presentation">
+                <img src="hsg_logo_web.png" alt="" role="presentation">
               </div>
               <div class="today-body">
-                <div class="today-topline"><span class="today-status">This month</span><span>Saturday</span></div>
-                <h2>Healing &amp; Prayer Gathering</h2>
-                <p class="today-details">5:00 PM IST · Bengaluru venue</p>
-                <p class="today-description">A focused gathering to receive biblical encouragement, personal prayer, and ministry in faith.</p>
+                <div class="today-topline"><span class="today-status">Special service</span><span>Word Fest</span></div>
+                <h2>Word Fest Service</h2>
+                <p class="today-details">Date, time &amp; venue · To be confirmed</p>
+                <p class="today-description">A focused celebration of Scripture with practical teaching that helps families carry God’s Word into everyday life.</p>
+              </div>
+            </article>
+            <article class="event-card" data-event-slide aria-hidden="true">
+              <div class="today-visual">
+                <span class="sample-chip">Prototype content</span>
+                <img src="hsg_logo_web.png" alt="" role="presentation">
+              </div>
+              <div class="today-body">
+                <div class="today-topline"><span class="today-status">Night of prayer</span><span>All night</span></div>
+                <h2>All Night Prayer</h2>
+                <p class="today-details">Date, time &amp; venue · To be confirmed</p>
+                <p class="today-description">An extended night of worship, intercession, and faith-filled prayer for people, cities, and the next generation.</p>
               </div>
             </article>
           </div>
           <div class="deck-controls" aria-label="Upcoming event controls">
             <button class="deck-button" type="button" data-event-prev aria-label="Previous event">←</button>
             <div class="deck-dots" aria-label="Choose an event">
-              <button class="deck-dot" type="button" data-event-dot="0" aria-label="Show Sunday Celebration Service" aria-current="true"></button>
-              <button class="deck-dot" type="button" data-event-dot="1" aria-label="Show Powerhouse Youth Night" aria-current="false"></button>
-              <button class="deck-dot" type="button" data-event-dot="2" aria-label="Show Healing and Prayer Gathering" aria-current="false"></button>
+              <button class="deck-dot" type="button" data-event-dot="0" aria-label="Show Together Youth Night" aria-current="true"></button>
+              <button class="deck-dot" type="button" data-event-dot="1" aria-label="Show AI Powered Multilingual Service" aria-current="false"></button>
+              <button class="deck-dot" type="button" data-event-dot="2" aria-label="Show Word Fest Service" aria-current="false"></button>
+              <button class="deck-dot" type="button" data-event-dot="3" aria-label="Show All Night Prayer" aria-current="false"></button>
             </div>
             <button class="deck-button" type="button" data-event-next aria-label="Next event">→</button>
           </div>
@@ -416,7 +448,7 @@
           <p class="eyebrow">This is HSG</p>
           <h2 class="section-title" id="welcome-title">Come as you are. Encounter a living God.</h2>
           <p class="section-copy">Holy Spirit Generation is a vibrant church founded and led by Apostle Dr. P. S Rambabu and Pastor Vinita Rambabu, raising disciples through the Word of faith and the supernatural power of God.</p>
-          <div class="welcome-mark" aria-hidden="true">HSG</div>
+          <div class="welcome-mark" aria-hidden="true">BELIEVE AND SEE THE GLORY</div>
         </div>
         <blockquote class="welcome-quote">
           <p>“We’re here to help a generation know who they are in Christ—and live it.”</p>
@@ -425,98 +457,107 @@
       </div>
     </section>
 
-    <section class="paths" id="paths" aria-labelledby="paths-title">
-      <div class="container">
-        <div class="paths-head">
-          <div>
-            <p class="eyebrow">Find your next step</p>
-            <h2 class="section-title" id="paths-title">You don’t have to figure it out alone.</h2>
-          </div>
-          <p>Whether you’re visiting, looking for prayer, or ready to get connected, start with the path that matters to you today.</p>
-        </div>
-        <div class="path-grid">
-          <a class="path-card" href="#visit">
-            <span class="path-number">01 · New here</span><span class="path-arrow" aria-hidden="true">↗</span>
-            <div class="path-bottom"><h3>Plan a visit</h3><p>Service time, directions, parking, children’s church, accessibility, and what to expect.</p></div>
-          </a>
-          <a class="path-card" href="#prayer">
-            <span class="path-number">02 · We’re with you</span><span class="path-arrow" aria-hidden="true">↗</span>
-            <div class="path-bottom"><h3>Receive prayer</h3><p>Share a prayer need or understand how healing prayer works during Sunday service.</p></div>
-          </a>
-          <a class="path-card" href="#stories">
-            <span class="path-number">03 · Stay current</span><span class="path-arrow" aria-hidden="true">↗</span>
-            <div class="path-bottom"><h3>See what’s happening</h3><p>Watch recent services, find upcoming gatherings, and catch the latest church updates.</p></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="service" id="visit" aria-labelledby="visit-title">
-      <div class="container service-grid">
-        <div class="service-media" aria-label="Placeholder for authentic HSG service photography">
-          <div class="service-poster"><div><strong>See you<br>Sunday.</strong><span>Authentic HSG photography needed</span></div></div>
-          <div class="service-label"><strong>Sunday Celebration Service</strong><small>Prototype schedule · verify before publishing</small></div>
-        </div>
-        <div>
-          <p class="eyebrow">Your first Sunday</p>
-          <h2 class="section-title" id="visit-title">Know exactly what to expect.</h2>
-          <p class="section-copy">A warm welcome, practical details, and a clear path from your front door to a seat in the service.</p>
-          <dl class="service-facts">
-            <div class="fact"><dt>Next service</dt><dd>Sunday · 10:00 AM IST</dd></div>
-            <div class="fact"><dt>Location</dt><dd>Bengaluru venue · address to be confirmed</dd></div>
-            <div class="fact"><dt>For families</dt><dd>Children’s church information available</dd></div>
-            <div class="fact"><dt>Access</dt><dd>Parking and wheelchair support details available</dd></div>
-          </dl>
-          <div class="service-actions">
-            <a class="btn btn-primary" href="#">Get directions <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-secondary" href="#">What to expect</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="stories" id="stories" aria-labelledby="stories-title">
       <div class="container">
         <div class="stories-head">
-          <div><p class="eyebrow">Faith in motion</p><h2 class="section-title" id="stories-title">Watch. Listen. Be encouraged.</h2></div>
-          <a class="btn btn-secondary" href="#">Explore all messages <span aria-hidden="true">↗</span></a>
+          <div><p class="eyebrow">Testimonies</p><h2 class="section-title" id="stories-title">Look what the Lord has done.</h2></div>
+          <a class="btn btn-secondary" href="testimonies.html">Explore all testimonies</a>
         </div>
         <div class="story-grid">
-          <a class="story" href="#">
-            <span class="story-tag">Recent service · Video</span>
-            <h3>A faith that changes how you live.</h3>
-            <span class="story-meta">Prototype media title · replace with approved YouTube content</span>
+          <a class="story" href="testimonies.html#financial-breakthrough">
+            <span class="story-tag">Financial breakthrough · Read</span>
+            <h3>Provision arrived at exactly the right time.</h3>
+            <span class="story-meta">Prototype testimony · Replace with approved HSG story</span>
           </a>
-          <a class="story" href="#">
-            <span class="story-tag">Testimony · 4 min read</span>
-            <h3>Stories of hope, healing, and new beginnings.</h3>
-            <span class="story-meta">Approved testimony content needed</span>
+          <a class="story" href="testimonies.html#healing-video">
+            <span class="story-tag">Healing testimony · Video</span>
+            <h3>A story of healing and restored hope.</h3>
+            <span class="story-meta">Prototype video · Replace with approved HSG testimony</span>
           </a>
         </div>
       </div>
     </section>
 
-    <section class="cta" id="prayer" aria-labelledby="prayer-title">
-      <div class="container cta-inner">
-        <p class="eyebrow">Prayer changes things</p>
-        <h2 id="prayer-title">We would be honoured to pray with you.</h2>
-        <p>Share what you’re walking through. Your request will be treated with dignity and routed to the appropriate HSG prayer team.</p>
-        <a class="btn" href="#">Request prayer <span aria-hidden="true">↗</span></a>
+    <section class="service" id="series" aria-labelledby="series-title">
+      <div class="container service-grid">
+        <div class="service-media" aria-label="Placeholder artwork for the featured YouTube teaching playlist">
+          <div class="service-poster"><div><strong>Word of<br>Faith.</strong><span>Featured YouTube playlist · prototype content</span></div></div>
+          <div class="service-label"><strong>The Word of Faith</strong><small>Teaching series · Playlist</small></div>
+        </div>
+        <div>
+          <p class="eyebrow">Featured Series</p>
+          <h2 class="section-title" id="series-title">Go deeper in the Word.</h2>
+          <p class="section-copy">Continue with recent HSG teaching through focused YouTube playlists you can watch at your own pace.</p>
+          <div class="series-list" aria-label="Featured teaching playlists">
+            <a class="series-item" href="https://www.youtube.com/" target="_blank" rel="noreferrer"><span class="series-number">01</span><div><h3>The Word of Faith</h3><p>Foundational teaching for confident, everyday faith.</p></div><span class="series-play" aria-hidden="true">▶</span></a>
+            <a class="series-item" href="https://www.youtube.com/" target="_blank" rel="noreferrer"><span class="series-number">02</span><div><h3>Life in the Spirit</h3><p>Practical messages for walking with the Holy Spirit.</p></div><span class="series-play" aria-hidden="true">▶</span></a>
+            <a class="series-item" href="https://www.youtube.com/" target="_blank" rel="noreferrer"><span class="series-number">03</span><div><h3>Believe and See the Glory</h3><p>Recent teachings on expectation, prayer, and God’s goodness.</p></div><span class="series-play" aria-hidden="true">▶</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paths" id="paths" aria-labelledby="paths-title">
+      <div class="container">
+        <div class="paths-head">
+          <h2 class="section-title" id="paths-title">How can we serve you?</h2>
+        </div>
+        <div class="path-grid">
+          <a class="path-card" href="visit.html">
+            <span class="path-number">01 · First time?</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg></span>
+            <div class="path-bottom"><h3>What do I need to know</h3><p>Everything you need for a comfortable first visit—what to expect, where to go, and people ready to welcome you.</p></div>
+          </a>
+          <a class="path-card" href="prayer-request.html">
+            <span class="path-number">02 · We’re with you</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.8a5.4 5.4 0 0 0-7.6 0L12 6l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.6a5.4 5.4 0 0 0 0-7.6Z"/></svg></span>
+            <div class="path-bottom"><h3>Request prayer</h3><p>Share what you’re walking through and let our prayer team stand with you in faith and care.</p></div>
+          </a>
+          <a class="path-card" href="events.html">
+            <span class="path-number">03 · Stay current</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>
+            <div class="path-bottom"><h3>See what’s happening</h3><p>Find upcoming gatherings, featured teaching, and the latest ways to take part in church life.</p></div>
+          </a>
+          <a class="path-card" href="healing.html">
+            <span class="path-number">04 · Stand in faith</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <div class="path-bottom"><h3>Receive healing</h3><p>Explore what the Bible says about healing and find a clear next step for receiving prayer and ministry.</p></div>
+          </a>
+          <a class="path-card" href="give.html#thanksgiving-offering">
+            <span class="path-number">05 · Offering of thanks</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h16v10H4zM3 7h18v4H3zM12 7v13"/><path d="M12 7H8.5A2.5 2.5 0 1 1 11 4.5L12 7Zm0 0h3.5A2.5 2.5 0 1 0 13 4.5L12 7Z"/></svg></span>
+            <div class="path-bottom"><h3>Give thanks</h3><p>Honour God with a thanksgiving offering in gratitude for His provision, faithfulness, and goodness.</p></div>
+          </a>
+          <a class="path-card" href="#contact">
+            <span class="path-number">06 · Tell of His goodness</span><span class="path-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/><path d="M8 9h8M8 13h5"/></svg></span>
+            <div class="path-bottom"><h3>Share your story</h3><p>Tell us how God has met you so your testimony can encourage faith in someone else.</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-strip" aria-label="HSG social media">
+      <div class="container social-inner">
+        <div class="social-links" aria-label="HSG social media">
+          <a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3.2l.8-4h-4V9c0-.7.3-1 1-1Z"/></svg></a>
+          <a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>
+          <a class="social-link" href="https://www.youtube.com/" target="_blank" rel="noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.4-.4-5c-.2-1-1-1.8-2-2C17.8 4.5 12 4.5 12 4.5s-5.8 0-7.6.5c-1 .2-1.8 1-2 2C2 8.6 2 12 2 12s0 3.4.4 5c.2 1 1 1.8 2 2 1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5c1-.2 1.8-1 2-2 .4-1.6.4-5 .4-5ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg></a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer id="contact">
     <div class="container">
       <div class="footer-top">
-        <img class="footer-logo" src="hsg_logo.png" alt="Holy Spirit Generation">
+        <img class="footer-logo" src="hsg_logo_web.png" alt="Holy Spirit Generation">
         <div class="footer-links">
-          <div><strong>Visit</strong><a href="#visit">Plan a visit</a><a href="#visit">Directions</a><a href="#visit">Accessibility</a></div>
-          <div><strong>Connect</strong><a href="#paths">New here</a><a href="#prayer">Prayer</a><a href="#stories">Messages</a></div>
+          <div><strong>Visit</strong><a href="visit.html">Plan a visit</a><a href="visit.html#directions">Directions</a><a href="visit.html#accessibility">Accessibility</a></div>
+          <div><strong>Connect</strong><a href="#paths">New here</a><a href="prayer-request.html">Prayer</a><a href="#series">Messages</a></div>
           <div><strong>Follow</strong><a href="#">YouTube</a><a href="#">Instagram</a><a href="#">Contact HSG</a></div>
         </div>
+        <div class="footer-address">
+          <strong>Address</strong>
+          <address>NC Arena #3<br>Near Legacy School &amp; Moto Mind Shop<br>Byrithi, Village, Kothanur<br>Bengaluru, Karnataka 560077</address>
+          <a class="footer-map" href="https://www.google.com/maps/search/?api=1&amp;query=NC+Arena+%233+Near+Legacy+School+%26+Moto+Mind+Shop+Byrithi+Village+Kothanur+Bengaluru+Karnataka+560077" target="_blank" rel="noreferrer">View on Google Maps <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6-5.15 6-11a6 6 0 1 0-12 0c0 5.85 6 11 6 11Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.25" fill="currentColor"/></svg></a>
+        </div>
       </div>
-      <div class="footer-bottom"><span>© 2026 Holy Spirit Generation</span><span>Prototype · Sample content is not verified public information</span></div>
+      <div class="footer-bottom"><span>© 2026 New Creation Ministries</span><span>Prototype · Sample content is not verified public information</span></div>
     </div>
   </footer>
   <script>
@@ -531,17 +572,16 @@
     function positionDropdown(trigger, dropdown) {
       const headerBottom = siteHeader.getBoundingClientRect().bottom;
       dropdown.style.top = `${Math.round(headerBottom + 8)}px`;
-
-      if (window.matchMedia('(max-width: 680px)').matches) {
-        dropdown.style.left = '14px';
-        dropdown.style.right = '14px';
-        return;
-      }
-
       dropdown.style.right = 'auto';
+      dropdown.style.width = window.matchMedia('(max-width: 680px)').matches
+        ? `${Math.min(310, window.innerWidth - 28)}px`
+        : '';
       const triggerRect = trigger.getBoundingClientRect();
       const dropdownWidth = dropdown.getBoundingClientRect().width;
-      const alignedLeft = Math.min(triggerRect.left, window.innerWidth - dropdownWidth - 14);
+      const alignedLeft = Math.min(
+        triggerRect.left + (triggerRect.width - dropdownWidth) / 2,
+        window.innerWidth - dropdownWidth - 14
+      );
       dropdown.style.left = `${Math.max(14, Math.round(alignedLeft))}px`;
     }
 

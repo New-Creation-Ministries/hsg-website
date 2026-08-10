@@ -4,7 +4,7 @@
       "key": "be79cf8ece9e80b9",
       "file": "/Users/udeetgulati/Projects/hsg-website/_bmad-output/planning-artifacts/ux-prototypes/prototype-hsg-website-2026-08-04/prototype/index.html",
       "url": "http://127.0.0.1:4387/session/be79cf8ece9e80b9",
-      "status": "ended",
+      "status": "open",
       "pending_prompts": 0,
       "prompts": [],
       "layout_warnings": [
@@ -856,9 +856,501 @@
           ],
           "resolved_at": "2026-08-04T17:41:37.899Z",
           "resolved_revision": 11
+        },
+        {
+          "id": "e579ac6e0a63740e",
+          "fingerprint": "e579ac6e0a63740e",
+          "rule": "overlapping-text",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "span#upcoming-events-title",
+          "component": "#upcoming-events-title",
+          "axis": "horizontal",
+          "overflow_px": 0,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:28:50.361Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-05T17:00:58.832Z",
+          "last_seen_revision": 54,
+          "observation_count": 9,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:28:50.361Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:49.948Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T22:23:09.317Z",
+              "revision": 28,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T22:27:25.830Z",
+              "revision": 31,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-05T16:21:53.045Z",
+              "revision": 44,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-05T16:26:02.554Z",
+              "revision": 45,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-05T16:48:12.760Z",
+              "revision": 47,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-05T16:53:15.095Z",
+              "revision": 48,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-05T16:59:34.175Z",
+              "revision": 53,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-05T17:00:46.272Z",
+              "revision": 54,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-05T17:00:58.832Z",
+              "revision": 54,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-05T17:02:08.987Z",
+              "revision": 55,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-05T17:02:08.987Z",
+          "resolved_revision": 55
+        },
+        {
+          "id": "0e1fff2e9ea342da",
+          "fingerprint": "0e1fff2e9ea342da",
+          "rule": "clipped-control",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top",
+          "component": "#top",
+          "axis": "horizontal",
+          "overflow_px": 185,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "0749406bd8cb84b0",
+          "fingerprint": "0749406bd8cb84b0",
+          "rule": "viewport-unreachable-control",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top > div > div > div:nth-of-type(1) > a:nth-of-type(1)",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 185,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "97fcc7d04592d62f",
+          "fingerprint": "97fcc7d04592d62f",
+          "rule": "viewport-unreachable-content",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top > div > div > p:nth-of-type(1)",
+          "component": "p",
+          "axis": "horizontal",
+          "overflow_px": 185,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "75205c6fb0557f80",
+          "fingerprint": "75205c6fb0557f80",
+          "rule": "viewport-unreachable-content",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "h1#hero-title",
+          "component": "#hero-title",
+          "axis": "horizontal",
+          "overflow_px": 185,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "92339d791c234476",
+          "fingerprint": "92339d791c234476",
+          "rule": "viewport-unreachable-content",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top > div > div > p:nth-of-type(2)",
+          "component": "p",
+          "axis": "horizontal",
+          "overflow_px": 185,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "2cea21a838177718",
+          "fingerprint": "2cea21a838177718",
+          "rule": "viewport-unreachable-content",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top > div > div > div:nth-of-type(1) > a:nth-of-type(1)",
+          "component": "a",
+          "axis": "horizontal",
+          "overflow_px": 166,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
+        },
+        {
+          "id": "b8e8da2e603e023c",
+          "fingerprint": "b8e8da2e603e023c",
+          "rule": "viewport-unreachable-content",
+          "severity": "error",
+          "status": "resolved",
+          "selector": "section#top > div > div > div:nth-of-type(2) > span:nth-of-type(1)",
+          "component": "span",
+          "axis": "horizontal",
+          "overflow_px": 172,
+          "viewport_class": "desktop",
+          "viewport_width": 1080,
+          "first_seen_at": "2026-08-04T21:29:00.243Z",
+          "first_seen_revision": 17,
+          "last_seen_at": "2026-08-04T21:55:57.922Z",
+          "last_seen_revision": 18,
+          "observation_count": 4,
+          "queued_revision": 0,
+          "queued_at": "",
+          "queue_attempts": 1,
+          "dismissed_revision": 0,
+          "history": [
+            {
+              "at": "2026-08-04T21:29:00.243Z",
+              "revision": 17,
+              "event": "detected"
+            },
+            {
+              "at": "2026-08-04T21:29:42.611Z",
+              "revision": 17,
+              "event": "queued"
+            },
+            {
+              "at": "2026-08-04T21:34:54.171Z",
+              "revision": 18,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            },
+            {
+              "at": "2026-08-04T21:55:57.922Z",
+              "revision": 18,
+              "event": "reopened",
+              "note": "detected again after being resolved"
+            },
+            {
+              "at": "2026-08-04T21:58:15.068Z",
+              "revision": 19,
+              "event": "resolved",
+              "note": "absent from a complete pass on a newer artifact revision"
+            }
+          ],
+          "resolved_at": "2026-08-04T21:58:15.068Z",
+          "resolved_revision": 19
         }
       ],
-      "artifact_revision": 16,
+      "artifact_revision": 63,
       "artifact_failures": [],
       "dom_snapshot": "",
       "chat": [
@@ -926,10 +1418,189 @@
           "role": "agent",
           "text": "Iteration 9 makes the deck unmistakably stacked: the back cards now have larger offsets, stronger rotations, higher visibility, and distinct gold/blue edges. The stage is taller while media and body spacing are tighter, giving every event description enough room. Please check all three cards with both arrows and verify that no description clips.",
           "at": "2026-08-04T17:56:08.970Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 9 is reopened. Please review the always-visible navigation and the hero’s layered three-card event deck first—especially card depth, description fit, and first-viewport spacing—then queue the next change or explicitly approve SCR-001.",
+          "at": "2026-08-04T21:26:40.883Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 9 is restored. Please review the always-visible navigation and the layered upcoming-events deck first, then annotate the next landing-page change or explicitly approve SCR-001.",
+          "at": "2026-08-04T22:02:31.517Z"
+        },
+        {
+          "role": "user",
+          "text": "approved moving on to next changes",
+          "at": "2026-08-04T22:03:08.820Z"
+        },
+        {
+          "role": "agent",
+          "text": "Iteration 9 is restored as the baseline. Please queue the next specific visual changes from this layout; nothing will be treated as approved or frozen.",
+          "at": "2026-08-04T22:08:23.606Z"
+        },
+        {
+          "role": "user",
+          "text": "Target\nsection#top > div > div > p:nth-of-type(1)\nPrompt\nRemove Bengaluru\nUnder Connect add Branch Churches and Contact Us\n\nRemove Request Prayer. Instead of plan your visit put Give and remove Give from the menu headers. Remove the Out arrow.\n\nChange the icon to reflect visit. Right now it seems like it is an out link\n\nChange this to read \"A Word-based, Spirit-filled church that is large enough to have you and small enough to know you\"\n\nChange this to - \"Led by Apostle Of Uncompromising Faith - Apostle Dr. P.S. Rambabu\" Make sure to adjust font sizes to make it look clean\n\nChange to list branches here : Bengaluru, Pune, Mysore, Navi Mumbai, New Delhi. Each will be a link to the Branch churches page at that church",
+          "at": "2026-08-04T22:09:04.209Z"
+        },
+        {
+          "role": "agent",
+          "text": "Applied the full batch: Give is now the sole header action; Connect includes Branch Churches and Contact Us; the hero uses the revised copy and a location pin for visiting; the leadership statement is rebalanced; and the strip now links the five branches. Please review the header width, leadership typography, and branch strip first.",
+          "at": "2026-08-04T22:11:41.699Z"
+        },
+        {
+          "role": "user",
+          "text": "Roll back as the target components were incorrectly identified",
+          "at": "2026-08-04T22:17:17.039Z"
+        },
+        {
+          "role": "agent",
+          "text": "Rolled back the mis-targeted batch completely. The page is iteration 9 again, with only the explicitly annotated trust-line changed to the five linked branch locations. Please continue by targeting each remaining component directly.",
+          "at": "2026-08-04T22:18:40.975Z"
+        },
+        {
+          "role": "agent",
+          "text": "Applied all six targeted annotations to their exact components. The hero now leads with Holy Spirit Generation and a smaller leadership line; the visit CTA uses a location pin; Connect has the two new links; Give is the clean header action; and the branch links remain in the annotated trust-line. Please review the hero hierarchy and header behavior.",
+          "at": "2026-08-04T22:27:05.751Z"
+        },
+        {
+          "role": "agent",
+          "text": "The event deck now uses the four requested cards, each with generated descriptive copy and clearly unconfirmed schedule details. The counter, dots, auto-advance, and visible layered stack all support four events. Please review the AI Multilingual card and the longest descriptions for fit first.",
+          "at": "2026-08-04T22:30:46.584Z"
+        },
+        {
+          "role": "agent",
+          "text": "The welcome mark now reads BELIEVE AND SEE THE GLORY with fitted responsive type. The next-step section is simplified to How can we serve you? and now has six cards, including the three new service paths and revised first-visit and prayer language. Please review the two-row card rhythm and the long first-card title.",
+          "at": "2026-08-04T22:44:49.452Z"
+        },
+        {
+          "role": "agent",
+          "text": "Applied the lower-page revision: six distinct service icons, a dark Featured Series block with three YouTube playlist rows, testimony-only financial and healing cards under Look what the Lord has done, and a compact social icon strip replacing the prayer CTA. Please review the Featured Series section and social strip first.",
+          "at": "2026-08-04T22:53:41.444Z"
+        },
+        {
+          "role": "agent",
+          "text": "The social strip now contains only the three centered platform symbols, with the label removed. Please continue with the next targeted change.",
+          "at": "2026-08-04T22:55:49.302Z"
+        },
+        {
+          "role": "agent",
+          "text": "The fifth card now clearly represents a thanksgiving offering, with an offering-specific destination, label, gift icon, and copy focused on honouring God for His provision and goodness. Please continue with the next targeted change.",
+          "at": "2026-08-04T22:56:31.245Z"
+        },
+        {
+          "role": "agent",
+          "text": "The footer is now three-part on desktop: logo left, navigation groups centered, and the supplied NC Arena address with a location-pin Google Maps link on the right. It stacks cleanly on smaller screens. Please review footer balance and address wrapping.",
+          "at": "2026-08-04T22:59:43.370Z"
+        },
+        {
+          "role": "agent",
+          "text": "The local review poll was interrupted and has been reattached. The optimized prototype is unchanged; please continue with the next targeted instruction.",
+          "at": "2026-08-04T23:53:13.874Z"
+        },
+        {
+          "role": "agent",
+          "text": "The current landing page is restored exactly as last reviewed. Everything remains provisional; please annotate the next component you want changed, or send explicit approval only if you want SCR-001 recorded as approved.",
+          "at": "2026-08-05T16:17:44.156Z"
+        },
+        {
+          "role": "user",
+          "text": "make the overall layout tighter as there are lot of empty spaces in some sections when they begin and end",
+          "at": "2026-08-05T16:25:07.599Z"
+        },
+        {
+          "role": "agent",
+          "text": "Density pass applied: the six service cards are shorter and more compact, and excess top/bottom spacing is reduced across the welcome, service, testimony, social, and footer sections on desktop and mobile. Please review the service-card scale first, then scan the full page rhythm; annotate any section that still feels too loose or now feels too compressed.",
+          "at": "2026-08-05T16:26:37.515Z"
+        },
+        {
+          "role": "agent",
+          "text": "Session reloaded with the latest provisional density iteration. Review the smaller service cards and tighter section spacing, then annotate the next focused change or send explicit approval for SCR-001.",
+          "at": "2026-08-05T16:45:00.355Z"
+        },
+        {
+          "role": "agent",
+          "text": "I am attached to this review now. Queue each fix from the page and send it; I will apply the batch, preserve unrelated components, and return the revision here.",
+          "at": "2026-08-05T16:47:31.585Z"
+        },
+        {
+          "role": "agent",
+          "text": "Applied all three fixes: the hero action now says Know more; Branch Churches moved from Connect to About; and the page order is This is HSG, Testimonies, Featured Series, then How can we serve you. Please review the new narrative flow and queue the next fixes.",
+          "at": "2026-08-05T16:54:50.666Z"
+        },
+        {
+          "role": "agent",
+          "text": "Restored the secondary hero action to Watch a Testimony. The reordered section flow and Branch Churches under About remain unchanged. Queue the next fixes when ready.",
+          "at": "2026-08-05T16:57:00.212Z"
+        },
+        {
+          "role": "agent",
+          "text": "The second About-menu item is now labeled Pastors and still points to the same welcome destination. Keep queuing fixes when ready.",
+          "at": "2026-08-05T16:57:59.771Z"
+        },
+        {
+          "role": "agent",
+          "text": "Footer copyright now reads © 2026 New Creation Ministries; the prototype disclosure remains unchanged. Continue queuing fixes when ready.",
+          "at": "2026-08-05T16:59:25.757Z"
+        },
+        {
+          "role": "agent",
+          "text": "Dropdown alignment updated: each panel now centers directly beneath its trigger and remains viewport-safe; mobile panels use a compact contained width. Please reopen Connect and verify the attachment, then queue any remaining fixes.",
+          "at": "2026-08-05T17:00:58.368Z"
+        },
+        {
+          "role": "agent",
+          "text": "Watch is now a direct top-level link to watch.html, and its Testimonies/Sermons/Worship dropdown has been removed. Other menus are unchanged. Queue the next fixes when ready.",
+          "at": "2026-08-05T17:02:21.194Z"
+        },
+        {
+          "role": "agent",
+          "text": "The About-menu item now reads Kainos HSG and keeps the same destination. Continue queuing fixes when ready.",
+          "at": "2026-08-05T17:03:56.514Z"
+        },
+        {
+          "role": "agent",
+          "text": "Hero actions now read Plan your first visit, Recent Sermons, and Worship Highlights in that order. Recent Sermons jumps to Featured Series; Worship Highlights routes to the Watch page. Queue the next fixes when ready.",
+          "at": "2026-08-05T17:06:16.475Z"
+        },
+        {
+          "role": "agent",
+          "text": "The primary hero action now reads Visit Us; its visit destination and location icon remain unchanged. Continue queuing fixes when ready.",
+          "at": "2026-08-05T17:11:38.326Z"
+        },
+        {
+          "role": "agent",
+          "text": "The About-menu item now reads Locations and keeps the existing branch-churches destination. Continue queuing fixes when ready.",
+          "at": "2026-08-05T17:13:58.078Z"
+        },
+        {
+          "role": "agent",
+          "text": "The primary hero action now reads Visit HSG; its destination and icon remain unchanged. Continue queuing fixes when ready.",
+          "at": "2026-08-05T17:16:47.782Z"
+        },
+        {
+          "role": "agent",
+          "text": "Recent Sermons now includes a compact open-book icon aligned with the other hero action symbols. Continue queuing fixes when ready.",
+          "at": "2026-08-05T17:17:35.487Z"
+        },
+        {
+          "role": "agent",
+          "text": "The event deck now exposes text and media only on the active card; background cards retain their offset, rotation, borders, and layered silhouettes without content bleed. Please cycle through the deck and queue any remaining fixes.",
+          "at": "2026-08-05T17:18:51.318Z"
+        },
+        {
+          "role": "agent",
+          "text": "The HSG landing-page prototype is open. Review the current homepage and queue any visual changes you want; no screen will be frozen or approved unless you explicitly request it here.",
+          "at": "2026-08-09T08:36:51.933Z"
+        },
+        {
+          "role": "agent",
+          "text": "The HSG homepage review is still active. Queue annotations or changes here; this remains a provisional iteration unless you explicitly request approval or freezing.",
+          "at": "2026-08-09T10:54:41.127Z"
         }
       ],
-      "updated_at": "2026-08-04T18:05:21.912Z",
-      "ended_by": "user"
+      "updated_at": "2026-08-09T10:54:41.128Z"
     }
   }
 }
