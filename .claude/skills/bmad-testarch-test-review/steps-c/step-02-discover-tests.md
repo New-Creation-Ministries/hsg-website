@@ -41,7 +41,7 @@ Collect test files in scope and parse structure/metadata.
 >
 > - `path does not exist` — a `review_files` entry that is not on disk.
 > - `file could not be parsed` — a discovered file the read or the parse failed on.
-> - `format not scorable by the ledger` — a changed test artifact the registry has no criteria for (a `.feature` file, a `.robot` suite, an `.http` collection). Maestro flows are **not** in this set: the registry carries mobile rows (C4, H1, H3, H4, H9, M8, L8), so a `.yaml` flow under a Maestro directory is discovered and scored like any other test file.
+> - `format not scorable by the ledger` — a changed test artifact the registry has no criteria for (a `.feature` file, a `.robot` suite, an `.http` collection). Maestro flows are **not** in this set: the registry carries mobile rows (C4, C7, H1, H3, H4, H9, M8, L8), so a `.yaml` flow under a Maestro directory is discovered and scored like any other test file.
 >
 > The third reason is the only one the runner can supply. When the run supplies an `---BEGIN UNSCORABLE---` block, reproduce every path in it verbatim with that exact reason, dropping none; the CLI rejects a report that dropped one. The first two you discover yourself, so add them to the same section with their own reason. No path may appear both here and in `## Reviewed Files`. A reviewed-files manifest that quietly omits a changed test artifact reads as "the diff held nothing else to review", which is a false statement the report makes on your behalf.
 
@@ -83,7 +83,8 @@ does. Then `criteria-registry.md` scores each Convention row against the result.
 > **Exception — convention baseline supplied.** A headless run through
 > `tea-test-review` computes this baseline deterministically instead of leaving it
 > to you: `corpusSize`, `sampled`, the exact sampled file list, and — for
-> `priorityMarkers`, `testIds`, `networkFirst`, `dataFactories`, and `fixtures` — a
+> `priorityMarkers`, `testIds`, `networkFirst`, `dataFactories`, `fixtures`, and
+> `playwrightUtils` — a
 > mechanical zero/nonzero adoption signal from actually reading every sampled
 > file's real content (see `cli/lib/convention-baseline.js`). When the prompt
 > states this data, use it verbatim: do not re-glob, re-sample, or re-derive
@@ -129,15 +130,16 @@ number.
 For each key, count how many sampled files use it, and record the observed form
 verbatim so the report can quote it back:
 
-| Key               | Adopted when a sampled file…                                   | Record as `form`                                                                |
-| ----------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `priorityMarkers` | carries a priority marker on its tests                         | the observed shape, e.g. `[P0] in the test name`, `@P1 tag`, `{ tag: ['@p2'] }` |
-| `testIds`         | locates elements by a stable test id                           | the attribute or helper, e.g. `data-testid`, `getByTestId`                      |
-| `bddNaming`       | names tests by behavior rather than implementation             | e.g. `starts with a verb phrase`, `Given/When/Then`                             |
-| `networkFirst`    | registers interception or a readiness signal before navigating | the helper, e.g. `interceptNetworkCall`, `page.route`                           |
-| `dataFactories`   | builds domain payloads through a factory or builder            | e.g. `@couture/testing factories`, `build*` helpers                             |
-| `fixtures`        | takes setup from a fixture rather than inline duplication      | e.g. `mergeTests`, `merged-fixtures`                                            |
-| `assertionStyle`  | uses one assertion dialect consistently                        | e.g. `expect + vitest matchers`                                                 |
+| Key               | Adopted when a sampled file…                                   | Record as `form`                                                                 |
+| ----------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `priorityMarkers` | carries a priority marker on its tests                         | the observed shape, e.g. `[P0] in the test name`, `@P1 tag`, `{ tag: ['@p2'] }`  |
+| `testIds`         | locates elements by a stable test id                           | the attribute or helper, e.g. `data-testid`, `getByTestId`                       |
+| `bddNaming`       | names tests by behavior rather than implementation             | e.g. `starts with a verb phrase`, `Given/When/Then`                              |
+| `networkFirst`    | registers interception or a readiness signal before navigating | the helper, e.g. `interceptNetworkCall`, `page.route`                            |
+| `playwrightUtils` | imports any `@seontechnologies/playwright-utils` subpath       | the observed entry point, e.g. `apiRequest fixture`, `merged-fixtures re-export` |
+| `dataFactories`   | builds domain payloads through a factory or builder            | e.g. `@couture/testing factories`, `build*` helpers                              |
+| `fixtures`        | takes setup from a fixture rather than inline duplication      | e.g. `mergeTests`, `merged-fixtures`                                             |
+| `assertionStyle`  | uses one assertion dialect consistently                        | e.g. `expect + vitest matchers`                                                  |
 
 ### Status thresholds, applied exactly
 
@@ -165,10 +167,34 @@ const conventionBaseline = {
     priorityMarkers: { adopted: 11, sampled: 19, status: 'established', form: '[P#] in the test name' },
     testIds: { adopted: 8, sampled: 19, status: 'emerging', form: 'data-testid' },
     networkFirst: { adopted: 5, sampled: 19, status: 'emerging', form: 'interceptNetworkCall' },
+    playwrightUtils: { adopted: 5, sampled: 19, status: 'emerging', form: 'apiRequest fixture' },
     // ...one entry per key in the table above, every key present
   },
 };
 ```
+
+A merged-fixtures import alone does **not** count as `playwrightUtils` adoption: a
+project can hand-roll `merged-fixtures.ts` with no playwright-utils anywhere, and
+that shape is already what the `fixtures` key measures. Only the package literal
+counts here, which is what `cli/lib/convention-baseline.js` scans for. Table and
+regex must keep saying the same thing, or a headless run and an interactive run
+count different corpora.
+
+`playwrightUtils` is measured on every corpus, but it only reaches the report when
+`tea_use_playwright_utils` is true and `@seontechnologies/playwright-utils` is a
+project dependency. Measure it either way, and carry the result even when it is
+zero: the three states each get a line in the report and none of them gets a
+per-file deduction.
+
+- **Flag on, package absent** — the ratio is the evidence that the framework step
+  never ran. Report it as a recommendation to run `framework`.
+- **Flag on, package present, adoption spread** — the ordinary Convention path;
+  the registry's deduction schedule takes it from here.
+- **Flag on, package present, adoption `absent` or `unknown`** — report one
+  run-level line saying so, per `criteria-registry.md` § _Mandate-backed keys
+  report an unspread convention_. This is the freshly scaffolded case: the corpus
+  outside the review set may be three sample specs, which is both 100% clean and
+  too small to measure.
 
 Every key in the table must appear, including ones that came back `absent`: a
 missing key is indistinguishable from an unmeasured one, and the registry needs
