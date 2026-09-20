@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  // src/overlay is bundled by esbuild into dist/overlay.js, not emitted as
+  // separate modules — see the build:overlay script.
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/overlay/**"]
+}

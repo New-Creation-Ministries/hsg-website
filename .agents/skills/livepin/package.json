@@ -1,0 +1,46 @@
+{
+  "name": "livepin",
+  "version": "0.1.0",
+  "description": "Annotate a live dev server and loop a coding agent into the feedback",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "livepin": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "SKILL.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build:server && npm run build:overlay",
+    "build:server": "tsc -p tsconfig.build.json",
+    "build:overlay": "esbuild src/overlay/index.ts --bundle --format=iife --target=es2020 --platform=browser --outfile=dist/overlay.js",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . && prettier --check .",
+    "lint:fix": "eslint . --fix && prettier --write .",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.5.13",
+    "@vitest/coverage-v8": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^9.17.0",
+    "happy-dom": "^20.11.2",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^3.0.0",
+    "ws": "^8.18.0"
+  }
+}

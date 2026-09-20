@@ -50,7 +50,7 @@ Author:  Status:
 
 ## Index
 
-After create or revise, update `docs/index.md` so every task in every category is listed and searchable (category, slug, title, status, link). Sort by category, then slug.
+After create or revise, update `docs/index.md` so every task in every category is listed and searchable (category, slug, title, status, intent link, spec link, plan link). Keep the Spec and Plan columns; use `—` until those files exist. Sort by category, then slug.
 
 ## Done when
 
