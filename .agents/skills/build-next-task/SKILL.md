@@ -1,19 +1,21 @@
 ---
 name: build-next-task
-description: Executes the next unblocked pending task from a feature plan.md. Use when the user asks to build the next task, do the next task, pick up the next queued task, or implement one plan task.
+description: Executes one runnable pending task from the current wave of a feature plan.md. Use when the user asks to build the next task, do the next task, pick up the next queued task, implement one plan task, or names a task id or title in the current wave.
 ---
 
 # Build next task
 
-One runnable `pending` task from `plan.md`. Do not rewrite the plan. Do not start other tasks.
+One runnable `pending` task from the current wave of `plan.md`. Do not rewrite the plan. Do not start other tasks.
 
 ## Pick
 
 Named plan, the one just specified, or `docs/index.md`. Ask once if several match. Stop if `plan.md` is missing or `Status: draft`.
 
-Queue is document order (Wave 1 onward). **Runnable:** `pending`, and every `depends_on` is `done` (foreign ids via `docs/index.md` → that plan). Skip `blocked` and `code_review`.
+**Current wave:** lowest-numbered wave with a `pending` task. **Runnable:** `pending`, in that wave, and every `depends_on` is `done` (foreign ids via `docs/index.md` → that plan). Skip `blocked` and `code_review`.
 
-If none runnable, stop and name blockers (or that the plan is finished).
+If the user names a task (`id` or title), execute that task only when it is runnable in the current wave. Ask once if the name matches several. If it is missing, outside the current wave, or not runnable, stop and say why. Do not substitute another task.
+
+If none named, take the first runnable task in document order in the current wave. If none runnable, stop and name blockers (or that the plan is finished).
 
 ## Do
 
