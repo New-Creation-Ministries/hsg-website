@@ -5,4 +5,4 @@ Skills: `.agents/skills/capture-intent/SKILL.md`, `.agents/skills/write-spec/SKI
 
 | Category | Slug | Title | Status | Intent | Spec | Plan |
 | --- | --- | --- | --- | --- | --- | --- |
-| feature | home-landing-page | Home landing page | ready | [intent](features/home-landing-page/intent.md) | — | — |
+| feature | home-landing-page | Home landing page | ready | [intent](features/home-landing-page/intent.md) | [spec](features/home-landing-page/spec.md) | — |
