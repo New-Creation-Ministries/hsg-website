@@ -26,7 +26,7 @@ Holy Spirit Generation is a public church website. Visitors and members share th
 See `docs/architecture.md`.
 
 ## Things agents gets wrong
-
+- When writing docs first plan where the information needs to go. Do not repeat the same information again and again. Don't add text to rationalize why something was put there, leave that to the human understanding. Plan the structure of the doc, what information goes where so that it doesn't have to repeat and makes sense in being read in a flow.
 ## Verifying your work
 In case you wrote some code that was not part of tests do the following verfications - 
 - Build: make build (must finish with "Build succeeded")
