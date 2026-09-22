@@ -15,9 +15,15 @@ Use progressive disclosure when gathering context.
 - If blocked by missing information, gather the next smallest piece of context needed.
 - Avoid large logs, generated files, broad directory reads, and unrelated search results.
 
+## Project
+
+Holy Spirit Generation is a public church website. Visitors and members share the same pages: church information, events whose content is updated in the repo, and YouTube or Instagram embeds. It is one Next.js app on Vercel, written in TypeScript, styled with Tailwind CSS and shadcn/ui. Content is published by deploy. Full boundaries and constraints are in `docs/architecture.md`.
+
 ## Conventions
 
 ## Architecture
+
+See `docs/architecture.md`.
 
 ## Things agents gets wrong
 
@@ -29,7 +35,6 @@ In case you wrote some code that was not part of tests do the following verficat
 
 Run all three before reporting any task complete, and paste the output.
 If a test fails, fix the code, not the test.
-
 
 <!-- BEGIN:nextjs-agent-rules -->
 
