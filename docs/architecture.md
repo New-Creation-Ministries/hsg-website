@@ -6,12 +6,22 @@ High-level architecture only. Feature design waits for the vertical slice that n
 
 Public website for Holy Spirit Generation. Visitors and members share the same pages: church information, events that gain content over time, and YouTube or Instagram embeds on one or two pages.
 
-```mermaid
-flowchart LR
-  People["Visitors and members"] --> Site["Church website"]
-  Site --> Vercel["Vercel"]
-  Site --> YouTube["YouTube"]
-  Site --> Instagram["Instagram"]
+```
+Visitors and members
+         |
+         v
++------------------------+
+|   Church website       |
+|   Next.js on Vercel    |
++-----------+------------+
+            |
+     +------+------+
+     |             |
+     v             v
+ YouTube       Instagram
+ (embed)       (embed)
+
+Content lives in the repository and is published by deploy.
 ```
 
 ## Major Components
