@@ -22,7 +22,9 @@ export function SiteHeader() {
       const focused = document.activeElement
       if (query.matches) {
         if (focused === menu.current) {
-          navigation.current?.querySelector<HTMLElement>('[aria-current="page"]')?.focus()
+          const current = navigation.current?.querySelector<HTMLElement>('[aria-current="page"]')
+          const firstLink = navigation.current?.querySelector<HTMLElement>("a")
+          ;(current ?? firstLink)?.focus()
         }
         setExpanded(false)
       } else {

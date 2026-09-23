@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test"
 
-import { churchName, routes, shellSentence } from "./copy"
+import { churchName, navLabels, routes, shellSentence } from "./copy"
 import { aboveMenu, atMenu, desktop, expectNoHorizontalScroll, headerNav, phone } from "./helpers"
 
-const routeLabels = routes.map((route) => route.label)
+const routeLabels = [...navLabels]
 
 test("opens, escapes, and closes Menu at 800px", async ({ page }) => {
   await page.setViewportSize(atMenu)
@@ -22,11 +22,11 @@ test("opens, escapes, and closes Menu at 800px", async ({ page }) => {
   await expect(nav.getByRole("link")).toHaveText(routeLabels)
 
   await page.keyboard.press("Tab")
-  await expect(nav.getByRole("link", { name: "Home" })).toBeFocused()
+  await expect(nav.getByRole("link", { name: "About" })).toBeFocused()
   await page.keyboard.press("Escape")
   await expect(menu).toBeFocused()
   await expect(menu).toHaveAttribute("aria-expanded", "false")
-  await expect(nav.getByRole("link", { name: "Home" })).toBeHidden()
+  await expect(nav.getByRole("link", { name: "About" })).toBeHidden()
 
   await menu.click()
   await nav.getByRole("link", { name: "About" }).click()
@@ -43,8 +43,8 @@ test("keeps navigation focus visible across the 800px threshold", async ({ page 
 
   await menu.focus()
   await page.setViewportSize(aboveMenu)
-  await expect(nav.getByRole("link", { name: "Home" })).toBeFocused()
-  await expect(nav.getByRole("link", { name: "Home" })).toBeVisible()
+  await expect(nav.getByRole("link", { name: "About" })).toBeFocused()
+  await expect(nav.getByRole("link", { name: "About" })).toBeVisible()
 
   await nav.getByRole("link", { name: "Events" }).focus()
   await page.setViewportSize(atMenu)
@@ -84,10 +84,15 @@ test("opens every shell with its title, heading, and current page", async ({ pag
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(route.label)
       await expect(page.getByText(shellSentence)).toBeVisible()
     }
-    const current = headerNav(page).getByRole("link", { name: route.label, exact: true })
-    await expect(current).toHaveAttribute("aria-current", "page")
-    await expect(page.locator("nav a[aria-current='page']")).toHaveCount(1)
-    await expect(page.locator("nav a[aria-current='page']")).toHaveText(route.label)
+    if (route.path === "/") {
+      await expect(page.locator("nav a[aria-current='page']")).toHaveCount(0)
+      await expect(page.getByRole("link", { name: churchName })).toHaveAttribute("href", "/")
+    } else {
+      const current = headerNav(page).getByRole("link", { name: route.label, exact: true })
+      await expect(current).toHaveAttribute("aria-current", "page")
+      await expect(page.locator("nav a[aria-current='page']")).toHaveCount(1)
+      await expect(page.locator("nav a[aria-current='page']")).toHaveText(route.label)
+    }
   }
 })
 

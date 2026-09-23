@@ -3,9 +3,11 @@ import { expect, test } from "@playwright/test"
 import {
   absentReferenceCopy,
   blurb,
-  channelUrl,
+  scripture,
+  scriptureRef,
   churchName,
-  footerLine,
+  footerAddress,
+  ministryName,
   sections,
   sundayNote,
   testimonySource,
@@ -30,14 +32,16 @@ test("shows the church, the blurb, and the four sections", async ({ page }) => {
   }
   await expect(page.getByText(testimonySource)).toBeVisible()
   await expect(page.getByText(sundayNote)).toBeVisible()
-  await expect(page.getByText(footerLine)).toBeVisible()
+  await expect(page.getByText(ministryName)).toBeVisible()
+  await expect(page.getByText(footerAddress)).toBeVisible()
+  await expect(page.getByText("Word-based. Spirit-filled. Bengaluru.")).toHaveCount(0)
   for (const text of absentReferenceCopy) {
     await expect(page.getByText(text)).toHaveCount(0)
   }
   await expect(page.locator("iframe")).toHaveCount(0)
 })
 
-test("keeps unpublished items as text and links only the sermon channel", async ({ page }) => {
+test("keeps unpublished highlights and shows the sermon series with Watch", async ({ page }) => {
   await page.goto("/")
 
   const highlights = page.getByRole("region", { name: sections[0] })
@@ -45,21 +49,62 @@ test("keeps unpublished items as text and links only the sermon channel", async 
   await expect(highlights.getByRole("link", { name: "Highlight to be published" })).toHaveCount(0)
   await expect(highlights.getByRole("link", { name: "Events" })).toHaveAccessibleName("Events")
 
+  const stories = page.getByRole("region", { name: "Highlighted testimonies" })
+  await expect(stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })).toBeVisible()
+  await expect(stories.getByRole("link", { name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
+  await expect(stories.getByRole("link", { name: "Testimony from California" })).toHaveCount(0)
+  await expect(stories.getByRole("link", { name: "Miracle from Dallas" })).toHaveCount(0)
+  await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveAttribute("href", "/praise-reports")
+
   const sermons = page.getByRole("region", { name: "Sermons" })
-  const channel = sermons.getByRole("link", { name: "Evangelist Rambabu" })
-  await expect(channel).toHaveAttribute("href", channelUrl)
-  await expect(channel).not.toHaveAttribute("target", /_blank/)
-  await expect(sermons.getByText("Playlist to be published")).toHaveCount(2)
-  await expect(sermons.getByRole("link", { name: "Playlist to be published" })).toHaveCount(0)
+  await expect(sermons.getByText(scripture)).toBeVisible()
+  await expect(sermons.getByText(scriptureRef)).toBeVisible()
+  await expect(sermons.getByRole("link", { name: "Evangelist Rambabu" })).toHaveCount(0)
+  await expect(sermons.getByText("Playlist to be published")).toHaveCount(0)
+  await expect(sermons.locator('a[href*="playlist?list="]')).toHaveCount(0)
+
+  const videoLinks = sermons.locator('a[href^="https://www.youtube.com/watch?v="]')
+  await expect(videoLinks).toHaveCount(5)
+  for (const link of await videoLinks.all()) {
+    const href = await link.getAttribute("href")
+    expect(href).toMatch(/^https:\/\/www\.youtube\.com\/watch\?v=/)
+    const id = new URL(href!).searchParams.get("v")
+    expect(id).toBeTruthy()
+    const img = link.locator("img")
+    await expect(img).toHaveAttribute("src", `https://i.ytimg.com/vi/${id}/mqdefault.jpg`)
+    await expect(img).toHaveAttribute("alt", "")
+    const title = (await link.innerText()).trim()
+    expect(title.length).toBeGreaterThan(0)
+    await expect(link).toHaveAccessibleName(title)
+    await expect(link).toHaveAttribute("target", "_blank")
+  }
+
+  await expect(sermons.getByRole("link", { name: "Watch" })).toHaveAttribute("href", "/watch")
   await expect(sermons.getByRole("link", { name: "Watch" })).toHaveAccessibleName("Watch")
+  await expect(page.locator("iframe")).toHaveCount(0)
 
   const portrait = page.locator("[aria-hidden='true']").getByText("HSG", { exact: true })
   await expect(portrait).toBeVisible()
   await expect(page.getByRole("img", { name: "Apostle Dr. P. S. Rambabu" })).toHaveCount(0)
-  await expect(page.getByRole("link", { name: "HSG" })).toHaveCount(0)
+  await expect(page.getByRole("link", { name: "HSG", exact: true })).toHaveCount(0)
 })
 
-test("reads both Sunday services with Contact Us and no visit claim", async ({ page }) => {
+test("keeps sermon titles when YouTube thumbnails are blocked", async ({ page }) => {
+  await page.route("https://i.ytimg.com/**", (route) => route.abort())
+  await page.goto("/")
+
+  const sermons = page.getByRole("region", { name: "Sermons" })
+  const videoLinks = sermons.locator('a[href^="https://www.youtube.com/watch?v="]')
+  await expect(videoLinks).toHaveCount(5)
+  for (const link of await videoLinks.all()) {
+    const title = (await link.innerText()).trim()
+    expect(title.length).toBeGreaterThan(0)
+    await expect(link).toBeVisible()
+    await expect(link.getByText(title)).toBeVisible()
+  }
+})
+
+test("reads both Sunday services with Know More and no visit claim", async ({ page }) => {
   await page.goto("/")
   const sunday = page.getByRole("region", { name: "New to HSG" })
   const text = await sunday.innerText()
@@ -77,23 +122,32 @@ test("reads both Sunday services with Contact Us and no visit claim", async ({ p
   expect(healing).toBeLessThan(multilingual)
   expect(multilingual).toBeLessThan(onwards)
   expect(onwards).toBeLessThan(note)
-  await expect(sunday.getByRole("link", { name: "Contact Us" })).toBeVisible()
+  await expect(sunday.getByText("Join us every Sunday to worship the Lord together and celebrate his goodness in our lives")).toBeVisible()
+  await expect(sunday.getByRole("link", { name: "Know More" })).toBeVisible()
   await expect(sunday.getByText(/direction|booking|reserve/i)).toHaveCount(0)
 })
 
-test("opens the sermon channel in the same tab and comes back", async ({ page }) => {
-  await page.route("https://www.youtube.com/**", (route) =>
+test("opens a sermon video in a new tab", async ({ page }) => {
+  await page.context().route("https://www.youtube.com/**", (route) =>
     route.fulfill({
       status: 200,
       contentType: "text/html",
-      body: "<!doctype html><title>Evangelist Rambabu</title><p>Channel</p>",
+      body: "<!doctype html><title>YouTube</title><p>YouTube</p>",
     }),
   )
   await page.goto("/")
-  await page.getByRole("link", { name: "Evangelist Rambabu" }).click()
-  await expect(page).toHaveURL(channelUrl)
-  await page.goBack()
+  const sermons = page.getByRole("region", { name: "Sermons" })
+  const video = sermons.locator('a[href^="https://www.youtube.com/watch?v="]').first()
+  const videoHref = await video.getAttribute("href")
+  expect(videoHref).toBeTruthy()
+  const videoPopup = page.waitForEvent("popup")
+  await video.click()
+  const videoPage = await videoPopup
+  await expect(videoPage).toHaveURL(videoHref!)
+  await expect(page).toHaveURL(/\/$/)
   await expect(page.getByRole("heading", { level: 1, name: churchName })).toBeVisible()
+  await videoPage.close()
+  await expect(sermons.locator('a[href*="playlist?list="]')).toHaveCount(0)
   await expect(page.locator("iframe")).toHaveCount(0)
 })
 
@@ -146,19 +200,31 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
   expect((await box(second)).x).toBeLessThan((await box(third)).x)
 
   const sermons = page.getByRole("region", { name: "Sermons" })
-  const channel = sermons.getByRole("link", { name: "Evangelist Rambabu" })
-  const playlist = sermons.getByText("Playlist to be published").first()
-  expect((await box(channel)).x).toBeLessThan((await box(playlist)).x)
+  const quote = sermons.locator(".channel")
+  const videos = sermons.locator('a[href^="https://www.youtube.com/watch?v="]')
+  const quoteBox = await box(quote)
+  const firstVideo = await box(videos.nth(0))
+  const secondVideo = await box(videos.nth(1))
+  const thirdVideo = await box(videos.nth(2))
+  expect(quoteBox.x).toBeLessThan(firstVideo.x)
+  expect(Math.abs(quoteBox.y - firstVideo.y)).toBeLessThan(8)
+  expect(Math.abs(secondVideo.x - quoteBox.x)).toBeLessThan(8)
+  expect(secondVideo.y).toBeGreaterThan(quoteBox.y + quoteBox.height - 8)
+  expect(Math.abs(thirdVideo.y - secondVideo.y)).toBeLessThan(8)
+  expect(thirdVideo.x).toBeGreaterThan(secondVideo.x)
+  expect((await box(page.getByRole("heading", { level: 2, name: "New to HSG?" }))).y).toBeLessThan(
+    (await box(sermons.getByRole("heading", { level: 2 }))).y,
+  )
 
-  const sunday = page.getByRole("region", { name: "New to HSG" })
-  const contact = sunday.getByRole("link", { name: "Contact Us" })
+  const sunday = page.getByRole("region", { name: "New to HSG?" })
+  const knowMore = sunday.getByRole("link", { name: "Know More" })
   const time = sunday.getByText("8\u20139am")
-  expect((await box(contact)).x).toBeLessThan((await box(time)).x)
+  expect((await box(knowMore)).x).toBeLessThan((await box(time)).x)
 
   await page.setViewportSize(atMenu)
   expect((await box(first)).y).toBeLessThan((await box(second)).y)
-  expect((await box(channel)).y).toBeLessThan((await box(playlist)).y)
-  expect((await box(contact)).y).toBeLessThan((await box(time)).y)
+  expect((await box(quote)).y).toBeLessThan((await box(videos.first())).y)
+  expect((await box(knowMore)).y).toBeLessThan((await box(time)).y)
 })
 
 test("names the brand from the logo and keeps routes in the header only", async ({ page }) => {
@@ -168,7 +234,6 @@ test("names the brand from the logo and keeps routes in the header only", async 
   await expect(brand).toHaveAttribute("href", "/")
   expect((await brand.innerText()).trim()).toBe("")
   await expect(headerNav(page).getByRole("link")).toHaveText([
-    "Home",
     "About",
     "Events",
     "Praise Reports",
