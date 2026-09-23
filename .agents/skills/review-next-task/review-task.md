@@ -1,6 +1,6 @@
 # Review one plan task
 
-Wave subagents: do not edit `plan.md` or production code. Return findings. The parent attaches tasks.
+Wave subagents: do not edit `plan.md` or production code. Return findings. The parent fixes findings in the same run using [resolve-findings.md](resolve-findings.md).
 
 ## Read
 
@@ -37,12 +37,12 @@ Follow the code-review skill. Read the spec and acceptance criteria before the c
 
 Severity, in this order: **Critical**, **Required**, **Optional**, **Nit**, **FYI**.
 
-- **Critical** and **Required** must be fixed. These become plan tasks.
-- **Optional** is a suggestion. **Nit** and **FYI** need no task.
+- **Critical**, **Required**, **Optional**, **Nit**, and **FYI** are fixed in the same run after this review pass.
+- A finding with `human: yes` is not guessed.
 - A missed acceptance criterion or spec behavior is **Required** at minimum.
 - A human decision (contradicting spec, product call, secret, destructive choice) is **Critical** or **Required** with `human: yes`. Do not invent the resolution.
 
-Do not rubber-stamp. Approve only when required work is actually done and you read the files. Tests passing is not sufficient. Do not edit code, tests, or the plan.
+Do not rubber-stamp. Approve only when required work is actually done and you read the files. Tests passing is not sufficient. Keep this review pass read-only; apply fixes afterward through [resolve-findings.md](resolve-findings.md).
 
 ## Return
 

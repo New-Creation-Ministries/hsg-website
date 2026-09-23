@@ -1,6 +1,13 @@
 import { expect, test } from "vitest"
 
-import { church, leader, nav, pageNotes, sections } from "."
+import {
+  church,
+  leader,
+  nav,
+  pageNotes,
+  sections,
+  sermonPlaylistId,
+} from "."
 
 test("names the church and states the blurb", () => {
   expect(church.name).toBe("Holy Spirit Generation")
@@ -15,7 +22,9 @@ test("carries the three page notes sections do not", () => {
   expect(pageNotes).toEqual({
     testimonies: "Stories adapted from Rambo World Outreach.",
     sunday: "Sunday services · Bengaluru local time",
-    footer: "Word-based. Spirit-filled. Bengaluru.",
+    ministry: "New Creation Ministries",
+    address:
+      "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077",
   })
 })
 
@@ -53,14 +62,29 @@ test("keeps Sunday service names, languages, and times", () => {
   expect(services?.more).toEqual({ label: "Contact Us", href: "/contact" })
 })
 
-test("gives a URL only to the Evangelist Rambabu channel", () => {
+test("exports the sermon playlist id", () => {
+  expect(sermonPlaylistId).toBe("PLWX7FFgYGzyU")
+})
+
+test("quotes Proverbs 4:20-21 in the sermon panel", () => {
+  const sermons = sections.find((section) => section.heading === "Sermons")
+  expect(sermons?.intro).toBe(
+    "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart.",
+  )
+  expect(sermons?.items).toEqual([{ title: "Proverbs 4:20-21" }])
+  expect(sermons?.more).toEqual({ label: "Watch", href: "/watch" })
+})
+
+test("has no Playlist to be published item titles", () => {
+  const titles = sections.flatMap((section) =>
+    section.items.map((item) => item.title),
+  )
+  expect(titles).not.toContain("Playlist to be published")
+})
+
+test("gives section items no URLs", () => {
   const linked = sections.flatMap((section) =>
     section.items.filter((item) => item.href),
   )
-  expect(linked).toEqual([
-    {
-      title: "Evangelist Rambabu",
-      href: "https://www.youtube.com/c/EvangelistRambabuRambo",
-    },
-  ])
+  expect(linked).toEqual([])
 })

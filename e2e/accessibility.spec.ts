@@ -1,10 +1,17 @@
 import AxeBuilder from "@axe-core/playwright"
-import { expect, test } from "@playwright/test"
+import { expect, test, type Page } from "@playwright/test"
 
 import { routes, sections } from "./copy"
 import { atMenu, desktop, expectMinHeight, headerNav, paintedBackground } from "./helpers"
 
-async function expectNoSeriousViolations(page: import("@playwright/test").Page) {
+function firstSermonVideo(page: Page) {
+  return page
+    .getByRole("region", { name: "Sermons" })
+    .locator('a[href^="https://www.youtube.com/watch?v="]')
+    .first()
+}
+
+async function expectNoSeriousViolations(page: Page) {
   const results = await new AxeBuilder({ page }).analyze()
   const blocking = results.violations.filter(
     (violation) => violation.impact === "critical" || violation.impact === "serious",
@@ -40,6 +47,7 @@ test("gives Menu, navigation, and section links a 44px target", async ({ page })
     page.getByRole("region", { name: "New to HSG" }).getByRole("link", { name: "Contact Us" }),
   ]
   for (const link of sectionLinks) await expectMinHeight(link)
+  await expectMinHeight(firstSermonVideo(page))
 })
 
 test("uses the Spirit in Blue colors for text on ink, cobalt, and the testimony band", async ({ page }) => {
@@ -63,8 +71,11 @@ test("uses the Spirit in Blue colors for text on ink, cobalt, and the testimony 
     "color",
     "rgb(222, 231, 127)",
   )
+  await expect(firstSermonVideo(page)).toHaveCSS("color", "rgb(222, 231, 127)")
   expect(await paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
-  expect(await paintedBackground(page.getByRole("link", { name: "Evangelist Rambabu" }))).toBe("rgb(23, 61, 224)")
+  expect(await paintedBackground(page.getByRole("region", { name: "Sermons" }).locator(".channel"))).toBe(
+    "rgb(23, 61, 224)",
+  )
 
   const stories = page.getByRole("region", { name: "Highlighted testimonies" })
   expect(await paintedBackground(stories.getByRole("heading", { level: 2 }))).toBe("rgb(222, 223, 201)")

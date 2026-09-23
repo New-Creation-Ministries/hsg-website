@@ -7,9 +7,18 @@ import {
   leader,
   pageNotes,
   sections,
+  sermonPlaylistId,
   type HomeItem,
   type HomeSection,
 } from "@/content/home"
+import {
+  firstPlaylistVideos,
+  readYoutubePlaylist,
+  type YoutubePlaylist,
+  type YoutubeVideo,
+} from "@/lib/youtube-playlist"
+
+export const dynamic = "error"
 
 const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-sermons", "is-services"] as const
 
@@ -43,10 +52,14 @@ function SectionLink({ href, children }: { href: string; children: ReactNode }) 
 }
 
 function ItemTitle({ item }: { item: HomeItem }) {
-  if (item.href) {
-    return <a href={item.href}>{item.title}</a>
-  }
-  return item.title
+  if (!item.href) return item.title
+  const external = /^https?:\/\//.test(item.href)
+  if (!external) return <a href={item.href}>{item.title}</a>
+  return (
+    <a href={item.href} target="_blank" rel="noopener noreferrer">
+      {item.title}
+    </a>
+  )
 }
 
 function HighlightItems({ items }: { items: HomeItem[] }) {
@@ -78,25 +91,46 @@ function TestimonyItems({ items }: { items: HomeItem[] }) {
   )
 }
 
-function SermonItems({ section }: { section: HomeSection }) {
-  const [first, ...rest] = section.items
+function SermonItems({
+  section,
+  series,
+  videos,
+}: {
+  section: HomeSection
+  series: YoutubePlaylist
+  videos: YoutubeVideo[]
+}) {
+  const [first] = section.items
   return (
     <div className="sermon-content">
       <div className="channel">
-        {section.intro ? <p className="section-intro">{section.intro}</p> : null}
-        {first ? (
-          <p className="channel-item">
-            <ItemTitle item={first} />
-          </p>
-        ) : null}
+        <blockquote className="scripture">
+          {section.intro ? <p>{section.intro}</p> : null}
+          {first ? <footer>{first.title}</footer> : null}
+        </blockquote>
       </div>
-      <ul className="playlists content-list">
-        {rest.map((item, itemIndex) => (
-          <li key={`${item.title}-${itemIndex}`}>
-            <ItemTitle item={item} />
-          </li>
-        ))}
-      </ul>
+      <div className="sermon-series">
+        <a href={series.url} target="_blank" rel="noopener noreferrer">
+          {series.title}
+        </a>
+        <ul className="playlists">
+          {videos.map((video) => (
+            <li key={video.id}>
+              <a href={video.url} target="_blank" rel="noopener noreferrer">
+                {/* eslint-disable-next-line @next/next/no-img-element -- remote YouTube thumbnail URL, not next/image */}
+                <img
+                  src={video.thumbnailUrl}
+                  alt=""
+                  referrerPolicy="no-referrer"
+                  width={320}
+                  height={180}
+                />
+                <span>{video.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
@@ -123,11 +157,13 @@ function ServiceItems({ items }: { items: HomeItem[] }) {
 function SectionBody({ section, index }: { section: HomeSection; index: number }) {
   if (index === 0) return <HighlightItems items={section.items} />
   if (index === 1) return <TestimonyItems items={section.items} />
-  if (index === 2) return <SermonItems section={section} />
   return <ServiceItems items={section.items} />
 }
 
-export default function Home() {
+export default async function Home() {
+  const series = await readYoutubePlaylist(sermonPlaylistId)
+  const videos = firstPlaylistVideos(series, 4)
+
   return (
     <main id="main-content" className="home-page page-width" tabIndex={-1}>
       <div className="hero leader-introduction">
@@ -171,7 +207,11 @@ export default function Home() {
                     <h2 id={headingId}>{section.heading}</h2>
                     <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
                   </div>
-                  <SectionBody section={section} index={index} />
+                  {index === 2 ? (
+                    <SermonItems section={section} series={series} videos={videos} />
+                  ) : (
+                    <SectionBody section={section} index={index} />
+                  )}
                   {isTestimonies ? (
                     <p className="source-note page-note">{pageNotes.testimonies}</p>
                   ) : null}

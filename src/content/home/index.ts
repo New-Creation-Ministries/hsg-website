@@ -35,8 +35,12 @@ export const nav = [
 export const pageNotes = {
   testimonies: "Stories adapted from Rambo World Outreach.",
   sunday: "Sunday services · Bengaluru local time",
-  footer: "Word-based. Spirit-filled. Bengaluru.",
+  ministry: "New Creation Ministries",
+  address:
+    "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077",
 } as const
+
+export const sermonPlaylistId = "PLWX7FFgYGzyU"
 
 export const sections: HomeSection[] = [
   {
@@ -68,15 +72,9 @@ export const sections: HomeSection[] = [
   },
   {
     heading: "Sermons",
-    intro: "Messages from the Evangelist Rambabu channel.",
-    items: [
-      {
-        title: "Evangelist Rambabu",
-        href: "https://www.youtube.com/c/EvangelistRambabuRambo",
-      },
-      { title: "Playlist to be published" },
-      { title: "Playlist to be published" },
-    ],
+    intro:
+      "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart.",
+    items: [{ title: "Proverbs 4:20-21" }],
     more: { label: "Watch", href: "/watch" },
   },
   {

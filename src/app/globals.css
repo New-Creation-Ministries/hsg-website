@@ -153,29 +153,29 @@ p { max-width: 65ch; }
   box-sizing: border-box;
   margin-inline: 0;
   min-height: 5.5rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 1.5rem 2rem;
   border-bottom: 1px solid var(--border);
   padding-block: 0.85rem;
   padding-inline: max(2.5rem, calc((100% - 76rem) / 2));
   background: var(--background);
 }
-.brand-link { display: flex; align-items: center; min-height: 44px; color: var(--foreground); text-decoration: none; flex-shrink: 0; }
-.header-mark { width: 3.25rem; height: auto; }
-.public-navigation ul { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.15rem 1.35rem; margin: 0; padding: 0; list-style: none; }
-.public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1.0625rem; }
+.brand-link { grid-column: 1; justify-self: start; display: flex; align-items: center; min-height: 44px; color: var(--foreground); text-decoration: none; }
+.header-mark { width: 4.75rem; height: auto; }
+.public-navigation { grid-column: 2; justify-self: center; }
+.public-navigation ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.15rem 1.35rem; margin: 0; padding: 0; list-style: none; }
+.public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1.25rem; }
 .public-navigation a:hover, .public-navigation a[aria-current="page"] { color: var(--acid); text-decoration: underline; text-underline-offset: 0.4em; text-decoration-thickness: 1px; }
-.menu-toggle { display: none; }
+.menu-toggle { display: none; grid-column: 3; justify-self: end; }
 /* Preserve focus until the viewport-change handler moves it to a visible target. */
 .menu-toggle:focus { display: flex; }
 .skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 10; padding: 0.8rem 1rem; background: var(--primary); color: var(--primary-foreground); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
-.site-footer { width: min(100% - 5rem, 76rem); margin-inline: auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; padding-block: 2.5rem 2rem; border-top: 1px solid var(--rule); }
-.footer-identity { display: flex; flex-direction: column; gap: 0.35rem; }
+.site-footer { width: 100%; box-sizing: border-box; margin-inline: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; padding-block: 2.5rem 2rem; padding-inline: max(2.5rem, calc((100% - 76rem) / 2)); border-top: 1px solid var(--rule); }
 .footer-name { margin: 0; font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
-.footer-note { margin: 0; color: var(--mist); font-size: 0.8125rem; }
+.footer-address { margin: 0; margin-left: auto; max-width: 42ch; text-align: right; color: var(--mist); font-size: 0.95rem; line-height: 1.45; }
 
 .home-page.page-width { width: 100%; max-width: none; margin: 0; }
 .hero {
@@ -305,14 +305,37 @@ p { max-width: 65ch; }
   gap: 65px;
   align-items: start;
 }
+.sermon-series { display: flex; flex-direction: column; align-items: stretch; }
 .channel {
-  padding: 35px;
+  padding: 48px 42px;
   background: var(--cobalt);
 }
-.channel .section-intro,
-.channel p { color: #d4dafa; max-width: 65ch; }
-.channel-item { margin-top: 22px; }
-.channel a { color: var(--acid); }
+.scripture {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.scripture p {
+  color: var(--paper);
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.35;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.scripture footer {
+  color: #d4dafa;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.sermon-series > a {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  min-height: 44px;
+  color: var(--acid);
+  font-size: 20px;
+}
 .playlists {
   list-style: none;
   padding: 0;
@@ -322,6 +345,22 @@ p { max-width: 65ch; }
   padding: 27px 0;
   border-top: 1px solid var(--rule);
   font-size: 20px;
+}
+.playlists a {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  min-height: 44px;
+  color: var(--acid);
+}
+.playlists a img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.playlists a span {
+  min-width: 0;
 }
 
 .visit h2 { font-size: 80px; max-width: 65ch; }
@@ -366,14 +405,16 @@ p { max-width: 65ch; }
 .shell-page p { max-width: 65ch; font-size: 1.125rem; line-height: 1.6; margin: 0; }
 
 @media (max-width: 800px) {
-  .page-width, .site-footer { width: calc(100% - 3rem); }
-  .site-header { min-height: 0; flex-wrap: wrap; gap: 0 1rem; padding-block: 0.75rem; padding-inline: 1.5rem; }
+  .page-width { width: calc(100% - 3rem); }
+  .site-header { display: flex; min-height: 0; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: 0.75rem; padding-inline: 1.5rem; }
+  .brand-link, .menu-toggle, .public-navigation { grid-column: auto; justify-self: auto; }
   .menu-toggle { display: flex; align-items: center; gap: 0.65rem; min-height: 44px; padding: 0.5rem 0; border: 0; background: none; color: var(--foreground); font: inherit; cursor: pointer; }
   .public-navigation { display: none; flex-basis: 100%; padding-top: 1rem; }
   .public-navigation[data-expanded="true"], .public-navigation:focus-within { display: block; }
   .public-navigation ul { display: block; }
   .public-navigation a { padding-block: 0.4rem; }
-  .site-footer { flex-direction: column; gap: 1.5rem; }
+  .site-footer { width: 100%; flex-direction: column; gap: 0.75rem; padding-inline: 1.5rem; }
+  .footer-address { margin-left: 0; text-align: left; }
 
   .hero {
     grid-template-columns: 1fr;
@@ -397,16 +438,17 @@ p { max-width: 65ch; }
   .stories { grid-template-columns: 1fr; gap: 30px; }
   .stories article + article { border-top: 1px solid #a6aa9b; padding-top: 30px; }
   .sermon-content { grid-template-columns: 1fr; gap: 30px; }
-  .channel { padding: 25px; }
+  .channel { padding: 32px 25px; }
   .visit-grid { grid-template-columns: 1fr; gap: 30px; }
   .visit h2 { font-size: 56px; }
   .time { font-size: 34px; }
 }
 
 @media (max-width: 25rem) {
-  .page-width, .site-footer { width: calc(100% - 2.5rem); }
+  .page-width { width: calc(100% - 2.5rem); }
+  .site-footer { padding-inline: 1.25rem; }
   .site-header { padding-inline: 1.25rem; }
-  .header-mark { width: 2.75rem; }
+  .header-mark { width: 3.5rem; }
   .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
   .home-section { padding-left: 1.25rem; padding-right: 1.25rem; }
   .hero h1 { font-size: 2.7rem; }

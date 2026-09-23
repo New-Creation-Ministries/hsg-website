@@ -4,8 +4,13 @@ export const blurb =
 export const shellSentence = "This page will be published here."
 export const testimonySource = "Stories adapted from Rambo World Outreach."
 export const sundayNote = "Sunday services \u00b7 Bengaluru local time"
-export const footerLine = "Word-based. Spirit-filled. Bengaluru."
-export const channelUrl = "https://www.youtube.com/c/EvangelistRambabuRambo"
+export const ministryName = "New Creation Ministries"
+export const footerAddress =
+  "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077"
+export const scripture =
+  "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart."
+export const scriptureRef = "Proverbs 4:20-21"
+export const playlistUrl = "https://www.youtube.com/playlist?list=PLWX7FFgYGzyU"
 export const oldSummary = "Gatherings, news, and messages will be published here."
 
 export const sections = [

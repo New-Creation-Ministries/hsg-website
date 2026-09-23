@@ -1,12 +1,10 @@
-import { church, pageNotes } from "@/content/home"
+import { pageNotes } from "@/content/home"
 
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="footer-identity">
-        <p className="footer-name">{church.name}</p>
-        <p className="footer-note">{pageNotes.footer}</p>
-      </div>
+      <p className="footer-name">{pageNotes.ministry}</p>
+      <p className="footer-address">{pageNotes.address}</p>
     </footer>
   )
 }

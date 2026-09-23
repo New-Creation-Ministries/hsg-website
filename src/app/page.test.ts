@@ -39,10 +39,10 @@ test("section links use destination label, aria-hidden arrow, and 44px min heigh
   expect(source).toMatch(/section\.more\.label/)
 })
 
-test("items with href are same-tab title links; items without href are plain text", () => {
+test("external item links open in a new tab; items without href are plain text", () => {
   expect(source).toMatch(/item\.href/)
-  expect(source).not.toMatch(/target=["']_blank["']/)
-  expect(source).not.toMatch(/target=\{["_']blank["_']\}/)
+  expect(source).toMatch(/target=["']_blank["']/)
+  expect(source).toMatch(/rel=["']noopener noreferrer["']/)
 })
 
 test("sermons put intro and first item in cobalt panel; no iframe or banned tagline", () => {
@@ -52,6 +52,30 @@ test("sermons put intro and first item in cobalt panel; no iframe or banned tagl
   expect(source).not.toMatch(/The Word,\s*wherever you are/i)
   expect(source).not.toMatch(/Messages & teaching/)
   expect(source).not.toMatch(/Church news & gatherings/)
+})
+
+test("Home is static: dynamic error, playlist reader during render, first four videos", () => {
+  expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']error["']/)
+  expect(source).not.toMatch(/\brevalidate\b/)
+  expect(source).toMatch(/async\s+function\s+Home/)
+  expect(source).toMatch(/readYoutubePlaylist\s*\(\s*sermonPlaylistId\s*\)/)
+  expect(source).toMatch(/firstPlaylistVideos\s*\(/)
+  expect(source).toMatch(/firstPlaylistVideos\s*\([^)]*,\s*4\s*\)/)
+  expect(source).not.toMatch(/cache:\s*["']no-store["']/)
+  expect(source).not.toMatch(/Playlist to be published/)
+})
+
+test("sermon video links: empty alt, no-referrer, new tab, no iframe", () => {
+  expect(source).toMatch(/referrerPolicy=["']no-referrer["']/)
+  expect(source).toMatch(/alt=["']["']/)
+  expect(source).toMatch(/width=\{320\}/)
+  expect(source).toMatch(/height=\{180\}/)
+  expect(source).not.toMatch(/<iframe\b/)
+  expect(source).toMatch(/target=["']_blank["']/)
+  expect(source).toMatch(/rel=["']noopener noreferrer["']/)
+  expect(source).toMatch(/className=["']playlists["']/)
+  expect(source).not.toMatch(/className=["']playlists content-list["']/)
+  expect(source).not.toMatch(/className=["'][^"']*playlists[^"']*content-list/)
 })
 
 test("testimony text is one paragraph; Sunday splits language and time; onwards stays", () => {
