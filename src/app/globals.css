@@ -107,9 +107,12 @@
     transparent 100%
   );
 }
-/* Public pages inherit the church's navy, blue, gold, and Fraunces. */
+/* Home colors and type: docs/features/home-landing-page/spec.md */
 ::selection { background: var(--primary); color: var(--primary-foreground); }
-html { scrollbar-color: var(--primary) var(--background); }
+html { scrollbar-color: var(--card) var(--background); }
+::-webkit-scrollbar { width: 0.7rem; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--card); }
 body { margin: 0; }
 a, button { -webkit-tap-highlight-color: transparent; }
 a { text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
@@ -117,58 +120,76 @@ a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 6px; }
 main:focus, h1:focus { outline: none; }
 main:focus-visible, h1:focus-visible { outline: 2px solid var(--ring); outline-offset: 8px; }
-.page-width { width: min(100% - 8rem, 75rem); margin-inline: auto; }
-.site-header { width: min(100% - 5rem, 83rem); margin-inline: auto; min-height: 7.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-bottom: 1px solid var(--border); padding-block: 1.25rem; }
-.brand-link { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; color: var(--foreground); text-decoration: none; flex-shrink: 0; }
-.brand-link span { max-width: 10rem; font-size: 1.25rem; line-height: 1.15; }
-.header-mark { width: 5.25rem; height: auto; }
-.public-navigation ul { display: flex; flex-wrap: wrap; gap: 0.2rem 1.35rem; margin: 0; padding: 0; list-style: none; }
-.public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1rem; }
-.public-navigation a:hover, .public-navigation a[aria-current="page"] { color: var(--primary); text-decoration: underline; text-underline-offset: 0.45em; }
+.page-width { width: min(100% - 5rem, 76rem); margin-inline: auto; }
+.site-header { width: min(100% - 5rem, 76rem); margin-inline: auto; min-height: 5.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem 2rem; border-bottom: 1px solid var(--border); padding-block: 0.85rem; }
+.brand-link { display: flex; align-items: center; gap: 0.7rem; min-height: 44px; color: var(--foreground); text-decoration: none; flex-shrink: 0; }
+.brand-link span { max-width: 9.5rem; font-size: 1.05rem; line-height: 1.2; font-weight: 500; }
+.header-mark { width: 3.25rem; height: auto; }
+.public-navigation ul { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.15rem 1.35rem; margin: 0; padding: 0; list-style: none; }
+.public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1.0625rem; }
+.public-navigation a:hover, .public-navigation a[aria-current="page"] { color: var(--primary); text-decoration: underline; text-underline-offset: 0.4em; text-decoration-thickness: 1px; }
 .menu-toggle { display: none; }
 /* Preserve focus until the viewport-change handler moves it to a visible target. */
 .menu-toggle:focus { display: flex; }
 .skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 10; padding: 0.8rem 1rem; background: var(--primary); color: var(--primary-foreground); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
-.leader-introduction { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; grid-template-rows: auto 1fr; column-gap: 6rem; padding-block: 6.5rem 6rem; align-items: start; }
-.leader-introduction h1 { margin: 0; max-width: 11ch; font-size: clamp(3.5rem, 6.1vw, 5.5rem); font-weight: 450; line-height: 1.06; letter-spacing: -0.035em; color: var(--primary); text-wrap: balance; }
-.leader-blurb { margin: 2rem 0 0; max-width: 42ch; font-size: 1.25rem; line-height: 1.7; }
-.portrait-field { position: relative; grid-column: 2; grid-row: 1 / 3; width: 100%; aspect-ratio: 4 / 5; background: var(--card); }
+.leader-introduction { display: flex; align-items: flex-start; gap: 1.75rem; width: fit-content; max-width: 100%; padding-top: 3.75rem; }
+.leader-copy { display: flex; flex-direction: column; gap: 1.6rem; width: min(65ch, 100%); min-width: 0; }
+.leader-introduction h1 { margin: 0; font-size: clamp(3.35rem, 5.4vw, 5rem); font-weight: 500; line-height: 1.02; letter-spacing: -0.03em; color: var(--primary); text-wrap: balance; }
+.leader-blurb { margin: 0; max-width: 65ch; font-size: 1.3125rem; line-height: 1.65; text-wrap: pretty; }
+.portrait-field { position: relative; flex: 0 0 15.25rem; width: 15.25rem; aspect-ratio: 4 / 5; background: var(--card); }
 .leader-portrait { object-fit: cover; }
-.home-sections { max-width: 65ch; padding-bottom: 7rem; font-size: 1.125rem; }
-.home-section { border-top: 1px solid var(--border); padding-top: 2.75rem; margin-bottom: 4.75rem; }
-.home-section:last-child { margin-bottom: 0; }
-.home-section h2 { margin: 0 0 1.5rem; font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1.2; font-weight: 450; letter-spacing: -0.02em; }
-.section-intro { margin: -0.35rem 0 1.6rem; line-height: 1.7; }
-.content-list { padding: 0; margin: 0; list-style: none; }
-.content-list li { padding-block: 1rem; border-bottom: 1px solid var(--border); line-height: 1.7; }
-.content-list li:first-child { padding-top: 0; }
-.content-list h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 500; margin: 0 0 0.55rem; }
-.content-list p { margin: 0; max-width: 65ch; }
-.home-section a { color: var(--primary); text-decoration-line: underline; }
+.home-sections { max-width: 65ch; margin-top: 4.75rem; padding-top: 2.75rem; padding-bottom: 6.5rem; border-top: 1px solid var(--border); font-size: 1.125rem; }
+.home-section + .home-section { margin-top: 4.25rem; }
+.home-section h2 { margin: 0 0 0.9rem; font-size: clamp(1.85rem, 2.8vw, 2.45rem); line-height: 1.15; font-weight: 500; letter-spacing: -0.02em; text-wrap: balance; }
+.section-intro { margin: 0 0 1.45rem; line-height: 1.65; font-size: 1.2rem; }
+.content-list { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+.content-list li { line-height: 1.45; }
+.content-list h3 { font-size: 1.35rem; line-height: 1.3; font-weight: 500; margin: 0 0 0.45rem; text-wrap: balance; }
+.content-list p { display: flex; flex-direction: column; gap: 0.12rem; margin: 0; max-width: 65ch; line-height: 1.65; font-size: 1.125rem; text-wrap: pretty; }
+.is-bulletin h2 { font-size: 1.45rem; margin-bottom: 0.4rem; letter-spacing: 0; }
+.is-bulletin .content-list { gap: 0.15rem; }
+.is-bulletin .content-list li { font-size: 1.0625rem; line-height: 1.35; }
+.is-bulletin .section-link { margin-top: 0.65rem; }
+.home-section.is-testimonies { margin-top: 5rem; }
+.is-testimonies h2 { margin-bottom: 1.5rem; }
+.is-testimonies .content-list { gap: 2.85rem; }
+.is-testimonies h3 { font-size: 1.55rem; margin-bottom: 0.6rem; }
+.is-sermons .content-list { gap: 0.2rem; }
+.is-sermons .content-list a { font-size: 1.35rem; }
+.is-sermons .section-link { margin-top: 0.85rem; }
+.home-section.is-services { margin-top: 4.75rem; }
+.is-services .content-list { gap: 2rem; }
+.is-services h3 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+.is-services .content-list p { flex-direction: row; flex-wrap: wrap; justify-content: space-between; column-gap: 1.5rem; max-width: 26rem; }
+.home-section a { color: var(--primary); text-decoration-line: underline; text-underline-offset: 0.28em; }
 .content-list a { display: inline-flex; align-items: center; min-height: 44px; }
-.section-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1.1rem; }
-.shell-page { padding-top: 6rem; padding-bottom: 6rem; min-height: calc(100dvh - 7.5rem); }
-.shell-page h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 450; letter-spacing: -0.03em; line-height: 1.15; color: var(--primary); margin: 0 0 2rem; }
-.shell-page p { font-size: 1.25rem; line-height: 1.7; }
+.section-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1.35rem; font-size: 1.2rem; }
+.shell-page { padding-top: 4.5rem; padding-bottom: 6rem; min-height: calc(100dvh - 5.5rem); }
+.shell-page h1 { max-width: 65ch; font-size: clamp(2.75rem, 5vw, 4.25rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.08; color: var(--foreground); margin: 0 0 1.5rem; text-wrap: balance; }
+.shell-page p { max-width: 65ch; font-size: 1.3125rem; line-height: 1.65; margin: 0; }
 @media (max-width: 63.999rem) {
-  .page-width { width: min(100% - 3rem, 46rem); }
-  .site-header { width: calc(100% - 3rem); min-height: 6.25rem; flex-wrap: wrap; gap: 0 1rem; }
+  .page-width, .site-header { width: calc(100% - 3rem); }
+  .site-header { min-height: 0; flex-wrap: wrap; gap: 0 1rem; padding-block: 0.75rem; }
   .menu-toggle { display: flex; align-items: center; gap: 0.65rem; min-height: 44px; padding: 0.5rem 0; border: 0; background: none; color: var(--foreground); font: inherit; cursor: pointer; }
   .public-navigation { display: none; flex-basis: 100%; padding-top: 1rem; }
   .public-navigation[data-expanded="true"], .public-navigation:focus-within { display: block; }
   .public-navigation ul { display: block; }
   .public-navigation a { padding-block: 0.4rem; }
-  .leader-introduction { grid-template-columns: 1fr; padding-block: 4rem; }
-  .leader-introduction h1 { max-width: 13ch; font-size: clamp(3.25rem, 8vw, 5rem); }
-  .portrait-field { grid-column: 1; grid-row: 2; width: min(70%, 17.5rem); margin-top: 2rem; }
-  .leader-blurb { grid-row: 3; max-width: 48ch; font-size: 1.125rem; }
-  .home-section { padding-top: 2rem; margin-bottom: 3.75rem; }
+  .leader-introduction { display: grid; grid-template-columns: 1fr; padding-top: 2.75rem; row-gap: 1.5rem; width: 100%; }
+  .leader-copy { display: contents; min-height: 0; width: auto; }
+  .leader-introduction h1 { order: 1; font-size: clamp(3rem, 12vw, 4.25rem); }
+  .portrait-field { order: 2; width: min(100%, 20rem); }
+  .leader-blurb { order: 3; font-size: 1.175rem; }
+  .home-sections { margin-top: 3.25rem; padding-top: 2.25rem; }
+  .home-section + .home-section,
+  .home-section.is-testimonies,
+  .home-section.is-services { margin-top: 3.25rem; }
 }
 @media (max-width: 25rem) {
   .page-width, .site-header { width: calc(100% - 2.5rem); }
   .brand-link { gap: 0.25rem; flex-shrink: 1; }
   .brand-link span { max-width: 8rem; font-size: 1.05rem; }
-  .header-mark { width: 3.5rem; }
-  .leader-introduction h1 { font-size: 3rem; }
+  .header-mark { width: 2.75rem; }
+  .leader-introduction h1 { font-size: 2.7rem; }
 }

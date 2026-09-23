@@ -43,6 +43,12 @@
       "skillPath": "playwright/SKILL.md",
       "computedHash": "935f7ebe85599046071e03274c582cc42b07d789d717715d2e9c200f8a3c4fbd"
     },
+    "product-design-and-ux": {
+      "source": "magnus919/agent-skills",
+      "sourceType": "github",
+      "skillPath": "product-design-and-ux/SKILL.md",
+      "computedHash": "d8ff1bfe1ff8e0c1e05c7859d01f306c04cb1f704e510896feb9583075d05e11"
+    },
     "supabase": {
       "source": "supabase/agent-skills",
       "sourceType": "github",

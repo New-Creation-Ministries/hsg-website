@@ -28,7 +28,7 @@
 ## Alternatives and limits
 
 - Inline disclosure keeps navigation in the reading order; a modal drawer would require additional dismissal and focus-trap behavior without an approved need.
-- Same-tab navigation follows the accepted spec; revisit if observed visitors repeatedly fail to return from external media.
+- Same-tab navigation follows the Home spec; revisit if observed visitors repeatedly fail to return from external media.
 - No automatic retry, custom offline cache, notification, analytics, or saved navigation preference is introduced.
 - Public shells fulfill route availability, not the information or transaction goals of their future pages.
 - Visual direction, content schemas, embed behavior, and future page layouts remain owned by their existing specs and [architecture](../architecture.md).

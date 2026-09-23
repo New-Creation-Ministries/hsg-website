@@ -6,11 +6,11 @@
     "colorMeta": {
       "primary": {
         "role": "primary",
-        "displayName": "Gold"
+        "displayName": "Acid"
       },
       "background": {
         "role": "neutral",
-        "displayName": "Navy"
+        "displayName": "Ink"
       },
       "foreground": {
         "role": "neutral",
@@ -18,17 +18,17 @@
       },
       "card": {
         "role": "neutral",
-        "displayName": "Blue"
+        "displayName": "Cobalt"
       },
       "border": {
         "role": "neutral",
-        "displayName": "Gold-blue rule"
+        "displayName": "Rule"
       }
     },
     "breakpoints": [
       {
         "name": "navigation-expanded",
-        "value": "64rem"
+        "value": "800px"
       },
       {
         "name": "compact-mobile",
@@ -45,7 +45,7 @@
       "refersTo": "navigation-link",
       "description": "Shared navigation with current-page and hover underline.",
       "html": "<a class=\"ds-nav\" href=\"#preview\" aria-current=\"page\">Home</a>",
-      "css": ".ds-nav { display:inline-flex; align-items:center; min-height:44px; color:var(--foreground); font-family:var(--font-sans),serif; font-size:1rem; text-decoration:none; } .ds-nav:hover,.ds-nav[aria-current=\"page\"] { color:var(--primary); text-decoration:underline; text-underline-offset:.45em; } .ds-nav:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
+      "css": ".ds-nav { display:inline-flex; align-items:center; min-height:44px; color:var(--foreground); font-family:var(--font-sans),sans-serif; font-size:1rem; text-decoration:none; } .ds-nav:hover,.ds-nav[aria-current=\"page\"] { color:var(--primary); text-decoration:underline; text-underline-offset:.45em; } .ds-nav:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
     },
     {
       "name": "Content link",
@@ -53,21 +53,21 @@
       "refersTo": "content-link",
       "description": "Underlined destination link used beneath reading sections.",
       "html": "<a class=\"ds-link\" href=\"#preview\">Events</a>",
-      "css": ".ds-link { display:inline-flex; align-items:center; min-height:44px; color:var(--primary); font-family:var(--font-sans),serif; font-size:1.125rem; text-decoration:underline; text-underline-offset:.25em; text-decoration-thickness:1px; } .ds-link:hover { text-decoration-thickness:2px; } .ds-link:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
+      "css": ".ds-link { display:inline-flex; align-items:center; min-height:44px; color:var(--primary); font-family:var(--font-sans),sans-serif; font-size:1.125rem; text-decoration:underline; text-underline-offset:.25em; text-decoration-thickness:1px; } .ds-link:hover { text-decoration-thickness:2px; } .ds-link:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
     },
     {
       "name": "Menu",
       "kind": "button",
       "description": "Narrow-screen navigation disclosure control.",
       "html": "<button class=\"ds-menu\" type=\"button\" aria-expanded=\"false\">Menu<svg aria-hidden=\"true\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M2 5h12M2 11h12\" stroke=\"currentColor\" stroke-width=\"1.5\" /></svg></button>",
-      "css": ".ds-menu { display:flex; align-items:center; gap:.65rem; min-height:44px; padding:.5rem 0; border:0; background:none; color:var(--foreground); font-family:var(--font-sans),serif; font-size:1rem; cursor:pointer; } .ds-menu:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
+      "css": ".ds-menu { display:flex; align-items:center; gap:.65rem; min-height:44px; padding:.5rem 0; border:0; background:none; color:var(--foreground); font-family:var(--font-sans),sans-serif; font-size:1rem; cursor:pointer; } .ds-menu:focus-visible { outline:2px solid var(--ring); outline-offset:6px; }"
     },
     {
       "name": "Reading list row",
       "kind": "custom",
       "description": "Text-only content row; no hover or action styling.",
       "html": "<div class=\"ds-row\"><h3>Highlight to be published</h3></div>",
-      "css": ".ds-row { padding-block:1rem; border-bottom:1px solid var(--border); color:var(--foreground); font-family:var(--font-sans),serif; line-height:1.7; } .ds-row h3 { font-size:1.25rem; line-height:1.4; font-weight:500; margin:0 0 .55rem; }"
+      "css": ".ds-row { padding-block:1rem; border-bottom:1px solid var(--border); color:var(--foreground); font-family:var(--font-sans),sans-serif; line-height:1.7; } .ds-row h3 { font-size:1.25rem; line-height:1.4; font-weight:500; margin:0 0 .55rem; }"
     },
     {
       "name": "Portrait reserve",

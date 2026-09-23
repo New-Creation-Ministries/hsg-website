@@ -33,7 +33,7 @@ Content lives in the repository and is published by deploy.
 - **Hosting:** Vercel.
 - **Frontend:** Next.js App Router, TypeScript. Pages are static unless a feature needs per-request data.
 - **UI:** Tailwind CSS and shadcn/ui.
-- **Brand:** `public/brand/hsg-logo.jpg`. Navy `#020411`, blue `#06154b`, gold `#d0af3b`.
+- **Brand:** `public/brand/hsg-logo.jpg`. The mark is gold on navy (`#020411`, `#06154b`, `#d0af3b`). Home colors and type are [ADR 0003](adr/0003-spirit-in-blue-visual-direction.md).
 - **Content:** files in the repository, published by deploy.
 
 ## System Boundaries
@@ -47,7 +47,7 @@ Content lives in the repository and is published by deploy.
 - Add member accounts only when a feature needs private content.
 - Design schemas, APIs, and workflows in the slice that needs them.
 - The first slice that needs a deferred decision sets the pattern. Later slices follow it.
-- Theme the UI from the logo. Do not introduce a second palette.
+- Theme Home from [ADR 0003](adr/0003-spirit-in-blue-visual-direction.md). The logo’s navy, blue, and gold are the mark colors.
 
 ## Deferred Decisions
 
@@ -64,4 +64,4 @@ Content lives in the repository and is published by deploy.
 6. **Frontend** — Next.js App Router.
 7. **Language** — TypeScript.
 8. **UI** — Tailwind CSS and shadcn/ui.
-9. **Brand** — The church logo is the gold-on-navy globe mark. The site palette is that navy, blue, and gold.
+9. **Brand** — The church logo is the gold-on-navy globe mark. Home follows [ADR 0003](adr/0003-spirit-in-blue-visual-direction.md).

@@ -3,10 +3,10 @@
 ## Handoff and authority
 
 - Status: designed; implementation and user validation pending.
-- Scope and content authority: [accepted spec](spec.md); purpose and audiences: [intent](intent.md).
+- Scope and content authority: [spec](spec.md); purpose and audiences: [intent](intent.md).
 - Shared behavior: [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
 - Page structure and publishing: [ADR 0001](../../adr/0001-public-pages.md).
-- Visual direction remains in the spec; this document defines interaction behavior.
+- Visual direction and church-name heading: [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md); this document defines interaction behavior.
 - Evidence is stakeholder-defined scope, not observed visitor behavior or independently verified source claims.
 - The spec’s Sunday times supersede the intent’s times; copy stays in the spec rather than being duplicated here.
 - Owners below are delivery responsibilities: Udeet Gulati for product/content decisions; implementing engineer for behavior and verification.
@@ -26,7 +26,7 @@
 | Order | Content object | Findability and meaning | Next action |
 | --- | --- | --- | --- |
 | Shared header | Church identity and public navigation | Brand returns Home; route labels/order come from Spec Routes | Shared navigation contract in ADR 0002 |
-| 1 | Leader identity and church introduction | Page heading identifies the leader; adjacent blurb identifies HSG | Read onward; navigation remains available |
+| 1 | Leader identity and church introduction | Page heading identifies HSG; adjacent blurb identifies its leaders | Read onward; navigation remains available |
 | 2 | What’s going on | Bounded list of three highlights; current fixture is unpublished content, not “no events” | Events |
 | 3 | Highlighted testimonies | Three story summaries; titles retain locations and do not attribute stories to HSG gatherings | Praise Reports |
 | 4 | Sermons | Channel introduction, one channel link, two unpublished playlist items | Watch |
@@ -151,13 +151,13 @@
 
 - Status of every criterion below: **not run — design-only task**.
 - Boundary: deployed Vercel preview, followed by a production route/link smoke check after deployment.
-- Fixtures: accepted spec’s placeholder dataset; separate local/preview fixture with a broken portrait URL; no invented production content.
+- Fixtures: the spec’s placeholder dataset; separate local/preview fixture with a broken portrait URL; no invented production content.
 - Evidence record: deployment URL/revision, browser/version, viewport/zoom/input mode, steps, expected/actual result, pass/fail/blocked, screenshot or focus notes as applicable.
 - Remove the broken-image fixture before publishing; no persistent user data needs cleanup.
 
 | ID | Given / action | Observable acceptance evidence |
 | --- | --- | --- |
-| A1 | Open Home directly and read in document order | Leader, blurb, and four sections match the accepted spec; no old summary sentence; headings and service associations remain understandable |
+| A1 | Open Home directly and read in document order | Church-name heading, blurb, and four sections match the spec; no old summary sentence; headings and service associations remain understandable |
 | A2 | Inspect unpublished items with keyboard and pointer | Three highlight placeholders and two playlist placeholders remain text; null portrait is unannounced and unfocusable; only supplied URLs produce item links |
 | A3 | Read New to HSG at normal and narrow widths | Both service records match the spec, with complete language/time associations; Contact Us is present; no directions or booking claim |
 | A4 | At narrow width, Tab to Menu; activate, traverse, Escape, reopen, navigate | Expansion is announced; links occur in route order; Escape closes and returns focus; route activation closes disclosure and identifies destination |
@@ -165,7 +165,7 @@
 | A6 | Open every route directly and through navigation; use Back, Home, and skip link | Correct heading/title/current-page state; exact shell copy; skip reaches main; Back respects browser restoration without forced top reset |
 | A7 | In preview, test null, supplied, and broken portrait fixtures | Null is decorative; supplied image has specified alternative; failure leaves name/blurb readable and layout usable |
 | A8 | Open channel then return; disconnect after Home loads; simulate unavailable document/provider | Same-tab navigation; native Back/reload recovery remains possible; loaded text survives disconnect; no false loading, playback, or success claim |
-| A9 | Run the agreed keyboard, touch, contrast, and assistive-technology checks | Visible focus, identifiable links/current page, required target sizes, readable gold/body text, correct disclosure state, and logical headings; findings recorded rather than inferred from appearance |
+| A9 | Run the agreed keyboard, touch, contrast, and assistive-technology checks | Visible focus, identifiable links/current page, required target sizes, readable accent and body text on ink, cobalt, and the testimony band, correct disclosure state, and logical headings; findings recorded rather than inferred from appearance |
 
 ## Design walkthrough
 

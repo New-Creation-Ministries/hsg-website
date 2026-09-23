@@ -1,25 +1,24 @@
 # Spec: Home landing page
 
-Status: accepted
+Status: approved
 Author: Udeet Gulati
 Intent: [intent.md](./intent.md)
+UX: [ux.md](./ux.md)
 Skills: frontend-design
 
 ## Outcome
 
-Home names Apostle Dr. P. S. Rambabu, holds a place for his portrait, and states what the church is. Four lead-in sections follow, in order, each with a few items and a link to its page. The shared nav opens every destination in [ADR 0001](../../adr/0001-public-pages.md).
+Home identifies Holy Spirit Generation and leads a visitor into what is happening, testimonies, sermons, and Sunday services. The page is the Spirit in Blue composition in [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md) and [02-spirit-in-blue.html](./design-reference/02-spirit-in-blue.html).
 
-Replaces the centered logo and the sentence “Gatherings, news, and messages will be published here.”
+Shared navigation and shells stay [ADR 0001](../../adr/0001-public-pages.md) and [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). Interaction stays in [ux.md](./ux.md). This spec names copy, routes, and the visual contract.
 
 ## Copy
 
-Adapt the blurb and testimony lines from [rwo.life/about-us](https://www.rwo.life/about-us) and [rwo.life](https://www.rwo.life/). Sunday service times are the New to HSG table. The street address stays off Home; visit information belongs to Contact Us.
-
-**Blurb**
+Blurb, adapted from the Holy Spirit Generation section of [rwo.life/about-us](https://www.rwo.life/about-us):
 
 Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.
 
-**What’s going on** — three items, no dates, places, or URLs:
+**What’s going on** — three items, no dates, places, URLs, or second lines:
 
 | Title |
 | --- |
@@ -27,7 +26,7 @@ Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, found
 | Highlight to be published |
 | Highlight to be published |
 
-**Highlighted testimonies** — three summaries, no media URL. These are Rambo World Outreach miracle-night stories. The item text does not place them at an HSG gathering.
+**Highlighted testimonies** — three summaries, no media URL. Titles keep their places. The stories are not placed at an HSG gathering. Under the three summaries: “Stories adapted from Rambo World Outreach.”
 
 | Title | Text |
 | --- | --- |
@@ -43,48 +42,84 @@ Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, found
 | Playlist to be published | — |
 | Playlist to be published | — |
 
-**New to HSG** — intro: “Join us every Sunday.” These times supersede the service times in the intent.
+**New to HSG** — intro: “Join us every Sunday.” These times replace the intent’s Word Fest time of 8:00–8:45am. Under the records: “Sunday services · Bengaluru local time”.
 
 | Service | Language | Time |
 | --- | --- | --- |
 | Word Fest Service | English | 8–9am |
 | Miracles and Healing Service | Multilingual | 9:30am onwards |
 
+Footer line: “Word-based. Spirit-filled. Bengaluru.”
+
+Do not publish “Gatherings, news, and messages will be published here.”
+
 ## Page
 
-Left aligned. One reading column, about 65 characters. Fraunces stays the only typeface: the leader’s name is the large setting; body uses the same family with open line-height.
+Visual reference: [02-spirit-in-blue.html](./design-reference/02-spirit-in-blue.html). Tokens: selected option in [tokens.json](./design-reference/tokens.json). Match the reference composition. Do not ship its preview note, query-string shells, or “Return Home” control.
 
-The memorable element is the name and the portrait. Sections are lists. Gold (`primary`) is the name, the current nav item, and text links. Body stays `foreground`. The portrait field uses `card`. No second palette beyond [docs/architecture.md](../../architecture.md) and the tokens already in `src/app/globals.css`.
+| Token | Value | Use |
+| --- | --- | --- |
+| Ink | `#090d15` | Page background |
+| Paper | `#f5f3e8` | Text on ink and cobalt |
+| Mist | `#b6c1d5` | Secondary text on ink |
+| Acid | `#dee77f` | Links, current nav item, service times on ink |
+| Cobalt | `#173de0` | Hero and sermon channel panel |
+| Rule | `#394250` | Separators on ink |
+| Band | `#dedfc9` | Testimony section background |
+| Band ink | `#141a20` | Text on the testimony band |
+| Band link | `#182da3` | Links on the testimony band |
+
+| Role | Face |
+| --- | --- |
+| Display headings, monogram, service times | Oswald, uppercase, weight 500 |
+| Body, navigation, footer, supporting copy | DM Sans |
+
+Load both through the app font pipeline. Body size 16px, line-height 1.6. Heading measure stays under 65 characters. Section links are Acid (Band link on the testimony band), underlined, at least 44px tall, with a decorative arrow that is not part of the accessible name.
 
 ```
-[mark] Holy Spirit Generation     Home  About  Events  Praise Reports  Watch  Contact Us  Give
+[logo]                                    Home  About  Events  Praise Reports  Watch  Contact Us  Give
 
-Apostle Dr. P. S. Rambabu                         [ portrait field ]
-Holy Spirit Generation is a Word-based, ...
+HOLY SPIRIT GENERATION                    [ HSG ]
+blurb
+About
 
-What's going on
+What’s going on                       Events
 Highlight to be published
 Highlight to be published
 Highlight to be published
-Events
 ```
 
-The other three sections repeat that shape: heading, intro when specified, items, one link.
+| Region | Wide (above 800px) | Narrow (800px and below) |
+| --- | --- | --- |
+| Header | Logo only, then the seven links. | Logo and a Menu button. Links follow [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
+| Hero | Cobalt band. Church name and blurb on the left, portrait on the right. About sits under the blurb. | One column. Portrait follows the blurb and About. |
+| Highlights | Three title rows separated by rules. | Same rows, stacked. |
+| Testimonies | Light band. First story wider than the other two. | One column, rule between stories. |
+| Sermons | Cobalt panel (intro and channel link) beside the two playlist lines. | Panel, then playlist lines. |
+| Sunday | Intro and Contact Us beside the two service records. | Intro, then records. |
+| Footer | Church name, footer line, same seven links. | Stacked. |
 
 | | |
 | --- | --- |
-| Header | Existing `/brand/hsg-logo.jpg` with `.logo-mark`, small, linking to `/`. Church name beside it. Then the nav. |
-| Hero | `h1` is “Apostle Dr. P. S. Rambabu”. Blurb under the name. Portrait to the right on wide viewports, stacked under the name when narrow. |
-| Portrait | No photo is supplied. Render a portrait-shaped `card` field, `aria-hidden`, because the name is already the `h1`. When `portrait` is set, `next/image` replaces the field; alt is “Apostle Dr. P. S. Rambabu”. |
-| Sections | `h2` headings, in the intent’s order. An item with a URL is a link. An item without a URL is text. |
-| Section links | What’s going on → Events. Highlighted testimonies → Praise Reports. Sermons → Watch. New to HSG → Contact Us. Link text is the destination label. |
-| Narrow nav | Below `64rem`, the seven links sit behind a button labeled “Menu” (`aria-expanded`). At `64rem` and up, the list is visible and the button is absent. |
+| Header link | Accessible name “Holy Spirit Generation”. Image is `/brand/hsg-logo.jpg` and does not add a second name. No church-name text beside the logo. |
+| Heading | `h1` is “Holy Spirit Generation”, set on two lines: Holy Spirit / Generation. |
+| Portrait | No photo. Cobalt field, `aria-hidden`, showing “HSG”. No visitor-facing caption. When `portrait` is set, `next/image` replaces the field; alt is “Apostle Dr. P. S. Rambabu”. A failed image keeps the field and the identity text. |
+| Sections | `h2` in this order: What’s going on, Highlighted testimonies, Sermons, New to HSG. All four stay visible. No carousel, tabs, or disclosure. |
+| Items | A URL makes one text link whose name is the title. No URL means text: no focus, hover, or link styling. |
+| Section links | What’s going on → Events. Highlighted testimonies → Praise Reports. Sermons → Watch. New to HSG → Contact Us. About in the hero → `/about`. Link text is the destination label. |
+| Services | Each record shows name, then language, with the time in the same record. Keep “onwards”. Times are Bengaluru local time, not the viewer’s zone. |
+| Sermons panel | Intro, then the Evangelist Rambabu link. Playlist lines stay plain text until a URL exists. No embedded player. |
+| Current page | Acid plus underline, and `aria-current="page"`. |
+| Menu threshold | Above 800px the seven links are visible and Menu is absent. At 800px and below, Menu is the disclosure in [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
 | Motion | None. |
+| Targets | Menu, nav links, and section links are at least 44px. |
+| Contrast | Paper, Mist, Acid, Band ink, and Band link meet WCAG AA on the background they sit on. |
+| Reflow | At narrow widths and 400% zoom, no horizontal page scroll and no clipped names, links, times, or summaries. Text wraps. |
 | Document title | `Holy Spirit Generation`. Description is the blurb. Shell titles are `{Page} \| Holy Spirit Generation`. |
 
 ## Content
 
-`src/content/home/` replaces `src/content/home.ts`. `@/content/home` remains the import path. Pages are static. No request fetches copy, playlists, or testimonials.
+`src/content/home/` is the Home module. `@/content/home` is the import path. Pages are static. Home does not fetch copy, playlists, or testimonies.
 
 | Export | Fields |
 | --- | --- |
@@ -93,43 +128,47 @@ The other three sections repeat that shape: heading, intro when specified, items
 | `nav` | `{ label, href }[]` in nav order |
 | `sections` | `{ heading, intro?, items: { title, text?, href? }[], more: { label, href } }[]` in section order |
 
-`src/app/layout.tsx` reads `church.name` and `leader.blurb` for metadata and renders the header. `src/content/home.test.ts` moves to `src/content/home/home.test.ts`.
+Service `text` is the language, a newline, then the time. The view keeps those two parts associated with the service name.
+
+`src/app/layout.tsx` reads `church.name` and `leader.blurb` for metadata and renders the header and footer. `src/content/home/home.test.ts` asserts church name, blurb, section order, nav, service times, and which items have a URL.
 
 ## Routes
 
 | Label | Path | Home section |
 | --- | --- | --- |
 | Home | `/` | — |
-| About | `/about` | — |
+| About | `/about` | Hero |
 | Events | `/events` | What’s going on |
 | Praise Reports | `/praise-reports` | Highlighted testimonies |
 | Watch | `/watch` | Sermons |
 | Contact Us | `/contact` | New to HSG |
 | Give | `/give` | — |
 
-Each path other than `/` is a static page: the shared header, an `h1` of the nav label, and “This page will be published here.” Give is nav only.
-
-External URLs open in the same tab.
+Each path other than `/` is a static page: shared header and footer, an `h1` of the nav label, and “This page will be published here.” Give is nav only. External URLs open in the same tab. The reference’s `?page=` addresses are not routes.
 
 ## Acceptance
 
-- Home shows the leader name, the portrait field, the blurb, then the four sections in order.
-- Each section shows the items in the copy tables and one destination link.
-- Nav labels and paths match the route table. Every path renders.
+Behavior checks are [ux.md](./ux.md) A1–A9. This slice also requires:
+
+- Home shows the church-name heading, the blurb, the portrait field, then the four sections in order.
+- Copy tables, the testimony source line, the Sunday note, and the footer line match this spec.
+- Nav labels and paths match the route table. Every path renders the shell sentence.
 - Placeholder rows have no `href`. The only external URL is the Evangelist Rambabu channel.
 - `portrait` is null. No new image file.
-- The old summary sentence is gone from content, metadata, and `home.test.ts`.
-- Tests assert church name, blurb, section order, nav, service times, and which items have a URL.
-- Keyboard: skip link to main content, visible focus, Menu opens and closes the same seven links.
-- Text and gold links meet contrast on the navy background. Touch targets for Menu and nav links are at least 44px.
+- The old summary sentence is absent from content, metadata, and `home.test.ts`.
+- Above 800px the nav is inline. At 800px and below, Menu shows the same seven links.
+- Keyboard: skip link to main, visible focus, Menu behavior in [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
 
 ## Concerns
 
 | Topic | What this spec does |
 | --- | --- |
-| Open questions in the intent | Playlist URLs, live highlights, testimony URLs, and a portrait stay empty fields. |
-| Miracle stories | Wording is adapted because the intent asks for it. Items are not labeled as HSG services. |
-| Visit address | The about page states an address. This slice leaves it for Contact Us, which is still a shell. A visitor cannot get directions from Home. |
+| Intent open questions | Playlist URLs, live highlights, testimony URLs, and a portrait stay empty. |
+| Intent service time | Word Fest is 8–9am here and in the locked reference. The intent’s 8:00–8:45am is not the Home time. |
+| Reference-only lines | Do not ship “Church news & gatherings”, “Messages & teaching”, “The Word, wherever you are.”, the portrait instruction caption, the design-comparison note, or a shell “Return Home” link. |
+| Miracle stories | Wording is adapted because the intent asks for it. The source line says they are from Rambo World Outreach. |
+| Visit address | Contact Us is still a shell. Home does not give directions or take a booking. |
 | Embeds and events | [docs/architecture.md](../../architecture.md) still defers the embed mechanism and the event model. Home stores optional URLs and renders links. |
-| Palette | Architecture locks navy, blue, and gold. This spec does not add another palette. |
-| Extra claims on the about page | Growth, “supernatural lifestyle,” and the biography are on the source page. The blurb stays the short sentence the intent names. |
+| Logo palette | [docs/architecture.md](../../architecture.md) records navy, blue, and gold for the mark. Home colors are the table above, per [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md). |
+| UX contrast wording | [ux.md](./ux.md) A9 checks Acid and body text on ink, cobalt, and the testimony band. |
+| Source-page claims | Growth, “supernatural lifestyle”, and the biography stay off Home. The blurb stays the sentence above. |

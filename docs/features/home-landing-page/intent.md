@@ -1,23 +1,20 @@
 # Intent: Home landing page
 Author: Udeet Gulati
-Status: ready
+Status: draft
 
 ## Problem
 
-Home is a centered logo and the sentence “Gatherings, news, and messages will be published here.” A visitor cannot tell who leads the church, what the church is, or where to go next.
+The landing page is currently empty. 
 
 ## Proposed outcome
 
-Home opens with Apostle Dr. P. S. Rambabu: his name, a portrait, and a short blurb about the church. The blurb is adapted from the Holy Spirit Generation section on [rwo.life/about-us](https://www.rwo.life/about-us): a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.
-
-Four lead-in sections follow, in order. Each shows a few items, then links to its page.
-
-1. **What’s going on** — highlighted events and announcements. Page: Events.
-2. **Highlighted testimonies** — short praise reports. An item may link to YouTube or Instagram. Wording adapted from the miracle-story summaries on [rwo.life](https://www.rwo.life/). Page: Praise Reports.
-3. **Sermons** — YouTube playlists. Channel: [Evangelist Rambabu](https://www.youtube.com/c/EvangelistRambabuRambo). Page: Watch.
-4. **New to HSG** — Sunday welcome adapted from rwo.life/about-us: Kannada service 8:00–9:30am, English service 10:00am–12:00pm. Page: Contact Us, for visit information.
-
-Navigation: Home, About, Events, Praise Reports, Watch, Contact Us, Give.
+- The landing page should catch the atention of the visitors. It should showcase the church.
+- Identify Holy Spirit Generation and its leaders. The church is Word-based and Spirit-filled, in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu. Wording is adapted from the Holy Spirit Generation section on [rwo.life/about-us](https://www.rwo.life/about-us).
+- Find what is happening currently in the church: highlighted events and announcements.
+- Read highlighted testimonies. An item may link to YouTube or Instagram. 
+- Find sermons from the [Evangelist Rambabu](https://www.youtube.com/c/EvangelistRambabuRambo) channel.
+- Learn the Sunday schedule for a first visit: Word Fest service, English, 8:00–8:45am, Miracles and Healing service, Multillingual, 9:30am onwards. 
+- Reach Home, About, Events, Praise Reports, Watch, Contact Us, and Give.
 
 ## Affected users and systems
 
@@ -27,8 +24,9 @@ Navigation: Home, About, Events, Praise Reports, Watch, Contact Us, Give.
 
 ## Constraints
 
-- Adapt text from rwo.life. Do not recreate that site’s layout or add facts it does not state.
-- Events, testimony URLs, playlist URLs, and photos that are not supplied stay placeholders.
+- State what Home must let a visitor do.
+- Adapt text from rwo.life.
+- Events, testimony URLs, and playlist URLs that are not supplied stay placeholders.
 - This intent is the Home page. No content folders for other pages.
 
 ## Open questions
