@@ -15,7 +15,7 @@ The HTML file states each rule twice. The later `body { --bg … }` block and th
 - Edit `src/app/globals.css` — replace the navy/gold theme and 64rem home layout with the Spirit in Blue tokens and regions.
 - Edit `src/app/page.tsx` — church-name hero, four sections, and the reference region structure.
 - Edit `src/components/site-header.tsx` — logo-only brand; Menu threshold at 800px.
-- Add `src/components/site-footer.tsx` — church name, footer line, and the seven links.
+- Add `src/components/site-footer.tsx` — church name and footer line. No second navigation.
 - Add `src/components/portrait-field.tsx` — monogram, supplied image, and failed-image fallback.
 - Add `playwright.config.ts` — Chromium project, `webServer` on `http://127.0.0.1:3000`, traces on retry.
 - Add `e2e/home.spec.ts`, `e2e/navigation.spec.ts`, `e2e/accessibility.spec.ts` — browser acceptance for UX A1–A9.
@@ -29,7 +29,7 @@ The HTML file states each rule twice. The later `body { --bg … }` block and th
 
 id: home-landing-page_1_1
 title: Add the three Home sentences the section items do not carry
-status: pending
+status: done
 acceptance_criteria:
 - `pageNotes.testimonies` is “Stories adapted from Rambo World Outreach.”
 - `pageNotes.sunday` is “Sunday services · Bengaluru local time”
@@ -43,7 +43,7 @@ depends_on: []
 
 id: home-landing-page_1_2
 title: Load Oswald and DM Sans in the root layout
-status: pending
+status: done
 acceptance_criteria:
 - `next/font/google` loads DM Sans as `--font-sans` and Oswald weight 500 as `--font-display`, both `display: "swap"` and `subsets: ["latin"]`
 - Fraunces is not imported
@@ -78,13 +78,13 @@ depends_on: []
 
 id: home-landing-page_2_1
 title: Switch the shared shell to a logo-only header, 800px Menu, and footer
-status: pending
+status: done
 acceptance_criteria:
 - Brand link accessible name is “Holy Spirit Generation”; the image is `/brand/hsg-logo.jpg` with an empty `alt`; no church-name text sits beside the logo
 - Wide query in both `matchMedia` calls is `(min-width: 801px)`. Narrow CSS is `@media (max-width: 800px)`. At 800px, Menu is shown and the seven links are not in the inline row
 - Menu remains a button named Menu. ADR 0002 G2–G6 behavior stays: collapsed on load, inline disclosure, Escape returns focus to Menu, widening from a focused Menu moves focus to the current-page link, narrowing keeps the disclosure open only when a nav link is focused
 - `.menu-toggle:focus { display: flex }` stays, so a focused Menu is not hidden before that focus move
-- Footer nav accessible name is “Footer”. It shows `church.name`, `pageNotes.footer`, and the same seven links. Header nav name stays “Main navigation”. Exactly the current label has `aria-current="page"` in both navs
+- Footer shows `church.name` and `pageNotes.footer`. It does not repeat the header links or the logo. Header nav name stays “Main navigation”. The current label has `aria-current="page"` on that header link
 - Public theme variables are Ink `#090d15`, Paper `#f5f3e8`, Mist `#b6c1d5`, Acid `#dee77f`, Cobalt `#173de0`, Rule `#394250`, Band `#dedfc9`, Band ink `#141a20`, Band link `#182da3`. Focus ring and current-page link use Acid. The radial logo mask and gold `#d0af3b` / navy `#020411` page colors are gone
 files:
 - src/components/site-header.tsx
@@ -97,7 +97,7 @@ depends_on:
 
 id: home-landing-page_2_2
 title: Rebuild the Home regions from the content module
-status: pending
+status: done
 acceptance_criteria:
 - `h1` accessible name is “Holy Spirit Generation”, drawn as two lines: Holy Spirit, then Generation. `leader.name` is not the heading
 - Hero order is heading, blurb, About link, then the portrait field. About links to `/about` with visible text “About”
@@ -120,11 +120,11 @@ depends_on:
 
 id: home-landing-page_3_1
 title: Apply the Spirit in Blue region layout
-status: pending
+status: done
 acceptance_criteria:
 - Body is DM Sans, 16px, line-height 1.6. `h1`, `h2`, the monogram, and service times are Oswald, uppercase, weight 500
 - Hero and the sermon panel are Cobalt. The testimony section is Band with Band ink text and Band link links. Other section links and the current nav item are Acid on their background
-- Wide, above 800px: hero is two columns; highlights are title rows separated by rules; testimonies are three columns with the first wider; sermons are panel beside playlist lines; Sunday is intro beside records; footer is name and line beside the links
+- Wide, above 800px: hero is two columns; highlights are title rows separated by rules; testimonies are three columns with the first wider; sermons are panel beside playlist lines; Sunday is intro beside records; footer is the church name and the footer line
 - At 800px and below: hero, highlights, stories, sermons, Sunday, and footer stack in that reading order. Portrait follows About. A rule separates testimony stories. Menu rules from `home-landing-page_2_1` still apply
 - These reference strings are absent from the page: “Church news & gatherings”, “Messages & teaching”, “The Word, wherever you are.”, “Leader portrait placeholder”, “Return Home”, “Design concept”
 - Headings stay under 65 characters of measure. No ellipsis, fixed text height, or horizontal page scroll at a 320px width
@@ -147,17 +147,11 @@ depends_on:
 
 ## Risks
 
-`site-header.tsx` and `globals.css` currently disagree with the spec by using a 64rem threshold. Shipping only one of those files leaves Menu visible while the script treats the viewport as wide, or the reverse. G4 then moves focus to a link that CSS still hides.
+The Menu breakpoint must stay the same in `site-header.tsx` and `globals.css`. A mismatch hides a focused link or shows Menu on a wide page.
 
-`page.tsx` renders `leader.name` as the `h1` and an empty portrait. `layout.tsx` has no footer. Shell pages only gain the footer if it is mounted in the root layout.
+Portrait failure handling stays in `portrait-field.tsx`.
 
-`next/image` failure handling needs a client component. Keeping it in the server page cannot swap a broken image for the HSG field.
-
-`globals.css` still defines the gold/navy theme, the logo mask, and the 65ch home column. Leaving those rules in place overrides the Spirit in Blue grids.
-
-`make e2e` fails until wave 3 because the specs assert the finished page, not the current Fraunces layout.
-
-The most risky step is `home-landing-page_2_1`.
+A deployed Vercel preview is still required before release sign-off. Supplied and broken portrait checks stay a local content edit, restored to `portrait: null`.
 
 ## Acceptance criteria
 
@@ -171,7 +165,7 @@ The most risky step is `home-landing-page_2_1`.
 | Spec | Asserts |
 | --- | --- |
 | `e2e/home.spec.ts` | A1–A3, A8. Church `h1`, blurb, four regions, source line, Sunday note, footer line. Unpublished rows are not links. Channel opens in the same tab and Back returns Home. Wide portrait sits beside the heading; at 800px it follows About. Highlight titles stack. Testimony columns share a row and the first parent is wider. Sermon panel sits beside playlists. Sunday time sits beside Contact Us |
-| `e2e/navigation.spec.ts` | A4–A6. At 800px, Tab from Menu skips hidden links, Escape returns focus to Menu, and About closes the disclosure. Widening from a focused Menu focuses Home. Narrowing from Events keeps that link visible. 320px has no horizontal page scroll. Skip link focuses `#main-content`. Every route has the shell title, heading, and `aria-current="page"` on header and footer. Back from Give restores scroll above 100px |
+| `e2e/navigation.spec.ts` | A4–A6. At 800px, Tab from Menu skips hidden links, Escape returns focus to Menu, and About closes the disclosure. Widening from a focused Menu focuses Home. Narrowing from Events keeps that link visible. 320px has no horizontal page scroll. Skip link focuses `#main-content`. Every route has the shell title, heading, and `aria-current="page"` on the header link. The footer has no links. Back from Give restores scroll above 100px |
 | `e2e/accessibility.spec.ts` | A9. Axe reports no critical or serious violations on `/` and the six shells, at desktop and at 800px for Home. Menu, header links, and section links are at least 44px tall. Body is Ink `#090d15`, Paper `#f5f3e8`, 16px, DM Sans. `h1` is Oswald, uppercase, weight 500, on Cobalt `#173de0`. Current Home link and Events are Acid `#dee77f`. Testimony heading is Band ink `#141a20` on Band `#dedfc9`; Praise Reports is Band link `#182da3`. Service time is Acid. The sermon link sits on Cobalt |
 
 A7 in Playwright covers the null HSG field only. Supplied alt “Apostle Dr. P. S. Rambabu” and a broken `src` are a temporary local edit, restored to `portrait: null` before finishing. No WebKit project or GitHub Actions workflow is in the repo. UX still requires a deployed Vercel preview before release sign-off.

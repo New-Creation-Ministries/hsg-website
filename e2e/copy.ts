@@ -1,6 +1,6 @@
 export const churchName = "Holy Spirit Generation"
 export const blurb =
-  "Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu."
+  "A Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu."
 export const shellSentence = "This page will be published here."
 export const testimonySource = "Stories adapted from Rambo World Outreach."
 export const sundayNote = "Sunday services \u00b7 Bengaluru local time"

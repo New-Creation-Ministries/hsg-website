@@ -63,11 +63,11 @@ test("uses the Spirit in Blue colors for text on ink, cobalt, and the testimony 
     "color",
     "rgb(222, 231, 127)",
   )
-  await expect(paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
-  await expect(paintedBackground(page.getByRole("link", { name: "Evangelist Rambabu" }))).toBe("rgb(23, 61, 224)")
+  expect(await paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
+  expect(await paintedBackground(page.getByRole("link", { name: "Evangelist Rambabu" }))).toBe("rgb(23, 61, 224)")
 
   const stories = page.getByRole("region", { name: "Highlighted testimonies" })
-  await expect(paintedBackground(stories.getByRole("heading", { level: 2 }))).toBe("rgb(222, 223, 201)")
+  expect(await paintedBackground(stories.getByRole("heading", { level: 2 }))).toBe("rgb(222, 223, 201)")
   await expect(stories.getByRole("heading", { level: 2 })).toHaveCSS("color", "rgb(20, 26, 32)")
   await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveCSS("color", "rgb(24, 45, 163)")
   await expect(page.getByText("8\u20139am")).toHaveCSS("color", "rgb(222, 231, 127)")

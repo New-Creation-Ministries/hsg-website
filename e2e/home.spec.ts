@@ -10,7 +10,7 @@ import {
   sundayNote,
   testimonySource,
 } from "./copy"
-import { aboveMenu, atMenu, box, desktop, footerNav, headerNav, paintedBackground } from "./helpers"
+import { aboveMenu, atMenu, box, desktop, headerNav, paintedBackground } from "./helpers"
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize(desktop)
@@ -161,7 +161,7 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
   expect((await box(contact)).y).toBeLessThan((await box(time)).y)
 })
 
-test("names the brand from the logo and repeats the routes in the footer", async ({ page }) => {
+test("names the brand from the logo and keeps routes in the header only", async ({ page }) => {
   await page.goto("/")
   const brand = page.getByRole("link", { name: churchName })
   await expect(brand).toHaveCount(1)
@@ -176,17 +176,9 @@ test("names the brand from the logo and repeats the routes in the footer", async
     "Contact Us",
     "Give",
   ])
-  await expect(footerNav(page).getByRole("link")).toHaveText([
-    "Home",
-    "About",
-    "Events",
-    "Praise Reports",
-    "Watch",
-    "Contact Us",
-    "Give",
-  ])
+  await expect(page.getByRole("contentinfo").getByRole("link")).toHaveCount(0)
   await expect(page.getByRole("main").getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/about")
-  await expect(paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
+  expect(await paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
 })
 
 test("shows inline navigation above 800px and Menu at 800px", async ({ page }) => {

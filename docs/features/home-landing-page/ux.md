@@ -2,7 +2,7 @@
 
 ## Handoff and authority
 
-- Status: designed; implementation and user validation pending.
+- Status: designed. Local Chromium checks are in `e2e/`. A deployed preview is still required before release sign-off.
 - Scope and content authority: [spec](spec.md); purpose and audiences: [intent](intent.md).
 - Shared behavior: [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
 - Page structure and publishing: [ADR 0001](../../adr/0001-public-pages.md).
@@ -143,14 +143,14 @@
 | Service schedule correctness | Udeet / church content provider | Accepted spec values; no independent validation claimed | Confirm before public release and whenever schedule changes |
 | Contact Us visit information | Udeet / future Contact Us feature | Shell; complete visit planning is blocked | Before claiming the website supports directions or full visit planning |
 | Empty destination usefulness | Udeet | Shells are authorized; broader information-seeking outcomes remain unmet | Public release review explicitly considers the shell experience |
-| Navigation focus and reflow | Implementing engineer | New interaction detail in ADR 0002 | Verify A4–A6 before implementation sign-off |
+| Navigation focus and reflow | Implementing engineer | [ADR 0002](../../adr/0002-public-navigation-and-recovery.md) | Chromium checks in `e2e/navigation.spec.ts` |
 | Supported browser/assistive-technology matrix | Implementing engineer; Udeet resolves coverage | Proposed initial checks: Chromium and WebKit, keyboard/touch, VoiceOver with Safari | Set supported versions and accessibility coverage before release verification |
-| Formal implementation plan | Implementing engineer | No plan exists; this document is a behavior handoff | Link this document and ADR 0002 when writing plan.md; do not duplicate contracts |
+| Formal implementation plan | Implementing engineer | [plan.md](./plan.md) | Waves 1–3 are done |
 
 ## Acceptance and deployed verification
 
-- Status of every criterion below: **not run — design-only task**.
-- Boundary: deployed Vercel preview, followed by a production route/link smoke check after deployment.
+- Local Chromium: `make e2e` covers A1–A6 and A8–A9. A7 covers the null portrait only.
+- Release sign-off still needs a deployed Vercel preview, then a production route and link check.
 - Fixtures: the spec’s placeholder dataset; separate local/preview fixture with a broken portrait URL; no invented production content.
 - Evidence record: deployment URL/revision, browser/version, viewport/zoom/input mode, steps, expected/actual result, pass/fail/blocked, screenshot or focus notes as applicable.
 - Remove the broken-image fixture before publishing; no persistent user data needs cleanup.
@@ -172,4 +172,4 @@
 - Normal path: F3 → C2 → channel link → A2/A8; no playable playlist is implied by a placeholder.
 - Highest-risk incomplete path: F4 → C3 → Contact Us shell → A3/A6; schedule discovery completes, directions do not; content owner and resolution gate are recorded above.
 - Interruption path: expanded Menu → viewport change → ADR 0002 focus handling → A5; no hidden focused link is permitted.
-- Handoff classification: conditional on recorded content/release gates; no implementation, usability, or accessibility pass is claimed.
+- Handoff classification: implementation is in the repo. Release sign-off still depends on the content gates and a deployed preview.

@@ -1,6 +1,6 @@
 # 0003 Spirit in Blue visual direction
 
-- Status: accepted; production implementation pending.
+- Status: accepted.
 - Date: 2026-09-23.
 - Decision owner: Udeet Gulati.
 

@@ -9,10 +9,6 @@ export function headerNav(page: Page) {
   return page.getByRole("navigation", { name: "Main navigation" })
 }
 
-export function footerNav(page: Page) {
-  return page.getByRole("navigation", { name: "Footer" })
-}
-
 export async function box(locator: Locator) {
   await expect(locator).toBeVisible()
   const value = await locator.boundingBox()

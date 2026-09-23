@@ -1,19 +1,22 @@
 import { expect, test } from "vitest"
 
-import { church, leader, nav, sections } from "."
-
-const published = "Gatherings, news, and messages will be published here."
+import { church, leader, nav, pageNotes, sections } from "."
 
 test("names the church and states the blurb", () => {
   expect(church.name).toBe("Holy Spirit Generation")
   expect(leader.name).toBe("Apostle Dr. P. S. Rambabu")
   expect(leader.blurb).toBe(
-    "Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.",
+    "A Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.",
   )
   expect(leader.portrait).toBeNull()
-  expect(JSON.stringify({ church, leader, nav, sections })).not.toContain(
-    published,
-  )
+})
+
+test("carries the three page notes sections do not", () => {
+  expect(pageNotes).toEqual({
+    testimonies: "Stories adapted from Rambo World Outreach.",
+    sunday: "Sunday services · Bengaluru local time",
+    footer: "Word-based. Spirit-filled. Bengaluru.",
+  })
 })
 
 test("lists sections in order", () => {

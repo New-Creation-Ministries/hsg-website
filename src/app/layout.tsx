@@ -1,15 +1,23 @@
 import type { Metadata } from "next"
-import { Fraunces } from "next/font/google"
+import { DM_Sans, Oswald } from "next/font/google"
 
 import { church, leader } from "@/content/home"
+import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
 
-const fraunces = Fraunces({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+})
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: "500",
+  variable: "--font-display",
   display: "swap",
 })
 
@@ -20,11 +28,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={cn("font-sans", fraunces.variable)}>
+    <html
+      lang="en"
+      className={cn("font-sans", dmSans.variable, oswald.variable)}
+    >
       <body>
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   )

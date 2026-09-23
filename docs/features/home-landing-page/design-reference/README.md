@@ -2,7 +2,7 @@
 
 - Visual decisions: [ADR 0003](../../../adr/0003-spirit-in-blue-visual-direction.md).
 - Comparison entry: `docs/features/home-landing-page/design-reference/index.html`.
-- Status: **Spirit in Blue locked by the user**; production implementation pending.
+- Status: **Spirit in Blue locked by the user**.
 - Selected visual reference: `docs/features/home-landing-page/design-reference/02-spirit-in-blue.html`.
 - Preserve the church-name heading and logo-only header in the selected direction.
 - Extracted palette and typography snapshot: `docs/features/home-landing-page/design-reference/tokens.json`; HTML remains authoritative.

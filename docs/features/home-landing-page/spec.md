@@ -16,7 +16,7 @@ Shared navigation and shells stay [ADR 0001](../../adr/0001-public-pages.md) and
 
 Blurb, adapted from the Holy Spirit Generation section of [rwo.life/about-us](https://www.rwo.life/about-us):
 
-Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.
+A Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.
 
 **What’s going on** — three items, no dates, places, URLs, or second lines:
 
@@ -97,7 +97,7 @@ Highlight to be published
 | Testimonies | Light band. First story wider than the other two. | One column, rule between stories. |
 | Sermons | Cobalt panel (intro and channel link) beside the two playlist lines. | Panel, then playlist lines. |
 | Sunday | Intro and Contact Us beside the two service records. | Intro, then records. |
-| Footer | Church name, footer line, same seven links. | Stacked. |
+| Footer | Church name and footer line. No second navigation and no logo. | Same. |
 
 | | |
 | --- | --- |

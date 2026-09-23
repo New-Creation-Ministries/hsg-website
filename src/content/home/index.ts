@@ -18,7 +18,7 @@ export const church = {
 export const leader = {
   name: "Apostle Dr. P. S. Rambabu",
   blurb:
-    "Holy Spirit Generation is a Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.",
+    "A Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu.",
   portrait: null as null | { src: string; alt: string },
 }
 
@@ -31,6 +31,12 @@ export const nav = [
   { label: "Contact Us", href: "/contact" },
   { label: "Give", href: "/give" },
 ] as const
+
+export const pageNotes = {
+  testimonies: "Stories adapted from Rambo World Outreach.",
+  sunday: "Sunday services · Bengaluru local time",
+  footer: "Word-based. Spirit-filled. Bengaluru.",
+} as const
 
 export const sections: HomeSection[] = [
   {

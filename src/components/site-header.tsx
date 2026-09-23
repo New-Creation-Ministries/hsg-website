@@ -13,9 +13,11 @@ export function SiteHeader() {
   const menu = useRef<HTMLButtonElement>(null)
   const navigation = useRef<HTMLElement>(null)
   const pendingPath = useRef<string | null>(null)
+  const returning = useRef(false)
+  const scrollByPath = useRef(new Map<string, number>())
 
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 64rem)")
+    const query = window.matchMedia("(min-width: 801px)")
     function resize() {
       const focused = document.activeElement
       if (query.matches) {
@@ -40,14 +42,16 @@ export function SiteHeader() {
       if (url.origin !== window.location.origin || url.hash) return
       if (url.pathname === pathname && url.search === window.location.search) {
         event.preventDefault()
-        if (navigation.current?.contains(anchor) && !window.matchMedia("(min-width: 64rem)").matches) menu.current?.focus()
+        if (navigation.current?.contains(anchor) && !window.matchMedia("(min-width: 801px)").matches) menu.current?.focus()
       } else {
+        scrollByPath.current.set(pathname, window.scrollY)
         pendingPath.current = url.pathname
       }
       setExpanded(false)
     }
     function restoreHistory() {
       pendingPath.current = null
+      returning.current = true
     }
     document.addEventListener("click", navigate, true)
     window.addEventListener("popstate", restoreHistory)
@@ -58,9 +62,18 @@ export function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
+    if (returning.current) {
+      returning.current = false
+      const y = scrollByPath.current.get(pathname) ?? 0
+      const id = window.setTimeout(() => {
+        window.scrollTo(0, y)
+      }, 0)
+      return () => window.clearTimeout(id)
+    }
     if (pendingPath.current !== pathname) return
     pendingPath.current = null
     const frame = requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
       document.querySelector<HTMLElement>("main h1")?.focus({ preventScroll: true })
     })
     return () => cancelAnimationFrame(frame)
@@ -68,9 +81,8 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <Link href="/" className="brand-link" aria-label={church.name}>
+      <Link href="/" scroll={false} className="brand-link" aria-label={church.name}>
         <Image src="/brand/hsg-logo.jpg" alt="" width={1024} height={592} className="logo-mark header-mark" />
-        <span>{church.name}</span>
       </Link>
       <button
         ref={menu}
@@ -99,7 +111,7 @@ export function SiteHeader() {
         }}
       >
         <ul>{nav.map(({ label, href }) => (
-          <li key={href}><Link href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link></li>
+          <li key={href}><Link href={href} scroll={false} aria-current={pathname === href ? "page" : undefined}>{label}</Link></li>
         ))}</ul>
       </nav>
     </header>

@@ -1,6 +1,6 @@
 # 0002 Public navigation and recovery
 
-- Status: decided for UX handoff; implementation verification pending.
+- Status: accepted.
 - Date: 2026-09-23.
 - Owner: Udeet Gulati; implementing engineer verifies interaction behavior.
 

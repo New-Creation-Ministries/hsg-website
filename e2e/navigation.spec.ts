@@ -86,8 +86,8 @@ test("opens every shell with its title, heading, and current page", async ({ pag
     }
     const current = headerNav(page).getByRole("link", { name: route.label, exact: true })
     await expect(current).toHaveAttribute("aria-current", "page")
-    await expect(page.locator("nav a[aria-current='page']")).toHaveCount(2)
-    await expect(page.locator("nav a[aria-current='page']")).toHaveText([route.label, route.label])
+    await expect(page.locator("nav a[aria-current='page']")).toHaveCount(1)
+    await expect(page.locator("nav a[aria-current='page']")).toHaveText(route.label)
   }
 })
 

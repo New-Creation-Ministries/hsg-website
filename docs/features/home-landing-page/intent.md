@@ -1,6 +1,6 @@
 # Intent: Home landing page
 Author: Udeet Gulati
-Status: draft
+Status: ready
 
 ## Problem
 
