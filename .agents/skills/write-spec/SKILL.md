@@ -32,7 +32,7 @@ Link `./intent.md`. Author from the intent, else `TBD`. List skills actually use
 
 ## ADRs
 
-Put overall / durable design decisions in `docs/adr/NNNN-<kebab>.md` (4-digit id, start `0001`). `Status: proposed` until accepted. Index in `docs/adr/index.md`. Link them from the spec. Skip task-local choices.
+Put overall / durable design decisions in `docs/adr/NNNN-<kebab>.md` (4-digit id, start `0001`). `Status: proposed` until accepted. Index in `docs/adr/index.md`. Link them from the spec. Skip task-local choices. Ensure ADRs are kept independent of project state. No statements like this is done now, this will be done in future etc.
 
 ## Index
 
