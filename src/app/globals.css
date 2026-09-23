@@ -162,8 +162,8 @@ p { max-width: 65ch; }
   padding-inline: max(2.5rem, calc((100% - 76rem) / 2));
   background: var(--background);
 }
-.brand-link { grid-column: 1; justify-self: start; display: flex; align-items: center; min-height: 44px; color: var(--foreground); text-decoration: none; }
-.header-mark { width: 4.75rem; height: auto; }
+.brand-link { grid-column: 1; justify-self: start; align-self: center; display: flex; align-items: center; min-height: 44px; color: var(--foreground); text-decoration: none; }
+.header-mark { width: 9rem; height: auto; display: block; }
 .public-navigation { grid-column: 2; justify-self: center; }
 .public-navigation ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.15rem 1.35rem; margin: 0; padding: 0; list-style: none; }
 .public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1.25rem; }
@@ -299,51 +299,62 @@ p { max-width: 65ch; }
 }
 .source-note { margin-top: 35px; font-size: 12px; color: var(--mist); }
 
-.sermon-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 65px;
-  align-items: start;
-}
-.sermon-series { display: flex; flex-direction: column; align-items: stretch; }
-.channel {
-  padding: 48px 42px;
+.playlists .channel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2.25rem 2rem 2.25rem 2.75rem;
   background: var(--cobalt);
 }
 .scripture {
+  --quote-size: clamp(26px, 2.2vw, 34px);
+  position: relative;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 1.35rem;
+  min-width: 0;
+}
+.quote-mark {
+  position: absolute;
+  width: 3.15rem;
+  height: auto;
+  color: var(--acid);
+}
+.quote-mark-start {
+  top: 0;
+  left: 0;
+  transform: translateY(calc(-100% - 0.45rem));
+}
+.quote-mark-end {
+  right: 0;
+  bottom: 0;
 }
 .scripture p {
   color: var(--paper);
-  font-size: clamp(28px, 2.8vw, 40px);
-  line-height: 1.35;
-  max-width: 22ch;
-  text-wrap: balance;
+  font-size: var(--quote-size);
+  line-height: 1.4;
+  text-wrap: pretty;
 }
 .scripture footer {
   color: #d4dafa;
   font-size: 15px;
   letter-spacing: 0.04em;
 }
-.sermon-series > a {
-  display: flex;
-  align-items: flex-start;
-  margin: 0;
-  min-height: 44px;
-  color: var(--acid);
-  font-size: 20px;
-}
 .playlists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 2.5rem;
+  align-items: stretch;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 .playlists li {
-  padding: 27px 0;
-  border-top: 1px solid var(--rule);
+  min-width: 0;
+  padding: 0;
+  border: 0;
   font-size: 20px;
 }
 .playlists a {
@@ -408,6 +419,7 @@ p { max-width: 65ch; }
   .page-width { width: calc(100% - 3rem); }
   .site-header { display: flex; min-height: 0; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: 0.75rem; padding-inline: 1.5rem; }
   .brand-link, .menu-toggle, .public-navigation { grid-column: auto; justify-self: auto; }
+  .header-mark { width: 6.75rem; }
   .menu-toggle { display: flex; align-items: center; gap: 0.65rem; min-height: 44px; padding: 0.5rem 0; border: 0; background: none; color: var(--foreground); font: inherit; cursor: pointer; }
   .public-navigation { display: none; flex-basis: 100%; padding-top: 1rem; }
   .public-navigation[data-expanded="true"], .public-navigation:focus-within { display: block; }
@@ -437,8 +449,8 @@ p { max-width: 65ch; }
   .highlights li { display: block; }
   .stories { grid-template-columns: 1fr; gap: 30px; }
   .stories article + article { border-top: 1px solid #a6aa9b; padding-top: 30px; }
-  .sermon-content { grid-template-columns: 1fr; gap: 30px; }
-  .channel { padding: 32px 25px; }
+  .playlists { grid-template-columns: 1fr; }
+  .playlists .channel { padding: 32px 25px 32px 2.25rem; }
   .visit-grid { grid-template-columns: 1fr; gap: 30px; }
   .visit h2 { font-size: 56px; }
   .time { font-size: 34px; }
@@ -448,7 +460,7 @@ p { max-width: 65ch; }
   .page-width { width: calc(100% - 2.5rem); }
   .site-footer { padding-inline: 1.25rem; }
   .site-header { padding-inline: 1.25rem; }
-  .header-mark { width: 3.5rem; }
+  .header-mark { width: 5.75rem; }
   .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
   .home-section { padding-left: 1.25rem; padding-right: 1.25rem; }
   .hero h1 { font-size: 2.7rem; }

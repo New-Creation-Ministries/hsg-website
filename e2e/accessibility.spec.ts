@@ -44,7 +44,7 @@ test("gives Menu, navigation, and section links a 44px target", async ({ page })
     page.getByRole("region", { name: sections[0] }).getByRole("link", { name: "Events" }),
     page.getByRole("region", { name: "Highlighted testimonies" }).getByRole("link", { name: "Praise Reports" }),
     page.getByRole("region", { name: "Sermons" }).getByRole("link", { name: "Watch" }),
-    page.getByRole("region", { name: "New to HSG" }).getByRole("link", { name: "Contact Us" }),
+    page.getByRole("region", { name: "New to HSG?" }).getByRole("link", { name: "Know More" }),
   ]
   for (const link of sectionLinks) await expectMinHeight(link)
   await expectMinHeight(firstSermonVideo(page))
@@ -65,8 +65,6 @@ test("uses the Spirit in Blue colors for text on ink, cobalt, and the testimony 
   expect(headingFont).toMatch(/oswald/i)
   expect(bodyFont).toMatch(/dm[_\s]?sans/i)
 
-  const current = headerNav(page).getByRole("link", { name: "Home" })
-  await expect(current).toHaveCSS("color", "rgb(222, 231, 127)")
   await expect(page.getByRole("region", { name: sections[0] }).getByRole("link", { name: "Events" })).toHaveCSS(
     "color",
     "rgb(222, 231, 127)",
@@ -82,4 +80,7 @@ test("uses the Spirit in Blue colors for text on ink, cobalt, and the testimony 
   await expect(stories.getByRole("heading", { level: 2 })).toHaveCSS("color", "rgb(20, 26, 32)")
   await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveCSS("color", "rgb(24, 45, 163)")
   await expect(page.getByText("8\u20139am")).toHaveCSS("color", "rgb(222, 231, 127)")
+
+  await page.goto("/about")
+  await expect(headerNav(page).getByRole("link", { name: "About" })).toHaveCSS("color", "rgb(222, 231, 127)")
 })

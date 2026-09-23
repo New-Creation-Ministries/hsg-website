@@ -21,7 +21,7 @@ test("names the church and states the blurb", () => {
 test("carries the three page notes sections do not", () => {
   expect(pageNotes).toEqual({
     testimonies: "Stories adapted from Rambo World Outreach.",
-    sunday: "Sunday services · Bengaluru local time",
+    sunday: "Sunday services · Namma Bengaluru",
     ministry: "New Creation Ministries",
     address:
       "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077",
@@ -32,14 +32,13 @@ test("lists sections in order", () => {
   expect(sections.map((section) => section.heading)).toEqual([
     "What’s going on",
     "Highlighted testimonies",
+    "New to HSG?",
     "Sermons",
-    "New to HSG",
   ])
 })
 
 test("lists public navigation in order", () => {
   expect(nav).toEqual([
-    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Events", href: "/events" },
     { label: "Praise Reports", href: "/praise-reports" },
@@ -50,8 +49,10 @@ test("lists public navigation in order", () => {
 })
 
 test("keeps Sunday service names, languages, and times", () => {
-  const services = sections.find((section) => section.heading === "New to HSG")
-  expect(services?.intro).toBe("Join us every Sunday.")
+  const services = sections.find((section) => section.heading === "New to HSG?")
+  expect(services?.intro).toBe(
+    "Join us every Sunday to worship the Lord together and celebrate his goodness in our lives",
+  )
   expect(services?.items).toEqual([
     { title: "Word Fest Service", text: "English\n8–9am" },
     {
@@ -59,7 +60,7 @@ test("keeps Sunday service names, languages, and times", () => {
       text: "Multilingual\n9:30am onwards",
     },
   ])
-  expect(services?.more).toEqual({ label: "Contact Us", href: "/contact" })
+  expect(services?.more).toEqual({ label: "Know More", href: "/contact" })
 })
 
 test("exports the sermon playlist id", () => {

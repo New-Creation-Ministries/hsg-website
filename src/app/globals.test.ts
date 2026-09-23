@@ -54,7 +54,7 @@ test("hero and sermon panel are Cobalt; testimony is Band with Band ink and Band
 test("wide region grids: hero two columns, stories 1.5fr first, sermons and Sunday beside", () => {
   expect(source).toMatch(/\.hero[^{]*\{[^}]*grid-template-columns:\s*1\.6fr\s+0?\.7fr/)
   expect(source).toMatch(/\.stories[^{]*\{[^}]*grid-template-columns:\s*1\.5fr\s+1fr\s+1fr/)
-  expect(source).toMatch(/\.sermon-content[^{]*\{[^}]*grid-template-columns:\s*1fr\s+1fr/)
+  expect(source).toMatch(/\.playlists[^{]*\{[^}]*grid-template-columns:\s*1fr\s+1fr/)
   expect(source).toMatch(/\.visit-grid[^{]*\{[^}]*grid-template-columns:/)
   expect(source).toMatch(/\.highlights[^{]*\{[^}]*display:\s*block/)
   expect(source).toMatch(/\.highlights\s+li[^{]*\{[^}]*border-top:/)
@@ -67,7 +67,7 @@ test("at 800px regions stack; portrait follows About; testimony stories separate
   const block = narrow![1]
   expect(block).toMatch(/\.hero[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.stories[^{]*\{[^}]*grid-template-columns:\s*1fr/)
-  expect(block).toMatch(/\.sermon-content[^{]*\{[^}]*grid-template-columns:\s*1fr/)
+  expect(block).toMatch(/\.playlists[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.visit-grid[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.site-footer[^{]*\{[^}]*flex-direction:\s*column/)
   expect(block).toMatch(/\.stories\s+article\s*\+\s*article[^{]*\{[^}]*border-top:/)

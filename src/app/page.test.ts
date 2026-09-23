@@ -54,13 +54,13 @@ test("sermons put intro and first item in cobalt panel; no iframe or banned tagl
   expect(source).not.toMatch(/Church news & gatherings/)
 })
 
-test("Home is static: dynamic error, playlist reader during render, first four videos", () => {
+test("Home is static: dynamic error, playlist reader during render, first five videos", () => {
   expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']error["']/)
   expect(source).not.toMatch(/\brevalidate\b/)
   expect(source).toMatch(/async\s+function\s+Home/)
   expect(source).toMatch(/readYoutubePlaylist\s*\(\s*sermonPlaylistId\s*\)/)
   expect(source).toMatch(/firstPlaylistVideos\s*\(/)
-  expect(source).toMatch(/firstPlaylistVideos\s*\([^)]*,\s*4\s*\)/)
+  expect(source).toMatch(/firstPlaylistVideos\s*\([^)]*,\s*5\s*\)/)
   expect(source).not.toMatch(/cache:\s*["']no-store["']/)
   expect(source).not.toMatch(/Playlist to be published/)
 })

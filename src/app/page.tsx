@@ -14,13 +14,12 @@ import {
 import {
   firstPlaylistVideos,
   readYoutubePlaylist,
-  type YoutubePlaylist,
   type YoutubeVideo,
 } from "@/lib/youtube-playlist"
 
 export const dynamic = "error"
 
-const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-sermons", "is-services"] as const
+const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-services", "is-sermons"] as const
 
 if (church.name !== "Holy Spirit Generation") {
   throw new Error(`Home heading expects “Holy Spirit Generation”, got “${church.name}”`)
@@ -91,47 +90,49 @@ function TestimonyItems({ items }: { items: HomeItem[] }) {
   )
 }
 
+function ClosingQuote({ className }: { className: string }) {
+  return (
+    <svg className={className} viewBox="0 0 37 31" fill="currentColor" aria-hidden="true">
+      <path d="M0 0h15v16c0 4-1 7-3 10-2 2.5-6 4.5-10 5 0-1 2-3 4.5-5.5C8.5 23 10 20 10 16H0V0z" />
+      <path transform="translate(22)" d="M0 0h15v16c0 4-1 7-3 10-2 2.5-6 4.5-10 5 0-1 2-3 4.5-5.5C8.5 23 10 20 10 16H0V0z" />
+    </svg>
+  )
+}
+
 function SermonItems({
   section,
-  series,
   videos,
 }: {
   section: HomeSection
-  series: YoutubePlaylist
   videos: YoutubeVideo[]
 }) {
-  const [first] = section.items
+  const [citation] = section.items
   return (
-    <div className="sermon-content">
-      <div className="channel">
+    <ul className="playlists">
+      <li className="channel">
         <blockquote className="scripture">
+          <ClosingQuote className="quote-mark quote-mark-start" />
           {section.intro ? <p>{section.intro}</p> : null}
-          {first ? <footer>{first.title}</footer> : null}
+          {citation ? <footer>{citation.title}</footer> : null}
+          <ClosingQuote className="quote-mark quote-mark-end" />
         </blockquote>
-      </div>
-      <div className="sermon-series">
-        <a href={series.url} target="_blank" rel="noopener noreferrer">
-          {series.title}
-        </a>
-        <ul className="playlists">
-          {videos.map((video) => (
-            <li key={video.id}>
-              <a href={video.url} target="_blank" rel="noopener noreferrer">
-                {/* eslint-disable-next-line @next/next/no-img-element -- remote YouTube thumbnail URL, not next/image */}
-                <img
-                  src={video.thumbnailUrl}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                  width={320}
-                  height={180}
-                />
-                <span>{video.title}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      </li>
+      {videos.map((video) => (
+        <li key={video.id}>
+          <a href={video.url} target="_blank" rel="noopener noreferrer">
+            {/* eslint-disable-next-line @next/next/no-img-element -- remote YouTube thumbnail URL, not next/image */}
+            <img
+              src={video.thumbnailUrl}
+              alt=""
+              referrerPolicy="no-referrer"
+              width={320}
+              height={180}
+            />
+            <span>{video.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -162,7 +163,7 @@ function SectionBody({ section, index }: { section: HomeSection; index: number }
 
 export default async function Home() {
   const series = await readYoutubePlaylist(sermonPlaylistId)
-  const videos = firstPlaylistVideos(series, 4)
+  const videos = firstPlaylistVideos(series, 5)
 
   return (
     <main id="main-content" className="home-page page-width" tabIndex={-1}>
@@ -180,7 +181,8 @@ export default async function Home() {
       <div className="home-sections">
         {sections.map((section, index) => {
           const headingId = `section-${index}`
-          const isSunday = index === 3
+          const isSunday = index === 2
+          const isSermons = index === 3
           const isTestimonies = index === 1
 
           return (
@@ -207,8 +209,8 @@ export default async function Home() {
                     <h2 id={headingId}>{section.heading}</h2>
                     <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
                   </div>
-                  {index === 2 ? (
-                    <SermonItems section={section} series={series} videos={videos} />
+                  {isSermons ? (
+                    <SermonItems section={section} videos={videos} />
                   ) : (
                     <SectionBody section={section} index={index} />
                   )}

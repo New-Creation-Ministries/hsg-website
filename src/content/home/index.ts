@@ -23,7 +23,6 @@ export const leader = {
 }
 
 export const nav = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
   { label: "Praise Reports", href: "/praise-reports" },
@@ -34,7 +33,7 @@ export const nav = [
 
 export const pageNotes = {
   testimonies: "Stories adapted from Rambo World Outreach.",
-  sunday: "Sunday services · Bengaluru local time",
+  sunday: "Sunday services · Namma Bengaluru",
   ministry: "New Creation Ministries",
   address:
     "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077",
@@ -71,15 +70,9 @@ export const sections: HomeSection[] = [
     more: { label: "Praise Reports", href: "/praise-reports" },
   },
   {
-    heading: "Sermons",
+    heading: "New to HSG?",
     intro:
-      "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart.",
-    items: [{ title: "Proverbs 4:20-21" }],
-    more: { label: "Watch", href: "/watch" },
-  },
-  {
-    heading: "New to HSG",
-    intro: "Join us every Sunday.",
+      "Join us every Sunday to worship the Lord together and celebrate his goodness in our lives",
     items: [
       { title: "Word Fest Service", text: "English\n8–9am" },
       {
@@ -87,6 +80,13 @@ export const sections: HomeSection[] = [
         text: "Multilingual\n9:30am onwards",
       },
     ],
-    more: { label: "Contact Us", href: "/contact" },
+    more: { label: "Know More", href: "/contact" },
+  },
+  {
+    heading: "Sermons",
+    intro:
+      "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart.",
+    items: [{ title: "Proverbs 4:20-21" }],
+    more: { label: "Watch", href: "/watch" },
   },
 ]
