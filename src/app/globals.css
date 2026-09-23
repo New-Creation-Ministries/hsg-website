@@ -107,3 +107,68 @@
     transparent 100%
   );
 }
+/* Public pages inherit the church's navy, blue, gold, and Fraunces. */
+::selection { background: var(--primary); color: var(--primary-foreground); }
+html { scrollbar-color: var(--primary) var(--background); }
+body { margin: 0; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a { text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 6px; }
+main:focus, h1:focus { outline: none; }
+main:focus-visible, h1:focus-visible { outline: 2px solid var(--ring); outline-offset: 8px; }
+.page-width { width: min(100% - 8rem, 75rem); margin-inline: auto; }
+.site-header { width: min(100% - 5rem, 83rem); margin-inline: auto; min-height: 7.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-bottom: 1px solid var(--border); padding-block: 1.25rem; }
+.brand-link { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; color: var(--foreground); text-decoration: none; flex-shrink: 0; }
+.brand-link span { max-width: 10rem; font-size: 1.25rem; line-height: 1.15; }
+.header-mark { width: 5.25rem; height: auto; }
+.public-navigation ul { display: flex; flex-wrap: wrap; gap: 0.2rem 1.35rem; margin: 0; padding: 0; list-style: none; }
+.public-navigation a { min-height: 44px; display: flex; align-items: center; color: var(--foreground); text-decoration: none; font-size: 1rem; }
+.public-navigation a:hover, .public-navigation a[aria-current="page"] { color: var(--primary); text-decoration: underline; text-underline-offset: 0.45em; }
+.menu-toggle { display: none; }
+/* Preserve focus until the viewport-change handler moves it to a visible target. */
+.menu-toggle:focus { display: flex; }
+.skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 10; padding: 0.8rem 1rem; background: var(--primary); color: var(--primary-foreground); transform: translateY(-200%); }
+.skip-link:focus { transform: none; }
+.leader-introduction { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; grid-template-rows: auto 1fr; column-gap: 6rem; padding-block: 6.5rem 6rem; align-items: start; }
+.leader-introduction h1 { margin: 0; max-width: 11ch; font-size: clamp(3.5rem, 6.1vw, 5.5rem); font-weight: 450; line-height: 1.06; letter-spacing: -0.035em; color: var(--primary); text-wrap: balance; }
+.leader-blurb { margin: 2rem 0 0; max-width: 42ch; font-size: 1.25rem; line-height: 1.7; }
+.portrait-field { position: relative; grid-column: 2; grid-row: 1 / 3; width: 100%; aspect-ratio: 4 / 5; background: var(--card); }
+.leader-portrait { object-fit: cover; }
+.home-sections { max-width: 65ch; padding-bottom: 7rem; font-size: 1.125rem; }
+.home-section { border-top: 1px solid var(--border); padding-top: 2.75rem; margin-bottom: 4.75rem; }
+.home-section:last-child { margin-bottom: 0; }
+.home-section h2 { margin: 0 0 1.5rem; font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1.2; font-weight: 450; letter-spacing: -0.02em; }
+.section-intro { margin: -0.35rem 0 1.6rem; line-height: 1.7; }
+.content-list { padding: 0; margin: 0; list-style: none; }
+.content-list li { padding-block: 1rem; border-bottom: 1px solid var(--border); line-height: 1.7; }
+.content-list li:first-child { padding-top: 0; }
+.content-list h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 500; margin: 0 0 0.55rem; }
+.content-list p { margin: 0; max-width: 65ch; }
+.home-section a { color: var(--primary); text-decoration-line: underline; }
+.content-list a { display: inline-flex; align-items: center; min-height: 44px; }
+.section-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1.1rem; }
+.shell-page { padding-top: 6rem; padding-bottom: 6rem; min-height: calc(100dvh - 7.5rem); }
+.shell-page h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 450; letter-spacing: -0.03em; line-height: 1.15; color: var(--primary); margin: 0 0 2rem; }
+.shell-page p { font-size: 1.25rem; line-height: 1.7; }
+@media (max-width: 63.999rem) {
+  .page-width { width: min(100% - 3rem, 46rem); }
+  .site-header { width: calc(100% - 3rem); min-height: 6.25rem; flex-wrap: wrap; gap: 0 1rem; }
+  .menu-toggle { display: flex; align-items: center; gap: 0.65rem; min-height: 44px; padding: 0.5rem 0; border: 0; background: none; color: var(--foreground); font: inherit; cursor: pointer; }
+  .public-navigation { display: none; flex-basis: 100%; padding-top: 1rem; }
+  .public-navigation[data-expanded="true"], .public-navigation:focus-within { display: block; }
+  .public-navigation ul { display: block; }
+  .public-navigation a { padding-block: 0.4rem; }
+  .leader-introduction { grid-template-columns: 1fr; padding-block: 4rem; }
+  .leader-introduction h1 { max-width: 13ch; font-size: clamp(3.25rem, 8vw, 5rem); }
+  .portrait-field { grid-column: 1; grid-row: 2; width: min(70%, 17.5rem); margin-top: 2rem; }
+  .leader-blurb { grid-row: 3; max-width: 48ch; font-size: 1.125rem; }
+  .home-section { padding-top: 2rem; margin-bottom: 3.75rem; }
+}
+@media (max-width: 25rem) {
+  .page-width, .site-header { width: calc(100% - 2.5rem); }
+  .brand-link { gap: 0.25rem; flex-shrink: 1; }
+  .brand-link span { max-width: 8rem; font-size: 1.05rem; }
+  .header-mark { width: 3.5rem; }
+  .leader-introduction h1 { font-size: 3rem; }
+}

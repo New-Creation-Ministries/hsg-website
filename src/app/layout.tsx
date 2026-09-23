@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { Fraunces } from "next/font/google"
 
-import { home } from "@/content/home"
+import { church, leader } from "@/content/home"
+import { SiteHeader } from "@/components/site-header"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
@@ -13,14 +14,18 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: home.name,
-  description: home.summary,
+  title: { default: church.name, template: `%s | ${church.name}` },
+  description: leader.blurb,
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={cn("font-sans", fraunces.variable)}>
-      <body>{children}</body>
+      <body>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <SiteHeader />
+        {children}
+      </body>
     </html>
   )
 }
