@@ -107,7 +107,7 @@ acceptance_criteria:
 - Dated scope line is “This date only.” or “These dates only.” followed by “Subscribing follows a later published time after your calendar refreshes.” The page does not contain “Added”.
 - One `AddToCalendar` per dated row and per Sunday service. Summary accessible name is `Add to calendar, {name}, {this date only|these dates only|every Sunday}`. The menu has “Google Calendar” and “Apple Calendar”, each named with the same event or service name. Google `href` is `https://calendar.google.com/calendar/render?cid=webcal://{host}/events/feeds/{id}.ics` with no `target`. Apple `href` is `webcal://{host}/events/feeds/{id}.ics`. `{host}` comes from the request `Host` header on this page only.
 - CSS for `.spine`, `.tick`, `.breakout`, and `.sunday` follows the reference. Stack to one column at `max-width: 800px`. Tokens stay the Home ink, paper, mist, acid, cobalt, and band values. Targets for the summary and both menu links are at least 44px.
-- `e2e/navigation.spec.ts` still checks the shell sentence on About, Praise Reports, Watch, Contact Us, and Give. `/events` expects title `Events | Holy Spirit Generation`, `h1` Events, and no shell sentence.
+- `e2e/navigation.spec.ts` still checks the shell sentence on About, Watch, Contact Us, and Give. `/events` expects title `Events | Holy Spirit Generation`, `h1` Events, and no shell sentence.
 files:
 - src/app/events/page.tsx
 - src/components/add-to-calendar.tsx

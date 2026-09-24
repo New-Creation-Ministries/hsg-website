@@ -26,7 +26,7 @@ Home “What’s going on” lists three unpublished placeholders. Visitors do n
 
 - Scripture tiles do not link.
 - Scripture copy is the wording in Proposed outcome, including the ellipsis in Acts 2:46.
-- Section links stay Events and Praise Reports ([Home spec](../../features/home-landing-page/spec.md)).
+- What’s going on links to Events. Highlighted testimonies has no section link ([Home spec](../../features/home-landing-page/spec.md)).
 - Event record fields: [ADR 0005](../../adr/0005-event-records.md).
 
 ## Open questions

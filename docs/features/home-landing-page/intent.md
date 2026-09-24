@@ -14,7 +14,7 @@ The landing page is currently empty.
 - Read highlighted testimonies. An item may link to YouTube or Instagram. 
 - Find sermons from the [Evangelist Rambabu](https://www.youtube.com/c/EvangelistRambabuRambo) channel.
 - Learn the Sunday schedule for a first visit: Word Fest service, English, 8:00–8:45am, Miracles and Healing service, Multillingual, 9:30am onwards. 
-- Reach Home, About, Events, Praise Reports, Watch, Contact Us, and Give.
+- Reach Home, About, Events, Watch, Contact Us, and Give.
 
 ## Affected users and systems
 

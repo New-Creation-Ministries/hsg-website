@@ -39,6 +39,23 @@ test("section links use destination label, aria-hidden arrow, and 44px min heigh
   expect(source).toMatch(/section\.more\.label/)
 })
 
+test("SectionLink renders only when more is set at visit intro and section head", () => {
+  const visitIntro = source.match(
+    /className=["']visit-intro["'][\s\S]*?<\/div>/,
+  )?.[0]
+  const sectionHead = source.match(
+    /className=["']section-head["'][\s\S]*?<\/div>/,
+  )?.[0]
+  expect(visitIntro).toBeDefined()
+  expect(sectionHead).toBeDefined()
+  expect(visitIntro).toMatch(/section\.more\s*&&|section\.more\s*\?/)
+  expect(sectionHead).toMatch(/section\.more\s*&&|section\.more\s*\?/)
+  expect(visitIntro).toMatch(/section\.more\.label/)
+  expect(sectionHead).toMatch(/section\.more\.label/)
+  expect(visitIntro).toMatch(/<SectionLink\b/)
+  expect(sectionHead).toMatch(/<SectionLink\b/)
+})
+
 test("external item links open in a new tab; items without href are plain text", () => {
   expect(source).toMatch(/item\.href/)
   expect(source).toMatch(/target=["']_blank["']/)

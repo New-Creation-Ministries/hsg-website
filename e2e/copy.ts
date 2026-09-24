@@ -22,7 +22,6 @@ export const sections = [
 export const navLabels = [
   "About",
   "Events",
-  "Praise Reports",
   "Watch",
   "Contact Us",
   "Give",
@@ -32,7 +31,6 @@ export const routes = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Events", path: "/events" },
-  { label: "Praise Reports", path: "/praise-reports" },
   { label: "Watch", path: "/watch" },
   { label: "Contact Us", path: "/contact" },
   { label: "Give", path: "/give" },

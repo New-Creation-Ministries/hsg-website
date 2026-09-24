@@ -74,10 +74,10 @@ Visual reference: [02-spirit-in-blue.html](./design-reference/02-spirit-in-blue.
 | Display headings, monogram, service times | Oswald, uppercase, weight 500 |
 | Body, navigation, footer, supporting copy | DM Sans |
 
-Load both through the app font pipeline. Body size 16px, line-height 1.6. Heading measure stays under 65 characters. Section links are Acid (Band link on the testimony band), underlined, at least 44px tall, with a decorative arrow that is not part of the accessible name.
+Load both through the app font pipeline. Body size 16px, line-height 1.6. Heading measure stays under 65 characters. Section links are Acid, underlined, at least 44px tall, with a decorative arrow that is not part of the accessible name.
 
 ```
-[logo]                                    Home  About  Events  Praise Reports  Watch  Contact Us  Give
+[logo]                                    Home  About  Events  Watch  Contact Us  Give
 
 HOLY SPIRIT GENERATION                    [ HSG ]
 blurb
@@ -91,7 +91,7 @@ Highlight to be published
 
 | Region | Wide (above 800px) | Narrow (800px and below) |
 | --- | --- | --- |
-| Header | Logo only, then the seven links. | Logo and a Menu button. Links follow [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
+| Header | Logo only, then the six links. | Logo and a Menu button. Links follow [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
 | Hero | Cobalt band. Church name and blurb on the left, portrait on the right. About sits under the blurb. | One column. Portrait follows the blurb and About. |
 | Highlights | Three title rows separated by rules. | Same rows, stacked. |
 | Testimonies | Light band. First story wider than the other two. | One column, rule between stories. |
@@ -106,11 +106,11 @@ Highlight to be published
 | Portrait | No photo. Cobalt field, `aria-hidden`, showing “HSG”. No visitor-facing caption. When `portrait` is set, `next/image` replaces the field; alt is “Apostle Dr. P. S. Rambabu”. A failed image keeps the field and the identity text. |
 | Sections | `h2` in this order: What’s going on, Highlighted testimonies, Sermons, New to HSG. All four stay visible. No carousel, tabs, or disclosure. |
 | Items | A URL makes one text link whose name is the title. No URL means text: no focus, hover, or link styling. |
-| Section links | What’s going on → Events. Highlighted testimonies → Praise Reports. Sermons → Watch. New to HSG → Contact Us. About in the hero → `/about`. Link text is the destination label. |
+| Section links | What’s going on → Events. Highlighted testimonies has no section link. Sermons → Watch. New to HSG → Contact Us. About in the hero → `/about`. Link text is the destination label. |
 | Services | Each record shows name, then language, with the time in the same record. Keep “onwards”. Times are Bengaluru local time, not the viewer’s zone. |
 | Sermons panel | Intro, then the Evangelist Rambabu link. Playlist lines stay plain text until a URL exists. No embedded player. |
 | Current page | Acid plus underline, and `aria-current="page"`. |
-| Menu threshold | Above 800px the seven links are visible and Menu is absent. At 800px and below, Menu is the disclosure in [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
+| Menu threshold | Above 800px the six links are visible and Menu is absent. At 800px and below, Menu is the disclosure in [ADR 0002](../../adr/0002-public-navigation-and-recovery.md). |
 | Motion | None. |
 | Targets | Menu, nav links, and section links are at least 44px. |
 | Contrast | Paper, Mist, Acid, Band ink, and Band link meet WCAG AA on the background they sit on. |
@@ -126,7 +126,7 @@ Highlight to be published
 | `church` | `name` |
 | `leader` | `name`, `blurb`, `portrait` (`null` or `{ src, alt }`) |
 | `nav` | `{ label, href }[]` in nav order |
-| `sections` | `{ heading, intro?, items: { title, text?, href? }[], more: { label, href } }[]` in section order |
+| `sections` | `{ heading, intro?, items: { title, text?, href? }[], more?: { label, href } }[]` in section order |
 
 Service `text` is the language, a newline, then the time. The view keeps those two parts associated with the service name.
 
@@ -139,7 +139,6 @@ Service `text` is the language, a newline, then the time. The view keeps those t
 | Home | `/` | — |
 | About | `/about` | Hero |
 | Events | `/events` | What’s going on |
-| Praise Reports | `/praise-reports` | Highlighted testimonies |
 | Watch | `/watch` | Sermons |
 | Contact Us | `/contact` | New to HSG |
 | Give | `/give` | — |
@@ -156,7 +155,7 @@ Behavior checks are [ux.md](./ux.md) A1–A9. This slice also requires:
 - Placeholder rows have no `href`. The only external URL is the Evangelist Rambabu channel.
 - `portrait` is null. No new image file.
 - The old summary sentence is absent from content, metadata, and `home.test.ts`.
-- Above 800px the nav is inline. At 800px and below, Menu shows the same seven links.
+- Above 800px the nav is inline. At 800px and below, Menu shows the same six links.
 - Keyboard: skip link to main, visible focus, Menu behavior in [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
 
 ## Concerns

@@ -240,7 +240,9 @@ export default async function Home() {
                   <div className="visit-intro">
                     <h2 id={headingId}>{section.heading}</h2>
                     {section.intro ? <p className="section-intro">{section.intro}</p> : null}
-                    <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
+                    {section.more && (
+                      <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
+                    )}
                   </div>
                   <div>
                     <ServiceItems items={section.items} />
@@ -251,7 +253,9 @@ export default async function Home() {
                 <>
                   <div className="section-head">
                     <h2 id={headingId}>{section.heading}</h2>
-                    <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
+                    {section.more && (
+                      <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
+                    )}
                   </div>
                   {isSermons ? (
                     <SermonItems section={section} videos={videos} />

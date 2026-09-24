@@ -8,7 +8,7 @@ export type HomeSection = {
   heading: string
   intro?: string
   items: HomeItem[]
-  more: { label: string; href: string }
+  more?: { label: string; href: string }
 }
 
 export const church = {
@@ -25,7 +25,6 @@ export const leader = {
 export const nav = [
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
-  { label: "Praise Reports", href: "/praise-reports" },
   { label: "Watch", href: "/watch" },
   { label: "Contact Us", href: "/contact" },
   { label: "Give", href: "/give" },
@@ -72,7 +71,6 @@ export const sections: HomeSection[] = [
         text: "A woman had been deaf in her left ear since childhood. She began to hear after Apostle Rambabu called out her condition and cast his shadow on her.",
       },
     ],
-    more: { label: "Praise Reports", href: "/praise-reports" },
   },
   {
     heading: "New to HSG?",

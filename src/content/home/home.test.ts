@@ -41,7 +41,6 @@ test("lists public navigation in order", () => {
   expect(nav).toEqual([
     { label: "About", href: "/about" },
     { label: "Events", href: "/events" },
-    { label: "Praise Reports", href: "/praise-reports" },
     { label: "Watch", href: "/watch" },
     { label: "Contact Us", href: "/contact" },
     { label: "Give", href: "/give" },
@@ -104,10 +103,7 @@ test("puts Hebrews 2:4 scripture first in Highlighted testimonies", () => {
   const testimonies = sections.find(
     (section) => section.heading === "Highlighted testimonies",
   )
-  expect(testimonies?.more).toEqual({
-    label: "Praise Reports",
-    href: "/praise-reports",
-  })
+  expect(testimonies?.more).toBeUndefined()
   expect(testimonies?.items).toEqual([
     {
       title: "Hebrews 2:4 (KJV)",

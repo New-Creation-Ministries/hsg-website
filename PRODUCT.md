@@ -12,7 +12,7 @@ Visitors and members share one public site. They come to identify Holy Spirit Ge
 
 ## Product Purpose
 
-A public church website for Holy Spirit Generation in Bengaluru. Home’s heading is the church name. The introduction names Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu, and the page leads into Events, Praise Reports, Watch, and Contact Us. Success is that those facts and destinations are readable without another page.
+A public church website for Holy Spirit Generation in Bengaluru. Home’s heading is the church name. The introduction names Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu, and the page leads into Events, Watch, and Contact Us. Success is that those facts and destinations are readable without another page.
 
 ## Positioning
 
@@ -24,7 +24,7 @@ Content is published by deploying the repository. Visitors and members use the s
 
 ## Capabilities and Constraints
 
-- Routes: Home, About, Events, Praise Reports, Watch, Contact Us, Give.
+- Routes: Home, About, Events, Watch, Contact Us, Give.
 - Unpublished destinations show the destination name and “This page will be published here.”
 - Home may store optional URLs and render links. No embeds, forms, or booking on Home.
 - Playlist URLs, live highlights, testimony URLs, and a portrait are not yet supplied.
