@@ -199,3 +199,75 @@ Both comments from Session 2026-09-23 are in the page. The blurb starts with “
 - comments: 4  resolved: 0  open: 4
 - open: Remove Home from the nav; the logo goes home and should be bigger and aligned with the bar. Move the New to HSG section before sermons, retitle the time line Namma Bengaluru, rename Contact Us to Know More, add a question mark, and replace the Sunday sentence. Lay sermons out as a 3×2 grid: scripture quote, then five playlist items. Verify alignment in the browser after the fixes.
 - themes: The header should drop the Home link and use a larger, better-aligned logo as the way home. The New to HSG block should sit above sermons, with Namma Bengaluru, Know More, a question-mark heading, and a longer Sunday invitation. Sermons should be a two-column grid whose first cell is the scripture quote and whose other five cells are playlist items.
+
+## Session 2026-09-24
+
+### 1. t_001
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: p — Times are in IST (Asia/Kolkata). Dated gatherings sit on the line. Sunday services repeat and stay off it.
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    remove text
+
+### 2. t_004
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: p — Not on the dated line. An add applies every Sunday in IST. Subscribing follows a later published time after your calend…
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    remove text
+
+### 3. t_007
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: p — Multilingual
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    Add a separator and say AI Powered
+
+### 4. t_010
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: p — No upcoming events.
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    Add an event called "Voice of Apostles 2026" starting 30th September, Ending 3rd October. 
+    Pull main Image from here: https://www.rwo.life/events?sapurl=LytwczZ6L2xiL2V2Lyt3Y2huNzNjP2JyYW5kaW5nPXRydWUmZW1iZWQ9dHJ1ZSZyZWNlbnRSb3V0ZT1hcHAud2ViLWFwcC5saWJyYXJ5LmNhbGVuZGFyJnJlY2VudFJvdXRlU2x1Zz0lMkIyeWhuaHY1
+
+## Session summary
+- comments: 4  resolved: 0  open: 4
+- open: Remove the IST note under Events. Remove the Sunday services intro. Change Multilingual to Multilingual · AI Powered. Add Voice of Apostles 2026 from 30 September through 3 October with the main image from the linked page.
+- themes: The events page should drop the two explanatory notes. The multilingual Sunday service should say it is AI Powered. The empty upcoming list should become the Voice of Apostles 2026 conference, with its poster.
+
+## Session 2026-09-24
+
+### 1. t_001
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: summary — Add to calendar
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    1. It should open in new tab
+    2. The calendar in google should have the title as event name 
+    3. The calendar in google is not creating events on the dates mentioned
+
+## Session summary
+- comments: 1  resolved: 0  open: 1
+- open: Add to calendar should open in a new tab, name the Google calendar after the event, and create events on the dates shown.
+- themes: The Google add should leave Events in a new tab and subscribe under the event’s name. The dates that land in Google should match the dates on the row.

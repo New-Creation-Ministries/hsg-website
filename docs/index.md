@@ -5,9 +5,11 @@ Skills: `.agents/skills/capture-intent/SKILL.md`, `.agents/skills/write-spec/SKI
 
 | Category | Slug | Title | Status | Intent | Spec | UX | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| feature | events-page | Events page | draft | [intent](features/events-page/intent.md) | [spec](features/events-page/spec.md) | [UX](features/events-page/ux.md) | [plan](features/events-page/plan.md) |
 | feature | home-landing-page | Home landing page | done | [intent](features/home-landing-page/intent.md) | [spec](features/home-landing-page/spec.md) | [UX](features/home-landing-page/ux.md) | [plan](features/home-landing-page/plan.md) |
 | feature | youtube-sermon-playlist | YouTube sermon playlist | draft | [intent](features/youtube-sermon-playlist/intent.md) | [spec](features/youtube-sermon-playlist/spec.md) | — | [plan](features/youtube-sermon-playlist/plan.md) |
 
 ## Design references
 
 - Home: [Spirit in Blue HTML](features/home-landing-page/design-reference/02-spirit-in-blue.html) · [visual decisions](adr/0003-spirit-in-blue-visual-direction.md).
+- Events: [timeline HTML](features/events-page/design-reference/05-timeline.html).

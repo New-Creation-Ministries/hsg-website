@@ -52,7 +52,7 @@ Content lives in the repository and is published by deploy.
 ## Deferred Decisions
 
 - Authentication and authorization.
-- Embed mechanism, content file format, event model, and page structure.
+- Embed mechanism, content file format, and page structure.
 
 ## Decisions Made
 
@@ -65,3 +65,4 @@ Content lives in the repository and is published by deploy.
 7. **Language** — TypeScript.
 8. **UI** — Tailwind CSS and shadcn/ui.
 9. **Brand** — The church logo is the gold-on-navy globe mark. Home follows [ADR 0003](adr/0003-spirit-in-blue-visual-direction.md).
+10. **Events** — Dated events are records in the repository ([ADR 0005](adr/0005-event-records.md)). Calendar handoff is a per-item subscription ([ADR 0006](adr/0006-calendar-subscription.md)).

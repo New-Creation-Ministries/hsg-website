@@ -90,3 +90,21 @@ test("reference design strings stay out of the stylesheet", () => {
   expect(source).not.toMatch(/Return Home/)
   expect(source).not.toMatch(/Design concept/)
 })
+
+test("timeline spine, tick, breakout, and sunday follow the reference with Home tokens", () => {
+  expect(source).toMatch(/\.spine\s*\{/)
+  expect(source).toMatch(/\.tick\s*\{/)
+  expect(source).toMatch(/\.tick::before/)
+  expect(source).toMatch(/\.breakout\s*\{/)
+  expect(source).toMatch(/\.sunday\s*\{/)
+  expect(source).toMatch(/\.breakout[^}]*background:\s*var\(--cobalt\)/)
+  expect(source).toMatch(/\.sunday[^}]*background:\s*var\(--band\)/)
+  expect(source).not.toMatch(/\.breakout[^}]*border-radius|\.breakout[^}]*box-shadow/)
+  expect(source).toMatch(/\.add summary[^}]*min-height:\s*44px/)
+  expect(source).toMatch(/\.add-menu a[^}]*min-height:\s*44px/)
+  const narrow = source.match(/@media\s*\(\s*max-width:\s*800px\s*\)\s*\{([\s\S]*)/)
+  expect(narrow).not.toBeNull()
+  expect(narrow![1]).toMatch(
+    /\.breakout,\s*\.sunday-grid,\s*\.tick|\.tick,\s*\.breakout,\s*\.sunday-grid|\.breakout[^{]*\{[^}]*grid-template-columns:\s*1fr/,
+  )
+})
