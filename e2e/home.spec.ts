@@ -14,6 +14,7 @@ import {
   navLabels,
   sections,
   sundayNote,
+  sundayServices,
   testimonySource,
 } from "./copy"
 import { aboveMenu, atMenu, box, desktop, headerNav, paintedBackground } from "./helpers"
@@ -26,6 +27,10 @@ const goingOnScripture = homeContent.find(
 const testimonyScripture = homeContent.find(
   (section) => section.heading === "Highlighted testimonies",
 )?.items[0]
+
+function curlyQuoted(text: string) {
+  return `\u201C${text}\u201D`
+}
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize(desktop)
@@ -73,13 +78,14 @@ test("shows scripture, request-time event slots, and testimony scripture", async
   const highlights = page.getByRole("region", { name: sections[0] })
   await expect(highlights.getByText("Highlight to be published")).toHaveCount(0)
   expect(goingOnScripture).toBeTruthy()
+  const goingOnQuote = curlyQuoted(goingOnScripture!.text!)
   await expect(highlights.getByRole("heading", { level: 3, name: goingOnScripture!.title })).toBeVisible()
-  await expect(highlights.getByText(goingOnScripture!.text!)).toBeVisible()
+  await expect(highlights.getByText(goingOnQuote)).toBeVisible()
   await expect(highlights.getByRole("link", { name: goingOnScripture!.title })).toHaveCount(0)
   await expect(highlights.locator("li")).toHaveCount(3)
   const scriptureRow = highlights.locator("li").first()
   await expect(scriptureRow.getByRole("heading", { level: 3 })).toHaveText(goingOnScripture!.title)
-  await expect(scriptureRow.getByRole("paragraph")).toHaveText(goingOnScripture!.text!)
+  await expect(scriptureRow.getByRole("paragraph")).toHaveText(goingOnQuote)
   await expectEventSlot(highlights, slots[0], 1)
   await expectEventSlot(highlights, slots[1], 2)
   await expect(highlights.getByRole("link", { name: slots[0].name })).toHaveCount(0)
@@ -88,8 +94,10 @@ test("shows scripture, request-time event slots, and testimony scripture", async
 
   const stories = page.getByRole("region", { name: "Highlighted testimonies" })
   expect(testimonyScripture).toBeTruthy()
+  const testimonyQuote = curlyQuoted(testimonyScripture!.text!)
   await expect(stories.getByRole("heading", { level: 3, name: testimonyScripture!.title })).toBeVisible()
-  await expect(stories.getByText(testimonyScripture!.text!)).toBeVisible()
+  await expect(stories.getByText(testimonyQuote)).toBeVisible()
+  await expect(stories.locator("article.scripture-tile").getByRole("paragraph")).toHaveText(testimonyQuote)
   await expect(stories.getByRole("link", { name: testimonyScripture!.title })).toHaveCount(0)
   await expect(stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })).toBeVisible()
   await expect(stories.getByRole("link", { name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
@@ -99,8 +107,9 @@ test("shows scripture, request-time event slots, and testimony scripture", async
   await expect(stories.getByText(testimonySource)).toBeVisible()
 
   const sermons = page.getByRole("region", { name: "Sermons" })
-  await expect(sermons.getByText(scripture)).toBeVisible()
-  await expect(sermons.getByText(scriptureRef)).toBeVisible()
+  const sermonQuote = sermons.locator("blockquote.scripture")
+  await expect(sermonQuote.getByRole("paragraph")).toHaveText(scripture)
+  await expect(sermonQuote.locator("footer")).toHaveText(scriptureRef)
   await expect(sermons.getByRole("link", { name: "Evangelist Rambabu" })).toHaveCount(0)
   await expect(sermons.getByText("Playlist to be published")).toHaveCount(0)
   await expect(sermons.locator('a[href*="playlist?list="]')).toHaveCount(0)
@@ -148,14 +157,16 @@ test("keeps sermon titles when YouTube thumbnails are blocked", async ({ page })
 
 test("reads both Sunday services with Know More and no visit claim", async ({ page }) => {
   await page.goto("/")
-  const sunday = page.getByRole("region", { name: "New to HSG" })
+  expect(sundayServices.length).toBe(2)
+  const [wordFest, miracles] = sundayServices
+  const sunday = page.getByRole("region", { name: "New to HSG?" })
   const text = await sunday.innerText()
-  const word = text.indexOf("Word Fest Service")
-  const english = text.indexOf("English")
-  const morning = text.indexOf("8\u20139am")
-  const healing = text.indexOf("Miracles and Healing Service")
-  const multilingual = text.indexOf("Multilingual")
-  const onwards = text.indexOf("9:30am onwards")
+  const word = text.indexOf(wordFest.title)
+  const english = text.indexOf(wordFest.language)
+  const morning = text.indexOf(wordFest.time)
+  const healing = text.indexOf(miracles.title)
+  const multilingual = text.indexOf(miracles.language)
+  const onwards = text.indexOf(miracles.time)
   const note = text.indexOf(sundayNote)
   expect(word).toBeGreaterThan(-1)
   expect(word).toBeLessThan(english)
@@ -236,17 +247,31 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
   const fourth = stories.getByRole("heading", { level: 3, name: "Miracle from Dallas" })
 
   await page.setViewportSize(aboveMenu)
-  const widths = await stories.locator("article").evaluateAll((articles) =>
-    articles.map((article) => article.getBoundingClientRect().width),
+  const articles = stories.locator("article")
+  const widths = await articles.evaluateAll((nodes) =>
+    nodes.map((article) => article.getBoundingClientRect().width),
   )
   expect(widths).toHaveLength(4)
-  expect(Math.abs(widths[0]! - widths[1]!)).toBeLessThan(8)
+  // Scripture tile bleeds wider via negative margin; the testimony pair stays equal.
+  expect(widths[0]!).toBeGreaterThan(widths[1]!)
+  expect(Math.abs(widths[0]! - widths[1]!)).toBeGreaterThan(16)
   expect(Math.abs(widths[2]! - widths[3]!)).toBeLessThan(8)
-  expect(Math.abs((await box(first)).y - (await box(second)).y)).toBeLessThan(8)
-  expect((await box(first)).x).toBeLessThan((await box(second)).x)
-  expect(Math.abs((await box(third)).y - (await box(fourth)).y)).toBeLessThan(8)
-  expect((await box(third)).x).toBeLessThan((await box(fourth)).x)
-  expect((await box(third)).y).toBeGreaterThan((await box(first)).y)
+
+  const [scriptureTile, healing, california, dallas] = await Promise.all([
+    box(articles.nth(0)),
+    box(articles.nth(1)),
+    box(articles.nth(2)),
+    box(articles.nth(3)),
+  ])
+  expect(Math.abs(scriptureTile.y - healing.y)).toBeLessThan(8)
+  expect(scriptureTile.x).toBeLessThan(healing.x)
+  expect(Math.abs(california.y - dallas.y)).toBeLessThan(8)
+  expect(california.x).toBeLessThan(dallas.x)
+  expect(california.y).toBeGreaterThan(scriptureTile.y)
+  await expect(first).toBeVisible()
+  await expect(second).toBeVisible()
+  await expect(third).toBeVisible()
+  await expect(fourth).toBeVisible()
 
   const sermons = page.getByRole("region", { name: "Sermons" })
   const quote = sermons.locator(".channel")
@@ -267,7 +292,7 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
 
   const sunday = page.getByRole("region", { name: "New to HSG?" })
   const knowMore = sunday.getByRole("link", { name: "Know More" })
-  const time = sunday.getByText("8\u20139am")
+  const time = sunday.getByText(sundayServices[0]!.time)
   expect((await box(knowMore)).x).toBeLessThan((await box(time)).x)
 
   await page.setViewportSize(atMenu)
@@ -291,7 +316,11 @@ test("names the brand from the logo and keeps routes in the header only", async 
   await expect(brand).toHaveAttribute("href", "/")
   expect((await brand.innerText()).trim()).toBe("")
   await expect(headerNav(page).getByRole("link")).toHaveText([...navLabels])
-  await expect(page.getByRole("contentinfo").getByRole("link")).toHaveCount(0)
+  const footerLinks = page.getByRole("contentinfo").getByRole("link")
+  await expect(footerLinks).toHaveCount(3)
+  await expect(footerLinks.nth(0)).toHaveAccessibleName("Facebook")
+  await expect(footerLinks.nth(1)).toHaveAccessibleName("Instagram")
+  await expect(footerLinks.nth(2)).toHaveAccessibleName("YouTube")
   await expect(page.getByRole("main").getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/about")
   expect(await paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")
 })

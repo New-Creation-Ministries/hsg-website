@@ -162,6 +162,195 @@ p { max-width: 65ch; }
   padding-inline: max(2.5rem, calc((100% - 76rem) / 2));
   background: var(--background);
 }
+html:has(.about-page) {
+  scroll-snap-type: y mandatory;
+}
+html:has(.about-page) .site-header {
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+html:has(.about-page) .site-footer {
+  scroll-snap-align: start;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.about-page) {
+    scroll-snap-type: none;
+  }
+}
+html:has(.about-page) {
+  scrollbar-color: var(--acid) var(--ink);
+}
+.about-page {
+  --band-muted: #424a4e;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.about-page .about-scene-dots {
+  position: fixed;
+  top: 0.55rem;
+  right: 1.2rem;
+  z-index: 8;
+  display: flex;
+  gap: 0.35rem;
+}
+.about-page .about-scene-dots a {
+  width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+.about-page .about-scene-dots a::before {
+  content: "";
+  width: 0.55rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+}
+.about-page .about-scene-dots a[aria-current="true"]::before {
+  background: var(--acid);
+  border-color: var(--acid);
+}
+.about-page .scene {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  position: relative;
+}
+.about-page .scene:nth-of-type(even) {
+  grid-template-columns: 0.9fr 1.1fr;
+}
+.about-page .scene:nth-of-type(even) .copy {
+  order: 2;
+}
+.about-page .copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 6.5rem 3rem 3.2rem;
+  background: var(--ink);
+}
+.about-page .copy h1,
+.about-page .copy h2 {
+  font-size: clamp(3.4rem, 7vw, 6rem);
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
+.about-page .copy p {
+  max-width: 38rem;
+  color: var(--mist);
+}
+.about-page #founders .copy,
+.about-page #born-again .copy,
+.about-page #church .copy {
+  color: var(--cobalt);
+}
+.about-page #founders .copy p,
+.about-page #born-again .copy p,
+.about-page #church .copy p {
+  color: var(--mist);
+}
+.about-page #the-call .copy,
+.about-page #the-call .copy p {
+  color: var(--acid);
+}
+.about-page #nations .copy {
+  color: var(--cobalt);
+}
+.about-page #nations .copy p {
+  color: var(--mist);
+}
+.about-page #story-continues .copy,
+.about-page #story-continues .copy p {
+  color: var(--acid);
+}
+.about-page .copy p + p {
+  margin-top: 0.9rem;
+}
+.about-page .plate {
+  min-height: 100svh;
+  background: var(--cobalt) center / cover no-repeat;
+}
+.about-page #born-again .plate,
+.about-page #church .plate {
+  background-color: #2a160f;
+  background-size: contain;
+}
+.about-page .plate.band {
+  background: var(--band);
+  color: var(--band-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+}
+.about-page .times {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+}
+.about-page .times h3 {
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.about-page .times .service-language {
+  margin: 0.35rem 0 0;
+  color: var(--band-muted);
+  font-size: 1rem;
+  max-width: none;
+}
+.about-page .times article > p:last-child {
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: -0.03em;
+  color: var(--band-link);
+  line-height: 1;
+  margin-top: 0.35rem;
+  max-width: none;
+}
+.about-page .address {
+  margin-top: 1.4rem;
+  max-width: 36ch;
+  color: var(--band-muted);
+}
+@media (max-width: 800px) {
+  .about-page .about-scene-dots {
+    top: auto;
+    bottom: 1rem;
+    right: 50%;
+    translate: 50% 0;
+    padding: 0.25rem 0.5rem;
+    background: color-mix(in srgb, var(--ink) 88%, transparent);
+    border: 1px solid var(--rule);
+  }
+  .about-page .scene,
+  .about-page .scene:nth-of-type(even) {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .about-page .scene:nth-of-type(even) .copy {
+    order: 0;
+  }
+  .about-page .plate {
+    min-height: 46svh;
+  }
+  .about-page .copy {
+    padding: 5.5rem 1.2rem 2rem;
+  }
+  .about-page .plate.band {
+    min-height: auto;
+  }
+}
 .brand-link { grid-column: 1; justify-self: start; align-self: center; display: flex; align-items: center; min-height: 44px; color: var(--foreground); text-decoration: none; }
 .header-mark { width: 9rem; height: auto; display: block; }
 .public-navigation { grid-column: 2; justify-self: center; }

@@ -318,3 +318,32 @@ Both comments from Session 2026-09-23 are in the page. The blurb starts with “
 - comments: 2  resolved: 0  open: 2
 - open: Miracles and Healing needs the description “Full service with healing prayer and live translation using AI. Lunch is provided afterwards.” Sunday descriptions need a clearer size and color.
 - themes: The second Sunday service should carry that description. Both Sunday descriptions should be easier to read than the current body type.
+
+## Session 2026-09-25
+
+### 1. t_005
+- kind: comment
+- url: http://127.0.0.1:4850/about
+- element: p — Holy Spirit Generation, No. 3 NC Arena, Byrathi Village, Bidarahalli Hobli, Kothanur, Bengaluru, Karnataka 560077. Near…
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    Remove Address. Say "We don't do Church together, We do Life together"
+
+### 2. global
+- kind: comment
+- url: http://127.0.0.1:4850/about
+- element: —
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    The header gets removed and it auto snaps to the first scene. Show the header at first. Don't auto snap, snap on scroll and hide the header.
+
+## Session summary
+- comments: 2  resolved: 0  open: 2
+- open: Replace the story-continues address with “We don't do Church together, We do Life together”. Show the header on first load, snap only after the user scrolls, and hide the header once snapping starts.
+- themes: The last scene should drop the street address and carry that line instead. The about page should open with the header visible and only snap, hiding the header, once the visitor scrolls.

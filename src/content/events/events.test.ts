@@ -109,14 +109,14 @@ test("sundayFeeds is word-fest and miracles-and-healing with their own revisions
   expect(serialized).not.toContain("Miracles and Healing Service")
 })
 
-test("word-fest is 08:00–09:00 while Home New to HSG? still says English 8–9am", () => {
+test("word-fest is 08:00–09:00 and Home New to HSG? uses that clock", () => {
   const services = sections.find((section) => section.heading === "New to HSG?")
   const wordFestHome = services?.items.find(
     (item) => item.title === "Word Fest Service",
   )
   const wordFest = sundayFeeds.find((feed) => feed.id === "word-fest")
 
-  expect(wordFestHome?.text).toBe("English\n8–9am")
+  expect(wordFestHome?.text).toBe("English\n08:00–09:00")
   expect(wordFest).toBeDefined()
   expect(kolkataWindow(wordFest!.start, wordFest!.end)).toEqual({
     start: "08:00",
@@ -126,14 +126,14 @@ test("word-fest is 08:00–09:00 while Home New to HSG? still says English 8–9
   })
 })
 
-test("miracles-and-healing is 09:30–13:30 while Home still says Multilingual 9:30am onwards", () => {
+test("miracles-and-healing is 09:30–13:30 and Home uses 09:30 onwards", () => {
   const services = sections.find((section) => section.heading === "New to HSG?")
   const miraclesHome = services?.items.find(
     (item) => item.title === "Miracles and Healing Service",
   )
   const miracles = sundayFeeds.find((feed) => feed.id === "miracles-and-healing")
 
-  expect(miraclesHome?.text).toBe("Multilingual\n9:30am onwards")
+  expect(miraclesHome?.text).toBe("Multilingual\n09:30 onwards")
   expect(miracles).toBeDefined()
   expect(kolkataWindow(miracles!.start, miracles!.end)).toEqual({
     start: "09:30",

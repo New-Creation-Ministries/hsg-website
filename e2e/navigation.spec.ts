@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-import { churchName, navLabels, routes, shellSentence } from "./copy"
+import { churchName, navLabels, routes, shellSentence, sundayServices } from "./copy"
 import { aboveMenu, atMenu, desktop, expectNoHorizontalScroll, headerNav, phone } from "./helpers"
 
 const routeLabels = [...navLabels]
@@ -31,7 +31,8 @@ test("opens, escapes, and closes Menu at 800px", async ({ page }) => {
   await menu.click()
   await nav.getByRole("link", { name: "About" }).click()
   await expect(page).toHaveURL("/about")
-  await expect(page.getByRole("heading", { level: 1, name: "About" })).toBeVisible()
+  await expect(page.getByRole("heading", { level: 1, name: "Founders" })).toBeVisible()
+  await expect(page.getByText(shellSentence)).toHaveCount(0)
   await expect(menu).toHaveAttribute("aria-expanded", "false")
 })
 
@@ -58,7 +59,7 @@ test("does not scroll the page sideways at 320px", async ({ page }) => {
   await page.goto("/")
   await expectNoHorizontalScroll(page)
   await expect(page.getByRole("heading", { level: 1, name: churchName })).toBeVisible()
-  await expect(page.getByText("8\u20139am")).toBeVisible()
+  await expect(page.getByText(sundayServices[0]!.time)).toBeVisible()
   await expect(page.getByText("A woman had lived for three decades with double scoliosis, a missing rib, and four back surgeries.")).toBeVisible()
 })
 
@@ -82,6 +83,10 @@ test("opens every shell with its title, heading, and current page", async ({ pag
     } else if (route.path === "/events") {
       await expect(page).toHaveTitle(`Events | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1, name: "Events" })).toBeVisible()
+      await expect(page.getByText(shellSentence)).toHaveCount(0)
+    } else if (route.path === "/about") {
+      await expect(page).toHaveTitle(`About | ${churchName}`)
+      await expect(page.getByRole("heading", { level: 1, name: "Founders" })).toBeVisible()
       await expect(page.getByText(shellSentence)).toHaveCount(0)
     } else {
       await expect(page).toHaveTitle(`${route.label} | ${churchName}`)
