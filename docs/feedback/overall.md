@@ -271,3 +271,21 @@ Both comments from Session 2026-09-23 are in the page. The blurb starts with “
 - comments: 1  resolved: 0  open: 1
 - open: Add to calendar should open in a new tab, name the Google calendar after the event, and create events on the dates shown.
 - themes: The Google add should leave Events in a new tab and subscribe under the event’s name. The dates that land in Google should match the dates on the row.
+
+## Session 2026-09-24
+
+### 1. t_002
+- kind: comment
+- url: http://127.0.0.1:4850/
+- element: svg — 
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    these are not aligned correctly in the mobile view
+
+## Session summary
+- comments: 1  resolved: 0  open: 1
+- open: Sermon quotation marks are misaligned in the mobile view.
+- themes: The sermon word block’s quotation marks need to line up on a narrow screen.

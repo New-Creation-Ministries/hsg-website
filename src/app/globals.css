@@ -260,16 +260,39 @@ p { max-width: 65ch; }
   margin: 0;
 }
 .highlights li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 0;
+  display: block;
+  margin-inline: -0.85rem;
+  padding: 22px 0.85rem;
   border-top: 1px solid var(--rule);
 }
 .highlights h3 {
   margin: 0;
   font-size: 32px;
   max-width: 65ch;
+}
+.highlights li.scripture-tile {
+  background: #2a3118;
+  margin-inline: -0.85rem;
+  padding: 22px 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+.highlights li.scripture-tile + li {
+  border-top: 0;
+}
+.highlights li.scripture-tile h3 {
+  color: var(--paper);
+}
+.highlights li.scripture-tile p {
+  color: var(--acid);
+}
+.testimony-section .scripture-tile {
+  background: #c5c6b0;
+  margin-inline: -0.85rem;
+  padding-inline: 0.85rem;
+}
+.testimony-section .scripture-tile h3,
+.testimony-section .scripture-tile p {
+  color: var(--band-ink);
 }
 
 .testimony-section {
@@ -284,7 +307,7 @@ p { max-width: 65ch; }
 .testimony-section .source-note { color: #424a4e; }
 .stories {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 45px;
 }
 .stories h3 {
@@ -304,7 +327,7 @@ p { max-width: 65ch; }
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-  padding: 2.25rem 2rem 2.25rem 2.75rem;
+  padding: 4.5rem 2rem 2.25rem;
   background: var(--cobalt);
 }
 .scripture {
@@ -606,11 +629,11 @@ p { max-width: 65ch; }
     margin-bottom: 30px;
   }
   .home-section { padding-top: 55px; padding-bottom: 55px; }
-  .highlights li { display: block; }
   .stories { grid-template-columns: 1fr; gap: 30px; }
   .stories article + article { border-top: 1px solid #a6aa9b; padding-top: 30px; }
   .playlists { grid-template-columns: 1fr; }
-  .playlists .channel { padding: 32px 25px 32px 2.25rem; }
+  .playlists .channel { padding: 4.6rem 1.5rem 1.25rem; }
+  .playlists .scripture { padding-bottom: 2.9rem; }
   .visit-grid { grid-template-columns: 1fr; gap: 30px; }
   .visit h2 { font-size: 56px; }
   .time { font-size: 34px; }

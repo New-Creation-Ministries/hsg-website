@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { ReactNode } from "react"
 
 import { PortraitField } from "@/components/portrait-field"
+import { events } from "@/content/events"
 import {
   church,
   leader,
@@ -12,12 +13,16 @@ import {
   type HomeSection,
 } from "@/content/home"
 import {
+  homeEventSlots,
+  type HomeEventSlot,
+} from "@/lib/home-event-slots"
+import {
   firstPlaylistVideos,
   readYoutubePlaylist,
   type YoutubeVideo,
 } from "@/lib/youtube-playlist"
 
-export const dynamic = "error"
+export const dynamic = "force-dynamic"
 
 const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-services", "is-sermons"] as const
 
@@ -61,14 +66,47 @@ function ItemTitle({ item }: { item: HomeItem }) {
   )
 }
 
-function HighlightItems({ items }: { items: HomeItem[] }) {
+function isScriptureItem(item: HomeItem) {
+  return /\d+:\d+/.test(item.title)
+}
+
+function HighlightItems({
+  items,
+  slots,
+}: {
+  items: HomeItem[]
+  slots: [HomeEventSlot, HomeEventSlot]
+}) {
   return (
     <ul className="highlights content-list">
-      {items.map((item, itemIndex) => (
-        <li key={`${item.title}-${itemIndex}`}>
-          <h3>
-            <ItemTitle item={item} />
-          </h3>
+      {items.map((item, itemIndex) =>
+        isScriptureItem(item) ? (
+          <li className="scripture-tile" key={`${item.title}-${itemIndex}`}>
+            <h3>
+              <ItemTitle item={item} />
+            </h3>
+            {item.text ? <p>“{item.text}”</p> : null}
+          </li>
+        ) : (
+          <li key={`${item.title}-${itemIndex}`}>
+            <h3>
+              <ItemTitle item={item} />
+            </h3>
+            {item.text ? <p>{item.text}</p> : null}
+          </li>
+        ),
+      )}
+      {slots.map((slot, slotIndex) => (
+        <li key={`${slot.kind}-${slot.name}-${slotIndex}`}>
+          <h3>{slot.name}</h3>
+          {slot.kind === "dated" ? (
+            <p>{slot.whenLine}</p>
+          ) : (
+            <>
+              <p>{slot.language}</p>
+              <p>{slot.time}</p>
+            </>
+          )}
         </li>
       ))}
     </ul>
@@ -78,14 +116,23 @@ function HighlightItems({ items }: { items: HomeItem[] }) {
 function TestimonyItems({ items }: { items: HomeItem[] }) {
   return (
     <div className="stories">
-      {items.map((item, itemIndex) => (
-        <article key={`${item.title}-${itemIndex}`}>
-          <h3>
-            <ItemTitle item={item} />
-          </h3>
-          {item.text ? <p>{item.text}</p> : null}
-        </article>
-      ))}
+      {items.map((item, itemIndex) =>
+        isScriptureItem(item) ? (
+          <article className="scripture-tile" key={`${item.title}-${itemIndex}`}>
+            <h3>
+              <ItemTitle item={item} />
+            </h3>
+            {item.text ? <p>“{item.text}”</p> : null}
+          </article>
+        ) : (
+          <article key={`${item.title}-${itemIndex}`}>
+            <h3>
+              <ItemTitle item={item} />
+            </h3>
+            {item.text ? <p>{item.text}</p> : null}
+          </article>
+        ),
+      )}
     </div>
   )
 }
@@ -155,13 +202,10 @@ function ServiceItems({ items }: { items: HomeItem[] }) {
   )
 }
 
-function SectionBody({ section, index }: { section: HomeSection; index: number }) {
-  if (index === 0) return <HighlightItems items={section.items} />
-  if (index === 1) return <TestimonyItems items={section.items} />
-  return <ServiceItems items={section.items} />
-}
-
 export default async function Home() {
+  const sundayItems =
+    sections.find((section) => section.heading === "New to HSG?")?.items ?? []
+  const slots = homeEventSlots(events, sundayItems, new Date())
   const series = await readYoutubePlaylist(sermonPlaylistId)
   const videos = firstPlaylistVideos(series, 5)
 
@@ -199,7 +243,7 @@ export default async function Home() {
                     <SectionLink href={section.more.href}>{section.more.label}</SectionLink>
                   </div>
                   <div>
-                    <SectionBody section={section} index={index} />
+                    <ServiceItems items={section.items} />
                     <p className="source-note page-note">{pageNotes.sunday}</p>
                   </div>
                 </div>
@@ -211,8 +255,10 @@ export default async function Home() {
                   </div>
                   {isSermons ? (
                     <SermonItems section={section} videos={videos} />
+                  ) : index === 0 ? (
+                    <HighlightItems items={section.items} slots={slots} />
                   ) : (
-                    <SectionBody section={section} index={index} />
+                    <TestimonyItems items={section.items} />
                   )}
                   {isTestimonies ? (
                     <p className="source-note page-note">{pageNotes.testimonies}</p>
