@@ -60,10 +60,11 @@ test("Sunday services keep Home name, language, and time; page text has no 1:30"
   expect(source).not.toMatch(/13:30/)
 })
 
-test("dated scope has refresh clause; page does not say Added", () => {
-  expect(source).toMatch(
+test("dated rows do not show the subscribe refresh note; page does not say Added", () => {
+  expect(source).not.toMatch(
     /Subscribing follows a later published time after your calendar refreshes\./,
   )
+  expect(source).not.toMatch(/className=["']scope["']/)
   expect(source).not.toMatch(/["']Added["']|>Added</)
 })
 

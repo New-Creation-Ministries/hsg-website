@@ -11,10 +11,14 @@ export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = { title: "Events" }
 
-const REFRESH =
-  "Subscribing follows a later published time after your calendar refreshes."
-
 const sundaySection = sections.find((section) => section.heading === "New to HSG?")
+
+const SUNDAY_DESCRIPTION: Record<string, string> = {
+  "Word Fest Service":
+    "Short English service focused on deep teaching of the Word of God",
+  "Miracles and Healing Service":
+    "Full service with healing prayer and live translation using AI. Lunch is provided afterwards.",
+}
 
 const SUNDAY_FEED_BY_TITLE = new Map(
   [
@@ -26,21 +30,26 @@ const SUNDAY_FEED_BY_TITLE = new Map(
   }),
 )
 
-function splitClock(time: string): { digits: string; period: string } {
-  const match = /^([^A-Za-z]*)(.*)$/.exec(time)
-  return { digits: match?.[1] ?? time, period: match?.[2] ?? "" }
+function hhmm(iso: string): string {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(iso))
+  const hour = parts.find((part) => part.type === "hour")?.value ?? ""
+  const minute = parts.find((part) => part.type === "minute")?.value ?? ""
+  return `${hour}:${minute}`
+}
+
+function sundayClock(time: string, start: string, end: string): string {
+  const startClock = hhmm(start)
+  if (/onwards/i.test(time)) return `${startClock} onwards`
+  return `${startClock}–${hhmm(end)}`
 }
 
 function scopePhrase(scope: UpcomingEventRow["scope"]): "this date only" | "these dates only" {
   return scope === "This date only" ? "this date only" : "these dates only"
-}
-
-function ScopeLine({ scope }: { scope: UpcomingEventRow["scope"] }) {
-  return (
-    <p className="scope">
-      {scope}. {REFRESH}
-    </p>
-  )
 }
 
 function TickTime({ row }: { row: UpcomingEventRow }) {
@@ -82,7 +91,6 @@ function FeaturedRow({
           <h2>{row.name}</h2>
           <p className="when">{row.whenLine}</p>
           {row.description ? <p>{row.description}</p> : null}
-          <ScopeLine scope={row.scope} />
           <AddToCalendar
             id={row.id}
             name={row.name}
@@ -108,7 +116,6 @@ function MinorRow({
       <div>
         <h3>{row.name}</h3>
         <p className="when">{row.whenLine}</p>
-        <ScopeLine scope={row.scope} />
         <AddToCalendar
           id={row.id}
           name={row.name}
@@ -155,7 +162,7 @@ export default async function Page() {
               const feed = SUNDAY_FEED_BY_TITLE.get(item.title)
               const [language, time] = (item.text ?? "").split("\n")
               if (!feed) return null
-              const clock = time ? splitClock(time) : null
+              const clock = time ? sundayClock(time, feed.start, feed.end) : null
               return (
                 <article className="service" key={feed.id}>
                   <div>
@@ -167,6 +174,9 @@ export default async function Page() {
                           : language}
                       </p>
                     ) : null}
+                    {SUNDAY_DESCRIPTION[item.title] ? (
+                      <p className="description">{SUNDAY_DESCRIPTION[item.title]}</p>
+                    ) : null}
                     <AddToCalendar
                       id={feed.id}
                       name={item.title}
@@ -174,12 +184,7 @@ export default async function Page() {
                       scope="every Sunday"
                     />
                   </div>
-                  {clock ? (
-                    <p className="clock">
-                      {clock.digits}
-                      {clock.period ? <small>{clock.period}</small> : null}
-                    </p>
-                  ) : null}
+                  {clock ? <p className="clock">{clock}</p> : null}
                 </article>
               )
             })}
