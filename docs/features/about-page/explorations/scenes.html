@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — Scenes — Holy Spirit Generation</title>
+  <link rel="stylesheet" href="../../home-landing-page/design-reference/fonts.css">
+  <style>
+    :root {
+      --bg: #090d15; --ink: #f5f3e8; --muted: #b6c1d5; --accent: #dee77f;
+      --panel: #173de0; --line: #394250; --band: #dedfc9; --band-ink: #141a20; --band-muted: #424a4e; --band-link: #182da3;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; scrollbar-color: var(--accent) var(--bg); }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.6 "DM Sans", sans-serif; }
+    ::selection { background: var(--accent); color: var(--bg); }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+    h1, h2, p { margin: 0; }
+    h1, h2 { font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.92; }
+    .skip { position: absolute; left: 1rem; top: 1rem; z-index: 20; padding: 0.8rem 1rem; background: var(--accent); color: var(--bg); transform: translateY(-200%); }
+    .skip:focus { transform: none; }
+    header { position: fixed; inset: 0 0 auto 0; z-index: 8; display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 1.2rem; }
+    header a:first-child { background: var(--bg); padding: 0.35rem 0.55rem; }
+    header img { width: 7.5rem; height: auto; display: block; }
+    .dots { display: flex; gap: 0.35rem; }
+    .dots a { width: 44px; height: 44px; display: grid; place-items: center; text-decoration: none; }
+    .dots a::before { content: ""; width: 0.55rem; height: 0.55rem; border: 1px solid var(--ink); border-radius: 50%; }
+    .dots a[aria-current="true"]::before { background: var(--accent); border-color: var(--accent); }
+    .scene { min-height: 100svh; scroll-snap-align: start; scroll-snap-stop: always; display: grid; grid-template-columns: 1.1fr 0.9fr; position: relative; }
+    .scene:nth-child(even) { grid-template-columns: 0.9fr 1.1fr; }
+    .scene:nth-child(even) .copy { order: 2; }
+    .copy { display: flex; flex-direction: column; justify-content: flex-end; padding: 6.5rem 3rem 3.2rem; background: var(--bg); }
+    .copy h1, .copy h2 { font-size: clamp(3.4rem, 7vw, 6rem); margin-bottom: 1rem; }
+    .copy p { max-width: 38rem; color: var(--muted); }
+    .copy p + p { margin-top: 0.9rem; }
+    .plate { min-height: 100svh; background: var(--panel) center/cover no-repeat; }
+    .plate.ink { background: var(--bg); }
+    .plate.band { background: var(--band); color: var(--band-ink); display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem; }
+    .times { display: grid; gap: 1.2rem; margin-top: 1.4rem; }
+    .times h3 { margin: 0; font-family: "Oswald", sans-serif; font-weight: 500; font-size: 1.4rem; text-transform: none; letter-spacing: 0; }
+    .times p { font-family: "Oswald", sans-serif; font-size: 2.4rem; letter-spacing: -0.03em; color: var(--band-link); line-height: 1; }
+    .address { margin-top: 1.4rem; max-width: 36ch; color: var(--band-muted); }
+    .menu { display: none; }
+    footer { scroll-snap-align: start; padding: 1.2rem 1.4rem 1.6rem; display: flex; justify-content: space-between; color: var(--muted); border-top: 1px solid var(--line); }
+    footer a { color: var(--ink); }
+    @media (max-width: 800px) {
+      header { background: var(--bg); border-bottom: 1px solid var(--line); }
+      .scene, .scene:nth-child(even) { grid-template-columns: 1fr; min-height: auto; }
+      .scene:nth-child(even) .copy { order: 0; }
+      .plate { min-height: 46svh; }
+      .copy { padding: 5.5rem 1.2rem 2rem; }
+      .plate.band { min-height: auto; }
+      footer { flex-direction: column; gap: 0.6rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-snap-type: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#founders">Skip to content</a>
+  <header>
+    <a href="../../home-landing-page/design-reference/02-spirit-in-blue.html"><img src="../../home-landing-page/design-reference/assets/hsg-logo.jpg" alt="Holy Spirit Generation, Home"></a>
+    <nav class="dots" aria-label="Scenes">
+      <a href="#founders" aria-current="true"><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Founders</span></a>
+      <a href="#year-1983"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">1983</span></a>
+      <a href="#the-call"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">The call</span></a>
+      <a href="#nations"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">89 nations</span></a>
+      <a href="#church"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">The church</span></a>
+      <a href="#sunday"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Sunday</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="scene" id="founders">
+      <div class="copy">
+        <h1>Founders</h1>
+        <p>Apostle Dr. P. S. Rambabu and Vinita Rambabu are the founders of Rambo World Outreach, also known as New Creation Ministries. A ministry that has been passionately taking the glorious Gospel of the Lord Jesus Christ to the whole world with undeniable signs, miracles, and wonders accompanying.</p>
+        <p>He and his wife serve as spiritual parents and mentors to many in the Lord, and they are dedicated to empowering believers all over the world to walk in faith in God’s Word.</p>
+      </div>
+      <div class="plate" style="background-image:url(images/couple.png)" role="img" aria-label="Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu"></div>
+    </section>
+    <section class="scene" id="year-1983">
+      <div class="copy">
+        <h2>1983</h2>
+        <p>Apostle Rambabu was born into a well-to-do and well-educated family in Bellary. In his teens he expressed hatred towards Christ and tore and burnt many Bibles. In 1983 he took a mute Muslim girl to a Christian meeting to challenge Jesus if He could heal her.</p>
+        <p>God healed her. After that miracle he made Jesus the Lord of his life, was disowned by his family, and kept preaching in streets, schools, and villages, riding a bicycle and sleeping in railway stations.</p>
+      </div>
+      <div class="plate" style="background-image:url(images/stage.png)" role="img" aria-label="Apostle Rambabu seated among wheelchairs on a worship platform"></div>
+    </section>
+    <section class="scene" id="the-call">
+      <div class="copy">
+        <h2>The call</h2>
+        <p>After graduating in mechanical engineering, he kept preaching Christ while working as a lecturer in an engineering college at Bellary.</p>
+        <p>In 1989 he heard a call from God to serve Him full-time. He set out to preach the gospel to all the nations, determined to let the world know that Jesus is Lord.</p>
+      </div>
+      <div class="plate ink" aria-hidden="true"></div>
+    </section>
+    <section class="scene" id="nations">
+      <div class="copy">
+        <h2>89 nations</h2>
+        <p>Open-air Gospel campaigns followed, across India and the world, with hundreds of thousands in attendance. He has preached in 89 nations, including endangered and unreached places, with miracles, words of knowledge, and the gifts of the Holy Spirit.</p>
+        <p>He lives in Bangalore with his wife Vinita Rambabu, and his two children Ankit and Annika.</p>
+      </div>
+      <div class="plate" style="background-image:url(images/night-crusade.png)" role="img" aria-label="Apostle Rambabu preaching at a night meeting, with empty wheelchairs on the platform"></div>
+    </section>
+    <section class="scene" id="church">
+      <div class="copy">
+        <h2>The church</h2>
+        <p>Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu are the founders and senior pastors of Holy Spirit Generation, a vibrant, Word-based, Spirit-filled church where the supernatural lifestyle is a norm, and it is one of the fastest-growing churches in India.</p>
+        <p>They equip believers in the Word of faith and the supernatural power of God, to raise up disciples who preach the gospel.</p>
+      </div>
+      <div class="plate" style="background-image:url(images/studio.png)" role="img" aria-label="Apostle Rambabu standing beside wheelchairs, walkers, and crutches"></div>
+    </section>
+    <section class="scene" id="sunday">
+      <div class="copy">
+        <h2>Sunday</h2>
+        <p>Join us every Sunday as we gather to worship together.</p>
+      </div>
+      <div class="plate band">
+        <div class="times">
+          <article><h3>Kannada Service</h3><p>8:00–9:30 am</p></article>
+          <article><h3>English Service</h3><p>10:00 am–12:00 pm</p></article>
+        </div>
+        <p class="address">Holy Spirit Generation, No. 3 NC Arena, Byrathi Village, Bidarahalli Hobli, Kothanur, Bengaluru, Karnataka 560077. Near Legacy School and Motor Mind Shop.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Holy Spirit Generation · Bengaluru</p>
+    <p>Exploration · Scenes</p>
+  </footer>
+  <script>
+    const links = [...document.querySelectorAll(".dots a")];
+    const scenes = links.map((link) => document.querySelector(link.getAttribute("href")));
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      for (const link of links) link.toggleAttribute("aria-current", link.getAttribute("href") === "#" + visible.target.id);
+    }, { threshold: 0.6 });
+    scenes.forEach((scene) => scene && observer.observe(scene));
+  </script>
+</body>
+</html>
