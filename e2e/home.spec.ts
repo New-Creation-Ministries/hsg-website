@@ -11,6 +11,7 @@ import {
   churchName,
   footerAddress,
   ministryName,
+  navLabels,
   sections,
   sundayNote,
   testimonySource,
@@ -94,7 +95,7 @@ test("shows scripture, request-time event slots, and testimony scripture", async
   await expect(stories.getByRole("link", { name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
   await expect(stories.getByRole("link", { name: "Testimony from California" })).toHaveCount(0)
   await expect(stories.getByRole("link", { name: "Miracle from Dallas" })).toHaveCount(0)
-  await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveAttribute("href", "/praise-reports")
+  await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveCount(0)
   await expect(stories.getByText(testimonySource)).toBeVisible()
 
   const sermons = page.getByRole("region", { name: "Sermons" })
@@ -289,14 +290,7 @@ test("names the brand from the logo and keeps routes in the header only", async 
   await expect(brand).toHaveCount(1)
   await expect(brand).toHaveAttribute("href", "/")
   expect((await brand.innerText()).trim()).toBe("")
-  await expect(headerNav(page).getByRole("link")).toHaveText([
-    "About",
-    "Events",
-    "Praise Reports",
-    "Watch",
-    "Contact Us",
-    "Give",
-  ])
+  await expect(headerNav(page).getByRole("link")).toHaveText([...navLabels])
   await expect(page.getByRole("contentinfo").getByRole("link")).toHaveCount(0)
   await expect(page.getByRole("main").getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/about")
   expect(await paintedBackground(page.getByRole("heading", { level: 1 }))).toBe("rgb(23, 61, 224)")

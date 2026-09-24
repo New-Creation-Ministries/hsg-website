@@ -23,7 +23,7 @@ Routes: /
 ### 2. t_004
 - kind: comment
 - url: http://127.0.0.1:4850/
-- element: footer — Holy Spirit GenerationWord-based. Spirit-filled. Bengaluru.HomeAboutEventsPraise ReportsWatchContact UsGive
+- element: footer — Holy Spirit GenerationWord-based. Spirit-filled. Bengaluru.HomeAboutEventsWatchContact UsGive
 - source: —
 - component: —
 - task: —
@@ -136,7 +136,7 @@ Both comments from Session 2026-09-23 are in the page. The blurb starts with “
 ### 9. t_018
 - kind: comment
 - url: http://127.0.0.1:4850/
-- element: ul — HomeAboutEventsPraise ReportsWatchContact UsGive
+- element: ul — HomeAboutEventsWatchContact UsGive
 - source: —
 - component: —
 - task: —

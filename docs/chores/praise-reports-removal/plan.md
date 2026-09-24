@@ -29,7 +29,7 @@ Links: [intent](./intent.md) · [spec](./spec.md)
 
 id: praise-reports-removal_1_1
 title: Delete the praise-reports route
-status: pending
+status: done
 acceptance_criteria:
 - `src/app/praise-reports/page.tsx` is gone
 - No other `src/app` page file is added or edited
@@ -42,7 +42,7 @@ depends_on: []
 
 id: praise-reports-removal_1_2
 title: Drop the nav item and the testimonies section link
-status: pending
+status: done
 acceptance_criteria:
 - `nav` and Highlighted testimonies match [spec.md](./spec.md) Nav and Highlighted testimonies
 - Other sections keep their current `more` values
@@ -55,7 +55,7 @@ depends_on: []
 
 id: praise-reports-removal_1_3
 title: Align Home planning docs with Nav
-status: pending
+status: done
 acceptance_criteria:
 - Edits match [spec.md](./spec.md) Docs for Home intent, Home spec, Home UX, and Home plan
 - Home spec `sections` export marks `more` optional
@@ -69,7 +69,7 @@ depends_on: []
 
 id: praise-reports-removal_1_4
 title: Remove the destination from the other listed docs
-status: pending
+status: done
 acceptance_criteria:
 - Edits match [spec.md](./spec.md) Docs for `PRODUCT.md`, Events plan, the timeline reference, Home events intent, Home events plan, and overall feedback
 - The two feedback element strings become `HomeAboutEventsWatchContact UsGive`
@@ -86,7 +86,7 @@ depends_on: []
 
 id: praise-reports-removal_2_1
 title: Assert nav and testimonies content
-status: pending
+status: done
 acceptance_criteria:
 - `src/content/home/home.test.ts` matches [spec.md](./spec.md) Tests for that file
 files:
@@ -96,7 +96,7 @@ depends_on:
 
 id: praise-reports-removal_2_2
 title: Assert header labels and no testimonies section link
-status: pending
+status: done
 acceptance_criteria:
 - `e2e/copy.ts`, `e2e/home.spec.ts`, and `e2e/accessibility.spec.ts` match [spec.md](./spec.md) Tests for those files
 files:

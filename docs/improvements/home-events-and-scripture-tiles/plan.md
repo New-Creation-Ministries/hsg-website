@@ -84,7 +84,7 @@ status: done
 acceptance_criteria:
 - `e2e/home.spec.ts` no longer expects `Highlight to be published` or a three-column testimony row.
 - On `/`, “What’s going on” matches [spec.md](./spec.md) that section. The two event rows equal `homeEventSlots(events, sundayItems, new Date())` computed in the test. Do not hard-code a dated event name.
-- Testimony grid matches [spec.md](./spec.md) Highlighted testimonies at `aboveMenu` (801px) and `atMenu` (800px). Praise Reports and the source line stay.
+- Testimony grid matches [spec.md](./spec.md) Highlighted testimonies at `aboveMenu` (801px) and `atMenu` (800px). The source line stays.
 files:
 - e2e/home.spec.ts
 depends_on:

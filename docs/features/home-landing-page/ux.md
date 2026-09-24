@@ -28,7 +28,7 @@
 | Shared header | Church identity and public navigation | Brand returns Home; route labels/order come from Spec Routes | Shared navigation contract in ADR 0002 |
 | 1 | Leader identity and church introduction | Page heading identifies HSG; adjacent blurb identifies its leaders | Read onward; navigation remains available |
 | 2 | What’s going on | Bounded list of three highlights; current fixture is unpublished content, not “no events” | Events |
-| 3 | Highlighted testimonies | Three story summaries; titles retain locations and do not attribute stories to HSG gatherings | Praise Reports |
+| 3 | Highlighted testimonies | Three story summaries; titles retain locations and do not attribute stories to HSG gatherings | — |
 | 4 | Sermons | Channel introduction, one channel link, two unpublished playlist items | Watch |
 | 5 | New to HSG | Sunday introduction and two service records, each retaining name/language/time | Contact Us |
 
@@ -46,7 +46,7 @@
 | ID | Entry and actions | Decision/alternative | Completion evidence | Interruption and recovery |
 | --- | --- | --- | --- | --- |
 | F1 / O1 | Open Home → read leader name and blurb | Skip header to main; continue to sections or use About | Identity facts are visible together; no portrait is required to understand the name | Reload or return to Home; missing image does not remove identity text |
-| F2 / O2, O5 | Read a section → activate its destination link, or use shared navigation | Unlinked summaries/placeholders remain readable; do not activate | Destination heading matches link label; shell accurately states unpublished status | Browser Back returns to prior page; Home link recovers from any shell |
+| F2 / O2, O5 | Read a section → activate its destination link when Spec Page lists one, or use shared navigation | Unlinked summaries/placeholders remain readable; do not activate | Destination heading matches link label when a section link exists; shell accurately states unpublished status | Browser Back returns to prior page; Home link recovers from any shell |
 | F3 / O3 | Read Sermons → activate Evangelist Rambabu | Choose Watch for the site’s media destination; unpublished playlists have no action | Browser navigates to supplied channel URL; successful playback is external and unverified | If external page fails, browser Back returns to HSG; reload external page is browser-owned |
 | F4 / O4 | Read New to HSG → compare services → activate Contact Us | Choose either service using visible language/time; no booking is implied | Sunday information is readable; Contact Us opens its shell | Back returns to service information; no directions or attendance confirmation can be completed in this slice |
 
@@ -64,7 +64,7 @@
 ### C2 — Highlights, testimonies, and sermons
 
 - Entry: Home’s static content is available; exact titles, descriptions, intro text, and item counts come from Spec Copy.
-- Each section exposes a heading, optional intro, list, and one destination link in that reading order.
+- Each section exposes a heading, optional intro, and list in that reading order, plus one destination link where Spec Page lists one (Highlighted testimonies has none).
 - An item with a URL has one descriptive text link using its title; text without a URL has no focus target, hover action, play icon, or link styling.
 - Keep any item description adjacent to its title; do not truncate testimony summaries or invent a healing outcome for an incomplete source summary.
 - Keep the supplied unpublished-item wording visible; do not substitute loading indicators or claim there are no events, playlists, or stories.
@@ -92,7 +92,7 @@
 | State | Force / entry trigger | Visible behavior and available action | Exit/recovery | Contract / verification |
 | --- | --- | --- | --- | --- |
 | Home ready | Successful static document load | Identity and all four sections; links enabled only where URLs exist | Navigate or keep reading | C1–C3 / A1–A3 |
-| Menu collapsed / expanded | Header cannot use the wide navigation arrangement; Menu toggled | Same seven destinations; expansion state and focus follow ADR 0002 | Toggle, Escape, activate link, or widen viewport | C4 / A4–A5 |
+| Menu collapsed / expanded | Header cannot use the wide navigation arrangement; Menu toggled | Same six destinations; expansion state and focus follow ADR 0002 | Toggle, Escape, activate link, or widen viewport | C4 / A4–A5 |
 | Content unpublished | Null portrait or absent item URL | Decorative portrait field and specified text placeholders; no fake controls | Follow section destination; content owner publishes later | C1–C2 / A2 |
 | Destination shell | Internal destination lacks published copy | Destination heading and approved shell sentence; shared nav remains usable | Home, another destination, or browser Back | C4 / A6 |
 | Portrait fails after later supply | Image URL unavailable | Identity remains readable; no broken layout or endless loading | Continue reading; publisher fixes asset | C1 / A7 |
@@ -125,7 +125,7 @@
 | --- | --- | --- |
 | Visible lists in approved order — Spec Page | Carousel or tabs save initial space but hide items and require additional navigation | Readers cannot locate visit information; Udeet reviews hierarchy with a future scope change |
 | Inline navigation disclosure — ADR 0002 design decision | Modal drawer separates navigation but adds dismissal/focus-trap behavior | Expanded links obscure orientation or Menu is not discovered; engineer and Udeet revisit header |
-| Destination labels on section links — Spec Page | Action labels could clarify intent but diverge from accepted labels | Readers cannot connect Sermons to Watch or testimonies to Praise Reports; Udeet resolves terminology |
+| Destination labels on section links — Spec Page | Action labels could clarify intent but diverge from accepted labels | Readers cannot connect Sermons to Watch; Udeet resolves terminology |
 | Same-tab external links — Spec Routes | New tabs retain Home visibly but add context-switching and closing work | Visitors cannot resume after external navigation; Udeet revisits with evidence |
 | Retain explicit placeholders — Spec Copy | Hiding unpublished groups reduces clutter but removes approved lead-ins | Visitors interpret placeholders as malfunction or live activity; Udeet reviews publication readiness |
 
