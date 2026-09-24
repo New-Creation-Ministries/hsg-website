@@ -175,7 +175,14 @@ p { max-width: 65ch; }
 .skip-link:focus { transform: none; }
 .site-footer { width: 100%; box-sizing: border-box; margin-inline: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; padding-block: 2.5rem 2rem; padding-inline: max(2.5rem, calc((100% - 76rem) / 2)); border-top: 1px solid var(--rule); }
 .footer-name { margin: 0; font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
-.footer-address { margin: 0; margin-left: auto; max-width: 42ch; text-align: right; color: var(--mist); font-size: 0.95rem; line-height: 1.45; }
+.site-footer { position: relative; }
+.footer-social { position: absolute; left: 50%; top: 2.5rem; translate: -50% 0; display: flex; align-items: center; justify-content: center; gap: 0.85rem; margin: 0; padding: 0; list-style: none; }
+.footer-social a { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: var(--paper); }
+.footer-social a:hover { color: var(--acid); }
+.footer-social svg { width: 1.35rem; height: auto; display: block; }
+.footer-place { margin-left: auto; max-width: 42ch; text-align: right; }
+.footer-church { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
+.footer-address { margin: 0; color: var(--mist); font-size: 0.95rem; line-height: 1.45; }
 
 .home-page.page-width { width: 100%; max-width: none; margin: 0; }
 .hero {
@@ -288,11 +295,14 @@ p { max-width: 65ch; }
 .testimony-section .scripture-tile {
   background: #c5c6b0;
   margin-inline: -0.85rem;
-  padding-inline: 0.85rem;
+  padding: 1.15rem 1.15rem 1.25rem;
 }
-.testimony-section .scripture-tile h3,
-.testimony-section .scripture-tile p {
+.testimony-section .scripture-tile h3 {
   color: var(--band-ink);
+}
+.testimony-section .scripture-tile p {
+  margin-top: 0.7rem;
+  color: var(--band-link);
 }
 
 .testimony-section {
@@ -580,6 +590,7 @@ p { max-width: 65ch; }
 }
 .sunday .service h3 { font-size: 28px; max-width: 65ch; }
 .sunday .lang { margin-top: 8px; color: var(--mist); font-size: 14px; }
+.sunday .description { margin-top: 10px; font-size: 18px; line-height: 1.45; color: var(--band-ink); }
 .sunday .clock {
   font-family: var(--font-display);
   font-size: 42px;
@@ -609,7 +620,8 @@ p { max-width: 65ch; }
   .public-navigation ul { display: block; }
   .public-navigation a { padding-block: 0.4rem; }
   .site-footer { width: 100%; flex-direction: column; gap: 0.75rem; padding-inline: 1.5rem; }
-  .footer-address { margin-left: 0; text-align: left; }
+  .footer-place { margin-left: 0; text-align: left; }
+  .footer-social { position: static; left: auto; top: auto; translate: none; justify-content: flex-start; }
 
   .hero {
     grid-template-columns: 1fr;

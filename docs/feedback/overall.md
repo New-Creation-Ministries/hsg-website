@@ -289,3 +289,32 @@ Both comments from Session 2026-09-23 are in the page. The blurb starts with “
 - comments: 1  resolved: 0  open: 1
 - open: Sermon quotation marks are misaligned in the mobile view.
 - themes: The sermon word block’s quotation marks need to line up on a narrow screen.
+
+## Session 2026-09-24
+
+### 1. t_017
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: article — Miracles and Healing ServiceMultilingual · AI PoweredAdd to calendarGoogle CalendarApple Calendar09:30 onwards
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    Full service with healing prayer and live translation using AI. Lunch is provided afterwards.
+
+### 2. t_017
+- kind: comment
+- url: http://127.0.0.1:4850/events
+- element: article — Miracles and Healing ServiceMultilingual · AI PoweredAdd to calendarGoogle CalendarApple Calendar09:30 onwards
+- source: —
+- component: —
+- task: —
+- resolved: no
+- text: |
+    this should be the description. Use better font sze and color for descriptions.
+
+## Session summary
+- comments: 2  resolved: 0  open: 2
+- open: Miracles and Healing needs the description “Full service with healing prayer and live translation using AI. Lunch is provided afterwards.” Sunday descriptions need a clearer size and color.
+- themes: The second Sunday service should carry that description. Both Sunday descriptions should be easier to read than the current body type.
