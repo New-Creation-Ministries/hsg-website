@@ -14,10 +14,10 @@ const moduleSource = readFileSync(
 )
 
 const sundayServices: HomeItem[] = [
-  { title: "Word Fest Service", text: "English\n8–9am" },
+  { title: "Word Fest Service", text: "English\n08:00–09:00" },
   {
     title: "Miracles and Healing Service",
-    text: "Multilingual\n9:30am onwards",
+    text: "Multilingual\n09:30 onwards",
   },
 ]
 
@@ -25,14 +25,14 @@ const miraclesSlot = {
   kind: "service" as const,
   name: "Miracles and Healing Service",
   language: "Multilingual",
-  time: "9:30am onwards",
+  time: "09:30 onwards",
 }
 
 const wordFestSlot = {
   kind: "service" as const,
   name: "Word Fest Service",
   language: "English",
-  time: "8–9am",
+  time: "08:00–09:00",
 }
 
 function baseEvent(

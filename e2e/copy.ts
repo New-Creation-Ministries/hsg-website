@@ -1,3 +1,5 @@
+import { sections as homeSections } from "../src/content/home"
+
 export const churchName = "Holy Spirit Generation"
 export const blurb =
   "A Word-based, Spirit-filled church in Bengaluru, founded and led by Apostle Dr. P. S. Rambabu and Pastor Vinita Rambabu."
@@ -11,6 +13,14 @@ export const scripture =
   "My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart."
 export const scriptureRef = "Proverbs 4:20-21"
 export const oldSummary = "Gatherings, news, and messages will be published here."
+
+/** Language/time pairs from Home “New to HSG?” — same source Events and About import. */
+export const sundayServices = (
+  homeSections.find((section) => section.heading === "New to HSG?")?.items ?? []
+).map((item) => {
+  const [language = "", time = ""] = (item.text ?? "").split("\n")
+  return { title: item.title, language, time }
+})
 
 export const sections = [
   "What\u2019s going on",

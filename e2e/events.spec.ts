@@ -1,11 +1,12 @@
 import { expect, test } from "@playwright/test"
 
-import { churchName, shellSentence } from "./copy"
+import { churchName, shellSentence, sundayServices } from "./copy"
 import { desktop, expectNoHorizontalScroll, headerNav, phone } from "./helpers"
 
 const whatsGoingOn = "What\u2019s going on"
-const wordFest = "Word Fest Service"
-const miracles = "Miracles and Healing Service"
+const [wordFestService, miraclesService] = sundayServices
+const wordFest = wordFestService!.title
+const miracles = miraclesService!.title
 
 test("opens Events from Home and the header, then Back returns Home", async ({ page }) => {
   await page.setViewportSize(desktop)
@@ -53,8 +54,12 @@ test("shows Voice of Apostles 2026, Sunday Home times, and no placeholder chrome
   await expect(page.getByRole("heading", { level: 2, name: "Sunday services" })).toBeVisible()
   await expect(page.getByRole("heading", { level: 3, name: wordFest })).toBeVisible()
   await expect(page.getByRole("heading", { level: 3, name: miracles })).toBeVisible()
-  await expect(page.getByText("8\u20139am")).toBeVisible()
-  await expect(page.getByText("9:30am onwards")).toBeVisible()
+  const wordFestArticle = page.locator("article.service").filter({
+    has: page.getByRole("heading", { level: 3, name: wordFest }),
+  })
+  await expect(wordFestArticle.getByText(wordFestService!.language, { exact: true })).toBeVisible()
+  await expect(wordFestArticle.getByText(wordFestService!.time, { exact: true })).toBeVisible()
+  await expect(page.getByText(miraclesService!.time, { exact: true })).toBeVisible()
 
   await expect(page.getByLabel(`Add to calendar, ${wordFest}, every Sunday`)).toHaveCount(1)
   await expect(page.getByLabel(`Add to calendar, ${miracles}, every Sunday`)).toHaveCount(1)

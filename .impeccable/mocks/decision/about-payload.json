@@ -1,0 +1,19 @@
+{
+  "title": "About page",
+  "question": "Scenes is the locked About page.",
+  "options": [
+    {
+      "id": "scenes",
+      "label": "Scenes",
+      "kicker": "THE ROLL",
+      "lineage": "One chapter owns the screen, then the next",
+      "thesis": "Each chapter is a full screen: the paragraph on ink, the photograph on the other half, and the page snaps to the next scene.",
+      "palette": ["#090d15", "#f5f3e8", "#173de0", "#dee77f", "#dedfc9"],
+      "materials": ["Oswald", "DM Sans", "full-bleed photographs", "scroll snap"],
+      "viewport": "Founders sits beside the couple portrait. Six dots mark the scenes.",
+      "risk": "A quiet scene, The call, has no photograph and can feel empty.",
+      "comp": ".impeccable/mocks/decision/scenes.webp"
+    }
+  ],
+  "buildPath": { "value": "comp", "toggle": true }
+}

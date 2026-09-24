@@ -43,7 +43,7 @@ const HOME_SUNDAY_LOCKS = [
   {
     id: "word-fest",
     homeTitle: "Word Fest Service",
-    homeText: "English\n8–9am",
+    homeText: "English\n08:00–09:00",
     window: {
       start: "08:00",
       end: "09:00",
@@ -54,7 +54,7 @@ const HOME_SUNDAY_LOCKS = [
   {
     id: "miracles-and-healing",
     homeTitle: "Miracles and Healing Service",
-    homeText: "Multilingual\n9:30am onwards",
+    homeText: "Multilingual\n09:30 onwards",
     window: {
       start: "09:30",
       end: "13:30",

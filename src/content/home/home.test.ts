@@ -53,10 +53,10 @@ test("keeps Sunday service names, languages, and times", () => {
     "Join us every Sunday to worship the Lord together and celebrate his goodness in our lives",
   )
   expect(services?.items).toEqual([
-    { title: "Word Fest Service", text: "English\n8–9am" },
+    { title: "Word Fest Service", text: "English\n08:00–09:00" },
     {
       title: "Miracles and Healing Service",
-      text: "Multilingual\n9:30am onwards",
+      text: "Multilingual\n09:30 onwards",
     },
   ])
   expect(services?.more).toEqual({ label: "Know More", href: "/contact" })
