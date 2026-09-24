@@ -45,15 +45,20 @@ export const sections: HomeSection[] = [
   {
     heading: "What’s going on",
     items: [
-      { title: "Highlight to be published" },
-      { title: "Highlight to be published" },
-      { title: "Highlight to be published" },
+      {
+        title: "Acts 2:46 (AMP)",
+        text: "And day after day they regularly assembled in the temple with united purpose... with gladness and simplicity and generous hearts",
+      },
     ],
     more: { label: "Events", href: "/events" },
   },
   {
     heading: "Highlighted testimonies",
     items: [
+      {
+        title: "Hebrews 2:4 (KJV)",
+        text: "God also bearing them witness, both with signs and wonders, and with divers miracles, and gifts of the Holy Ghost",
+      },
       {
         title: "Healing story from Sherman, Illinois",
         text: "A woman had lived for three decades with double scoliosis, a missing rib, and four back surgeries.",

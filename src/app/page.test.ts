@@ -54,15 +54,37 @@ test("sermons put intro and first item in cobalt panel; no iframe or banned tagl
   expect(source).not.toMatch(/Church news & gatherings/)
 })
 
-test("Home is static: dynamic error, playlist reader during render, first five videos", () => {
-  expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']error["']/)
+test("Home is request-time: force-dynamic, event slots, playlist reader, first five videos", () => {
+  expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/)
+  expect(source).not.toMatch(/export\s+const\s+dynamic\s*=\s*["']error["']/)
   expect(source).not.toMatch(/\brevalidate\b/)
+  expect(source).toMatch(/homeEventSlots\s*\(\s*events\s*,\s*sundayItems\s*,\s*new\s+Date\s*\(\s*\)\s*\)/)
+  expect(source).toMatch(/new\s+Date\s*\(\s*\)/)
   expect(source).toMatch(/async\s+function\s+Home/)
   expect(source).toMatch(/readYoutubePlaylist\s*\(\s*sermonPlaylistId\s*\)/)
   expect(source).toMatch(/firstPlaylistVideos\s*\(/)
   expect(source).toMatch(/firstPlaylistVideos\s*\([^)]*,\s*5\s*\)/)
   expect(source).not.toMatch(/cache:\s*["']no-store["']/)
   expect(source).not.toMatch(/Playlist to be published/)
+})
+
+test("What’s going on renders scripture text and slot name, whenLine, language, time", () => {
+  const highlightsStart = source.indexOf('className="highlights content-list"')
+  const slotsMap = source.indexOf("slots.map", highlightsStart)
+  const highlightItemsEnd = source.indexOf("function TestimonyItems", slotsMap)
+  expect(highlightsStart).toBeGreaterThan(-1)
+  expect(slotsMap).toBeGreaterThan(highlightsStart)
+  expect(highlightItemsEnd).toBeGreaterThan(slotsMap)
+  const scriptureRows = source.slice(highlightsStart, slotsMap)
+  expect(scriptureRows).toMatch(/scripture-tile/)
+  expect(scriptureRows).toMatch(/<h3>[\s\S]*<ItemTitle item=\{item\} \/>/)
+  expect(scriptureRows).toMatch(/“\{item\.text\}”/)
+  const slotRows = source.slice(slotsMap, highlightItemsEnd)
+  expect(slotRows).toMatch(/slot\.name/)
+  expect(slotRows).toMatch(/slot\.whenLine/)
+  expect(slotRows).toMatch(/slot\.language/)
+  expect(slotRows).toMatch(/slot\.time/)
+  expect(slotRows).toMatch(/kind\s*===\s*["']dated["']|kind\s*!==\s*["']dated["']|kind\s*===\s*["']service["']/)
 })
 
 test("sermon video links: empty alt, no-referrer, new tab, no iframe", () => {

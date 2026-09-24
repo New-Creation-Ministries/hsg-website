@@ -1,5 +1,8 @@
-import { expect, test } from "@playwright/test"
+import { expect, test, type Locator } from "@playwright/test"
 
+import { events } from "../src/content/events"
+import { sections as homeContent } from "../src/content/home"
+import { homeEventSlots, type HomeEventSlot } from "../src/lib/home-event-slots"
 import {
   absentReferenceCopy,
   blurb,
@@ -14,9 +17,29 @@ import {
 } from "./copy"
 import { aboveMenu, atMenu, box, desktop, headerNav, paintedBackground } from "./helpers"
 
+const sundayItems =
+  homeContent.find((section) => section.heading === "New to HSG?")?.items ?? []
+const goingOnScripture = homeContent.find(
+  (section) => section.heading === "What’s going on",
+)?.items[0]
+const testimonyScripture = homeContent.find(
+  (section) => section.heading === "Highlighted testimonies",
+)?.items[0]
+
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize(desktop)
 })
+
+async function expectEventSlot(region: Locator, slot: HomeEventSlot, index: number) {
+  const row = region.locator("li").nth(index)
+  await expect(row.getByRole("heading", { level: 3 })).toHaveText(slot.name)
+  if (slot.kind === "dated") {
+    await expect(row.getByText(slot.whenLine)).toBeVisible()
+  } else {
+    await expect(row.getByText(slot.language)).toBeVisible()
+    await expect(row.getByText(slot.time)).toBeVisible()
+  }
+}
 
 test("shows the church, the blurb, and the four sections", async ({ page }) => {
   await page.goto("/")
@@ -41,20 +64,38 @@ test("shows the church, the blurb, and the four sections", async ({ page }) => {
   await expect(page.locator("iframe")).toHaveCount(0)
 })
 
-test("keeps unpublished highlights and shows the sermon series with Watch", async ({ page }) => {
+test("shows scripture, request-time event slots, and testimony scripture", async ({ page }) => {
   await page.goto("/")
+  expect(sundayItems.length).toBeGreaterThan(0)
+  const slots = homeEventSlots(events, sundayItems, new Date())
 
   const highlights = page.getByRole("region", { name: sections[0] })
-  await expect(highlights.getByText("Highlight to be published")).toHaveCount(3)
-  await expect(highlights.getByRole("link", { name: "Highlight to be published" })).toHaveCount(0)
+  await expect(highlights.getByText("Highlight to be published")).toHaveCount(0)
+  expect(goingOnScripture).toBeTruthy()
+  await expect(highlights.getByRole("heading", { level: 3, name: goingOnScripture!.title })).toBeVisible()
+  await expect(highlights.getByText(goingOnScripture!.text!)).toBeVisible()
+  await expect(highlights.getByRole("link", { name: goingOnScripture!.title })).toHaveCount(0)
+  await expect(highlights.locator("li")).toHaveCount(3)
+  const scriptureRow = highlights.locator("li").first()
+  await expect(scriptureRow.getByRole("heading", { level: 3 })).toHaveText(goingOnScripture!.title)
+  await expect(scriptureRow.getByRole("paragraph")).toHaveText(goingOnScripture!.text!)
+  await expectEventSlot(highlights, slots[0], 1)
+  await expectEventSlot(highlights, slots[1], 2)
+  await expect(highlights.getByRole("link", { name: slots[0].name })).toHaveCount(0)
+  await expect(highlights.getByRole("link", { name: slots[1].name })).toHaveCount(0)
   await expect(highlights.getByRole("link", { name: "Events" })).toHaveAccessibleName("Events")
 
   const stories = page.getByRole("region", { name: "Highlighted testimonies" })
+  expect(testimonyScripture).toBeTruthy()
+  await expect(stories.getByRole("heading", { level: 3, name: testimonyScripture!.title })).toBeVisible()
+  await expect(stories.getByText(testimonyScripture!.text!)).toBeVisible()
+  await expect(stories.getByRole("link", { name: testimonyScripture!.title })).toHaveCount(0)
   await expect(stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })).toBeVisible()
   await expect(stories.getByRole("link", { name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
   await expect(stories.getByRole("link", { name: "Testimony from California" })).toHaveCount(0)
   await expect(stories.getByRole("link", { name: "Miracle from Dallas" })).toHaveCount(0)
   await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveAttribute("href", "/praise-reports")
+  await expect(stories.getByText(testimonySource)).toBeVisible()
 
   const sermons = page.getByRole("region", { name: "Sermons" })
   await expect(sermons.getByText(scripture)).toBeVisible()
@@ -177,9 +218,9 @@ test("keeps highlight rows stacked and puts the wide section link beside its hea
   expect(tops[1]).toBeLessThan(tops[2])
 
   const heading = highlights.getByRole("heading", { level: 2 })
-  const events = highlights.getByRole("link", { name: "Events" })
+  const eventsLink = highlights.getByRole("link", { name: "Events" })
   const headingBox = await box(heading)
-  const eventsBox = await box(events)
+  const eventsBox = await box(eventsLink)
   expect(eventsBox.x).toBeGreaterThan(headingBox.x)
   expect(Math.abs(eventsBox.y - headingBox.y)).toBeLessThan(48)
 })
@@ -187,17 +228,24 @@ test("keeps highlight rows stacked and puts the wide section link beside its hea
 test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }) => {
   await page.goto("/")
   const stories = page.getByRole("region", { name: "Highlighted testimonies" })
-  const first = stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })
-  const second = stories.getByRole("heading", { level: 3, name: "Testimony from California" })
-  const third = stories.getByRole("heading", { level: 3, name: "Miracle from Dallas" })
-  const widths = await stories.locator("h3").evaluateAll((headings) =>
-    headings.map((heading) => heading.parentElement?.getBoundingClientRect().width ?? 0),
+  expect(testimonyScripture).toBeTruthy()
+  const first = stories.getByRole("heading", { level: 3, name: testimonyScripture!.title })
+  const second = stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })
+  const third = stories.getByRole("heading", { level: 3, name: "Testimony from California" })
+  const fourth = stories.getByRole("heading", { level: 3, name: "Miracle from Dallas" })
+
+  await page.setViewportSize(aboveMenu)
+  const widths = await stories.locator("article").evaluateAll((articles) =>
+    articles.map((article) => article.getBoundingClientRect().width),
   )
-  expect(widths).toHaveLength(3)
-  expect(widths[0]).toBeGreaterThan(widths[1])
-  expect(Math.abs(widths[1] - widths[2])).toBeLessThan(8)
+  expect(widths).toHaveLength(4)
+  expect(Math.abs(widths[0]! - widths[1]!)).toBeLessThan(8)
+  expect(Math.abs(widths[2]! - widths[3]!)).toBeLessThan(8)
   expect(Math.abs((await box(first)).y - (await box(second)).y)).toBeLessThan(8)
-  expect((await box(second)).x).toBeLessThan((await box(third)).x)
+  expect((await box(first)).x).toBeLessThan((await box(second)).x)
+  expect(Math.abs((await box(third)).y - (await box(fourth)).y)).toBeLessThan(8)
+  expect((await box(third)).x).toBeLessThan((await box(fourth)).x)
+  expect((await box(third)).y).toBeGreaterThan((await box(first)).y)
 
   const sermons = page.getByRole("region", { name: "Sermons" })
   const quote = sermons.locator(".channel")
@@ -223,6 +271,14 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
 
   await page.setViewportSize(atMenu)
   expect((await box(first)).y).toBeLessThan((await box(second)).y)
+  expect((await box(second)).y).toBeLessThan((await box(third)).y)
+  expect((await box(third)).y).toBeLessThan((await box(fourth)).y)
+  const rules = await stories.locator("article").evaluateAll((articles) =>
+    articles.map((article) => getComputedStyle(article).borderTopWidth),
+  )
+  expect(rules).toHaveLength(4)
+  expect(rules[0]).toBe("0px")
+  expect(rules.slice(1).every((width) => width === "1px")).toBe(true)
   expect((await box(quote)).y).toBeLessThan((await box(videos.first())).y)
   expect((await box(knowMore)).y).toBeLessThan((await box(time)).y)
 })

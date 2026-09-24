@@ -12,10 +12,12 @@ test("Events is force-dynamic, lists upcoming at request time, and does not reva
   expect(source).not.toMatch(/\brevalidate\b/)
 })
 
-test("Home stays static and does not import events modules", () => {
-  expect(homeSource).toMatch(/export\s+const\s+dynamic\s*=\s*["']error["']/)
-  expect(homeSource).not.toMatch(/@\/content\/events/)
-  expect(homeSource).not.toMatch(/@\/lib\/event-list/)
+test("Home uses event slots at request time; Events lists upcoming directly", () => {
+  expect(homeSource).toMatch(/export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/)
+  expect(homeSource).toMatch(/@\/content\/events/)
+  expect(homeSource).toMatch(/homeEventSlots/)
+  expect(homeSource).not.toMatch(/listUpcoming/)
+  expect(source).toMatch(/listUpcoming\s*\(\s*events\s*,\s*new Date\s*\(\s*\)\s*\)/)
 })
 
 test("document title is Events; h1 Events; no IST note or placeholders", () => {
