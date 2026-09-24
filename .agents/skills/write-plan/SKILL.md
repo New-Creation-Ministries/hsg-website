@@ -1,11 +1,11 @@
 ---
 name: write-plan
-description: Reads intent.md and spec.md and writes a standalone implementation plan.md beside them. Use when the user asks to write a plan, implementation plan, plan.md, take spec to plan, or after a spec is ready and needs sequenced engineering work.
+description: Reads intent.md and spec.md and writes an implementation plan.md beside them. Use when the user asks to write a plan, implementation plan, plan.md, take spec to plan, or after a spec is ready and needs sequenced engineering work.
 ---
 
 # Write plan
 
-Take an intent and spec file and convert it into an implementation plan. Ask what the change could break, which step is most risky, and what other options the agent chose not to do. Iterate until an engineer who has never seen the conversation could implement the change from the plan alone.
+Take an intent and spec file and convert them into an implementation plan. Identify possible breakage, the most risky step, and implementation exclusions. An engineer must be able to implement from the plan and its linked source documents without this conversation.
 
 Do not implement. If intent or spec is missing or too thin, stop. Do not invent either.
 
@@ -23,7 +23,7 @@ Answer in the plan, not as chat asides:
 
 1. What the change could break
 2. Which step is most risky
-3. What other options the agent chose not to do
+3. Which implementation options are excluded, if any
 
 Then rewrite until all of these are true:
 
@@ -61,7 +61,7 @@ These should be specific and concrete test scenarios for all the changes includi
 
 ### Files that change
 
-List every path that will be added, edited, or deleted. One line per path: action, path, why (one clause). No glob-only lists.
+List every path that will be added, edited, or deleted. One line per path: action, path, owning task id(s). Keep implementation details in the owning task. No glob-only lists.
 
 ### Order of work
 
@@ -100,7 +100,7 @@ depends_on:
 - other-feature_2_1
 ```
 
-Mark the most risky step in its wave. Record rejected options as a short "Not doing" list at the end of this section (what was declined and why), so implementers do not revive them.
+Mark the most risky step in its wave; keep its risk details under Risks. Record only exclusions that constrain implementation as a short "Not doing" list, linking existing intent or spec constraints instead of restating them. Omit rejected-option history and unnecessary justifications.
 
 ### Risks
 
@@ -119,5 +119,12 @@ Update the task row in `docs/index.md` with the plan link. Keep existing rows. K
 - `plan.md` is at the classified path
 - `docs/index.md` includes the plan link
 - Critique answers are in the plan
-- A new engineer could implement from the plan alone
+- A new engineer could implement from the plan and linked source documents
 - Every wave task has `id`, `title`, `status`, `acceptance_criteria`, `files`, `depends_on`
+
+## Independent document review
+
+- After writing or revising the document and updating its index, spawn an independent subagent with no inherited conversation history.
+- Give it the written artifact paths, their source-document paths, and `.agents/skills/doc-review/SKILL.md`; instruct it to use that skill. Include any ADRs created or revised in this run.
+- Apply its findings, then have it recheck the revised artifacts. Complete only after it reports no remaining findings; if review is unavailable or a finding needs a user decision, report the blocker and leave the documents as drafts.
+- Keep review findings in the conversation, outside the generated documents. Editorial review does not change their approval status.

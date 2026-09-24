@@ -67,8 +67,6 @@ Ink, paper, mist, acid, cobalt, and the pale band are the Home tokens. Display i
 
 ```
 Events
-Times are in IST (Asia/Kolkata). Dated gatherings sit on the line.
-Sunday services repeat and stay off it.
 
 | 4 Oct  |  [photo]  NIGHT OF WORSHIP          |
 | 6:00pm |           Saturday, 4 October 2026 · 6:00–8:30 pm IST
@@ -82,9 +80,9 @@ Sunday services repeat and stay off it.
            Add to calendar
 
 Sunday services          Word Fest Service
-Not on the dated line.   English                 8–9am
-An add applies every     Add to calendar
-Sunday in IST.           Miracles and Healing Service
+                         English                 8–9am
+                         Add to calendar
+                         Miracles and Healing Service
                          Multilingual            9:30am onwards
                          Add to calendar
 ```
@@ -96,7 +94,7 @@ Sunday in IST.           Miracles and Healing Service
 - Featured row: photograph when present (empty `alt` only if the description already carries the meaning; otherwise the photo’s alt), `h2` name, the when-line, description when present, then the scope.
 - Minor row: `h3` name, the when-line, same scope. No photograph and no description.
 - Zero upcoming events: the sentence “No upcoming events.” Sunday services remain. One featured event is not padded to two.
-- Sunday group heading “Sunday services”. Intro: “Not on the dated line. An add applies every Sunday in IST.” Each Home record keeps name, language, and time, including “onwards”. Word Fest keeps “8–9am”. Miracles and Healing keeps “9:30am onwards” and still has Add to calendar.
+- Sunday group heading “Sunday services”. No intro under that heading. Each Home record keeps name, language, and time, including “onwards”. Word Fest keeps “8–9am”. Miracles and Healing keeps “9:30am onwards” and still has Add to calendar.
 - Both Sunday services use the same one-button control. The feed end for Miracles and Healing is 1:30pm IST and is not written on the page.
 - One button per item, label “Add to calendar”. It opens two options: “Google Calendar” and “Apple Calendar”. Those names are not separate buttons on the row. The button’s accessible name includes the event or service name and either “this date only”, “these dates only”, or “every Sunday”. Menu options include the same event or service name. Targets are at least 44px. Labels wrap. No horizontal page scroll at narrow width or 400% zoom.
 - No past section, detail route, search, filter, pagination, venue, or “Added” status.
@@ -113,9 +111,9 @@ Built at deploy. One feed per addable item. Path `/events/feeds/{id}.ics`. `Cont
 | Miracles and Healing | One weekly `VEVENT`, Sunday 09:30–13:30. The page still says “9:30am onwards”. |
 | Dated event with no end | No URL and no button. |
 
-Google href: `https://calendar.google.com/calendar/render?cid=webcal://{host}/events/feeds/{id}.ics`, same tab. Apple href: `webcal://{host}/events/feeds/{id}.ics`.
+Google href: `https://calendar.google.com/calendar/render?cid=webcal://{host}/events/feeds/{id}.ics`, new tab. Apple href: `webcal://{host}/events/feeds/{id}.ics`, new tab. Both use `rel="noopener noreferrer"`. The feed’s `X-WR-CALNAME` is that item’s name (dated record `name`, or the Sunday service title used as `SUMMARY`).
 
-The scope line beside the button reads “This date only.” or “These dates only.”, then “Subscribing follows a later published time after your calendar refreshes.” Sunday intro adds the same refresh clause to the weekly sentence. Do not promise the same day.
+The scope line beside a dated button reads “This date only.” or “These dates only.”, then “Subscribing follows a later published time after your calendar refreshes.” Do not promise the same day. The page has no IST note under the title and no Sunday intro.
 
 ## Acceptance
 

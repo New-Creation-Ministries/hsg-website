@@ -16,7 +16,7 @@ A subscribed iCalendar feed does change. The client keeps the event’s UID and 
 - A same-day event is one `VEVENT` for its real IST start and end. UID is the event id. `SEQUENCE` is the revision. `DTSTAMP` is the deploy time.
 - A span that covers more than one IST date is one `VEVENT` per IST date from the start date through the end date, inclusive. No date before the start and no date after the end. Each is 08:00–08:30 `Asia/Kolkata`, UID `{event-id}/{date}`, `SUMMARY` the event name. These are reminders on the conference days, not a countdown and not that day’s schedule. `SEQUENCE` is the record revision.
 - Word Fest is one weekly `VEVENT` (`RRULE` on Sunday), 08:00–09:00 `Asia/Kolkata`. Miracles and Healing is one weekly `VEVENT`, 09:30–13:30 `Asia/Kolkata`. That 13:30 end is only in the feed. The page keeps the Home text “9:30am onwards”. A dated event with no end has no feed.
-- Google opens `https://calendar.google.com/calendar/render?cid=` with that feed’s `webcal:` URL, in the same tab. Apple opens the `webcal:` URL and lets the device offer Subscribe.
+- Google opens `https://calendar.google.com/calendar/render?cid=` with that feed’s `webcal:` URL in a new tab. Apple opens the `webcal:` URL in a new tab and lets the device offer Subscribe. Both links use `rel="noopener noreferrer"`. The feed’s `X-WR-CALNAME` is the event name or the Sunday service title (same string as `SUMMARY`).
 - The feed is not rewritten when the event leaves the page. Leftover reminders in a visitor’s calendar are acceptable. Deleting the record on a later deploy removes the URL; clients may keep their last copy.
 - The feed response is cacheable for at most one hour. No per-request data, no stored consent, and no provider write API.
 

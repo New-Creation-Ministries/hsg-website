@@ -37,3 +37,10 @@ Put overall / durable design decisions in `docs/adr/NNNN-<kebab>.md` (4-digit id
 ## Index
 
 Update the task row in `docs/index.md` with the spec link. Keep existing rows. Keep the Plan column; use `—` until a plan exists.
+
+## Independent document review
+
+- After writing or revising the document and updating its index, spawn an independent subagent with no inherited conversation history.
+- Give it the written artifact paths, their source-document paths, and `.agents/skills/doc-review/SKILL.md`; instruct it to use that skill. Include any ADRs created or revised in this run.
+- Apply its findings, then have it recheck the revised artifacts. Complete only after it reports no remaining findings; if review is unavailable or a finding needs a user decision, report the blocker and leave the documents as drafts.
+- Keep review findings in the conversation, outside the generated documents. Editorial review does not change their approval status.

@@ -79,6 +79,10 @@ test("opens every shell with its title, heading, and current page", async ({ pag
     if (route.path === "/") {
       await expect(page).toHaveTitle(churchName)
       await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(churchName)
+    } else if (route.path === "/events") {
+      await expect(page).toHaveTitle(`Events | ${churchName}`)
+      await expect(page.getByRole("heading", { level: 1, name: "Events" })).toBeVisible()
+      await expect(page.getByText(shellSentence)).toHaveCount(0)
     } else {
       await expect(page).toHaveTitle(`${route.label} | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(route.label)

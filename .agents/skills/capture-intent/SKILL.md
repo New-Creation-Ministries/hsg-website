@@ -1,6 +1,6 @@
 ---
 name: capture-intent
-description: Captures user intent into docs/{features,fixes,improvements,chores}/<task>/intent.md (under 120 lines) and updates docs/index.md. Use when the user describes a feature, bug, fix, improvement, chore, or asks to capture intent / write intent.md.
+description: Captures user intent into a classified task folder’s intent.md (under 120 lines) and updates docs/index.md. Use when the user describes a feature, bug, fix, improvement, chore, or asks to capture intent / write intent.md.
 ---
 
 # Capture intent
@@ -57,3 +57,10 @@ After create or revise, update `docs/index.md` so every task in every category i
 - `intent.md` is at the classified path
 - `docs/index.md` includes the task
 - Problem and proposed outcome are specific enough to plan from
+
+## Independent document review
+
+- After writing or revising the document and updating its index, spawn an independent subagent with no inherited conversation history.
+- Give it the written artifact paths, their source-document paths, and `.agents/skills/doc-review/SKILL.md`; instruct it to use that skill. Include any ADRs created or revised in this run.
+- Apply its findings, then have it recheck the revised artifacts. Complete only after it reports no remaining findings; if review is unavailable or a finding needs a user decision, report the blocker and leave the documents as drafts.
+- Keep review findings in the conversation, outside the generated documents. Editorial review does not change their approval status.

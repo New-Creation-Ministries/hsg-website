@@ -1,17 +1,19 @@
 ---
 name: human-ui-review
 description: >-
-  Runs a human UI review on the live app with livepin and records the comments
-  for later analysis. Use when the user asks for a human review of the UI, to
+  Runs a human UI review on the live app with livepin, applies small fixes
+  immediately, and records larger issues for later. Use when the user asks for a human review of the UI, to
   review one plan task or a wave with them, to look at the whole UI together,
   or to capture UI feedback with livepin.
 ---
 
 # Human UI review
 
-Show the running UI to the human with livepin, collect their comments, and write them down. Do not implement. Do not edit `plan.md`, `intent.md`, or `spec.md`.
+- Show the running UI to the human with livepin, apply small fixes immediately, and record larger issues for later.
+- Do not edit `plan.md`, `intent.md`, or `spec.md`.
 
-Before starting, read `.agents/skills/livepin/SKILL.md` and follow it for install, start, poll, reply, and end. Where that skill says to change the code, this skill wins: acknowledge or ask, then record.
+- Before starting, read `.agents/skills/livepin/SKILL.md` and follow it for install, start, poll, reply, and end.
+- Use the triage rules below to decide whether to change code or defer an issue.
 
 ## Scope
 
@@ -45,15 +47,24 @@ The dev server must already be running. Start it only if this repo has a known d
 
 ## Session
 
-Tell them the scope (task id, wave number, or overall), the routes, the review URL, and that you are waiting. Say comments are recorded and not built in this session. Say that before `livepin poll`.
+- Before `livepin poll`, tell them the scope (task id, wave number, or overall), routes, review URL, and that you are waiting.
+- Explain that small fixes happen immediately without a feedback record; larger issues are recorded for later.
 
-One comment at a time. Read `data.source` before searching the repo. Reply in that thread: confirm you have it, or ask one clarifying question if it is ambiguous. Then poll again. Do not edit application code. If they ask for a fix, say it will be in the record.
+- Handle one comment at a time; read `data.source` before searching the repo.
+- Ask one clarifying question in the thread when the requested outcome is ambiguous.
+- Apply small, clear, localized fixes that can be verified during the review, such as a copy correction, spacing adjustment, or isolated style fix.
+- Verify each immediate fix in the live UI and follow repository verification requirements before reporting it complete; reply in the thread with the result, then resume polling.
+- Do not add successfully applied small fixes to feedback documents or create plan tasks for them.
+- Record larger issues for later when they require broader changes, investigation, or product/design decisions; acknowledge the issue in its thread without implementing it during the review.
+- If a small fix proves larger or cannot be completed and verified during the review, defer it and include its remaining work in the record.
 
 They end with **End**, or you run `livepin end` when they say they are done. Do not restart an ended session.
 
 ## Record
 
-After the session ends, run `livepin state` and write from that plus the poll results. Create the `docs/feedback/` path if needed. If the file exists, append a new session. Do not edit earlier sessions.
+- After the session ends, run `livepin state` and use it with the poll results to identify deferred issues.
+- Write only deferred issues to the feedback record; exclude successfully applied small fixes from entries, counts, and themes.
+- Create the `docs/feedback/` path only when there are deferred issues. If the file exists, append a new session without editing earlier sessions.
 
 Keep each comment's `text` verbatim. Keep `[redacted]` as redacted. Attribute a comment to a task when its url or `data.source.file` matches that task's route or `files`; otherwise `—`.
 
@@ -86,8 +97,10 @@ Routes: <paths opened>
 - themes: <two or three sentences on what they asked for>
 ```
 
-A session with no comments is still written: `comments: 0` and `themes: no comments`.
+- If no issues remain deferred, do not create or append a feedback record.
 
 ## Close
 
-Tell them the file path, the counts, and each open comment in one line. The file is the record for later analysis. Do not turn comments into plan tasks unless they ask.
+- Briefly report the immediate fixes made.
+- If issues were deferred, give the feedback file path, deferred counts, and each open issue in one line; otherwise say no issues were deferred.
+- Do not turn comments into plan tasks unless they ask.
