@@ -29,9 +29,9 @@ test("opens, escapes, and closes Menu at 800px", async ({ page }) => {
   await expect(nav.getByRole("link", { name: "About" })).toBeHidden()
 
   await menu.click()
-  await nav.getByRole("link", { name: "About" }).click()
-  await expect(page).toHaveURL("/about")
-  await expect(page.getByRole("heading", { level: 1, name: "Founders" })).toBeVisible()
+  await nav.getByRole("link", { name: "Give" }).click()
+  await expect(page).toHaveURL("/give")
+  await expect(page.getByRole("heading", { level: 1, name: "Why we give" })).toBeVisible()
   await expect(page.getByText(shellSentence)).toHaveCount(0)
   await expect(menu).toHaveAttribute("aria-expanded", "false")
 })
@@ -87,6 +87,10 @@ test("opens every shell with its title, heading, and current page", async ({ pag
     } else if (route.path === "/about") {
       await expect(page).toHaveTitle(`About | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1, name: "Founders" })).toBeVisible()
+      await expect(page.getByText(shellSentence)).toHaveCount(0)
+    } else if (route.path === "/give") {
+      await expect(page).toHaveTitle(`Give | ${churchName}`)
+      await expect(page.getByRole("heading", { level: 1, name: "Why we give" })).toBeVisible()
       await expect(page.getByText(shellSentence)).toHaveCount(0)
     } else {
       await expect(page).toHaveTitle(`${route.label} | ${churchName}`)

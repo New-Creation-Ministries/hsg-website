@@ -1,0 +1,77 @@
+{
+  "regions": [
+    {
+      "id": "logo",
+      "kind": "image",
+      "grid": "A0:A0",
+      "note": "Circular HSG logo at the left of the header"
+    },
+    {
+      "id": "nav",
+      "kind": "text",
+      "grid": "F0:J0",
+      "note": "Header links Home About Events Watch Contact Us Give"
+    },
+    {
+      "id": "verse-field",
+      "kind": "chrome",
+      "grid": "A1:E8",
+      "container": true,
+      "note": "One solid cobalt panel holding the scripture"
+    },
+    {
+      "id": "verse",
+      "kind": "text",
+      "grid": "A2:E6",
+      "note": "KJV 2 Corinthians 9:6 in large white condensed caps"
+    },
+    {
+      "id": "citation",
+      "kind": "text",
+      "grid": "A7:C7",
+      "note": "2 CORINTHIANS 9:6 · KJV"
+    },
+    {
+      "id": "why-heading",
+      "kind": "text",
+      "grid": "F2:G2",
+      "note": "WHY WE GIVE"
+    },
+    {
+      "id": "why-body",
+      "kind": "text",
+      "grid": "F3:J5",
+      "note": "God is generous and so he calls us to be as well, through finances"
+    },
+    {
+      "id": "give",
+      "kind": "control",
+      "grid": "F6:G7",
+      "note": "Pale yellow GIVE button"
+    },
+    {
+      "id": "help-band",
+      "kind": "chrome",
+      "grid": "A9:J9",
+      "note": "Warm paper strip across the foot"
+    },
+    {
+      "id": "help-question",
+      "kind": "text",
+      "grid": "C9:E9",
+      "note": "HAVE QUESTIONS OR NEED HELP?"
+    },
+    {
+      "id": "help-phone",
+      "kind": "text",
+      "grid": "F9:G9",
+      "note": "+91-9036 060 480"
+    },
+    {
+      "id": "help-email",
+      "kind": "text",
+      "grid": "H9:I9",
+      "note": "support@rwo.life"
+    }
+  ]
+}

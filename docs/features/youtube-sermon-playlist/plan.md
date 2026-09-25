@@ -67,12 +67,12 @@ acceptance_criteria:
 - The page exports `dynamic = "error"` and does not export `revalidate`. The playlist fetch is the one in the reader (`cache: "force-cache"`). No `cache: "no-store"`
 - `firstPlaylistVideos(..., 4)` is what the page renders. Entries after the fourth are absent from the JSX
 - Sermons region name stays “Sermons”. “Watch” still points at `/watch`. The cobalt panel still has the intro, then the channel link
-- The series title is one same-tab link to the playlist URL, in the column beside the panel, above the rows. It is not an `h2` or `h3`. Accessible name is the feed title
-- Each video is one same-tab link wrapping an `img` and the full title. `alt=""`. `referrerPolicy="no-referrer"`. `width={320}` and `height={180}`. Accessible name is the title once
-- The video list uses `playlists` and not `content-list`. Rows keep the hairline `border-top`. No radius, shadow, play icon, card, iframe, or YouTube script. No `target="_blank"`
+- The series title is one new-tab link to the playlist URL, in the column beside the panel, above the rows. It is not an `h2` or `h3`. Accessible name is the feed title
+- Each video is one new-tab link wrapping an `img` and the full title. `alt=""`. `referrerPolicy="no-referrer"`. `width={320}` and `height={180}`. Accessible name is the title once
+- The video list uses `playlists` and not `content-list`. Rows keep the hairline `border-top`. No radius, shadow, play icon, card, iframe, or YouTube script. External links use `target="_blank"` and `rel="noopener noreferrer"` (ADR 0002 G7)
 - Titles use DM Sans (body), wrap, and are not uppercase Oswald. The image displays at `8rem` wide, `height: auto`, `aspect-ratio: 16 / 9`, `flex: none`, with a `25px` gap before the title (the service-record gap). At `max-width: 25rem` the row fits the existing page width
 - Wide `.sermon-content` stays `grid-template-columns: 1fr 1fr`. At `max-width: 800px` it stays one column. Existing `globals.test.ts` grid assertions still pass
-- `page.test.ts` source checks: `dynamic = "error"`, `readYoutubePlaylist`, `firstPlaylistVideos`, `referrerPolicy`, empty alt, no `<iframe`, no `target="_blank"`
+- `page.test.ts` source checks: `dynamic = "error"`, `readYoutubePlaylist`, `firstPlaylistVideos`, `referrerPolicy`, empty alt, no `<iframe`, external links use `target="_blank"`
 files:
 - src/app/page.tsx
 - src/app/page.test.ts
@@ -88,12 +88,12 @@ title: Cover the sermon series in the existing browser tests
 status: done
 acceptance_criteria:
 - `e2e/home.spec.ts` no longer expects “Playlist to be published”
-- Sermons shows one link named by its text whose href is `https://www.youtube.com/playlist?list=PLWX7FFgYGzyU`, with no `target="_blank"`
+- Sermons shows one link named by its text whose href is `https://www.youtube.com/playlist?list=PLWX7FFgYGzyU`, with `target="_blank"`
 - That region shows four links whose hrefs match `https://www.youtube.com/watch?v=`, in DOM order, each with an `img` whose `src` matches `https://i.ytimg.com/vi/{id}/mqdefault.jpg` and whose accessible name equals the link text once
 - At the desktop viewport the series link sits to the right of “Evangelist Rambabu”. At `atMenu` (800px) it sits below that link
 - “Watch” still points at `/watch`. Highlight placeholders and testimony URLs are unchanged. `iframe` count stays 0
 - Aborting `https://i.ytimg.com/**` leaves the four title links visible
-- One video link and the series link navigate in the same tab (Playwright fulfills `https://www.youtube.com/**`) and Back returns Home
+- One video link and the series link open in a new tab (ADR 0002 G7; Playwright asserts `target="_blank"`); Home stays
 - A sermon video link’s computed color is `rgb(222, 231, 127)`, and its box height is at least 44
 - `e2e/navigation.spec.ts` still shows `/watch` as the unpublished shell. The 320px Home test still has no horizontal scroll
 files:

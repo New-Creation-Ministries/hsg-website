@@ -8,7 +8,7 @@
 
 - Applies to the shared header and public-page navigation, including future pages.
 - Inherits routes, labels, order, shell copy, and public access from [ADR 0001](0001-public-pages.md) and [Home spec](../features/home-landing-page/spec.md#routes).
-- Inherits Menu threshold, same-tab links, focus visibility, skip link, and target-size requirements from [Home spec](../features/home-landing-page/spec.md#page).
+- Inherits Menu threshold, internal same-tab navigation, focus visibility, skip link, and target-size requirements from [Home spec](../features/home-landing-page/spec.md#page). External link target is decided here (G7), not by the Home spec’s former same-tab external rule.
 - Defines the previously unspecified focus, disclosure, and recovery behavior below.
 - Landing-page-only content and flows remain in [Home UX](../features/home-landing-page/ux.md).
 
@@ -22,13 +22,13 @@
 | G4 | Viewport changes | Wide navigation exposes all links. If Menu becomes hidden while focused, move focus to the current-page link. On narrowing, keep the disclosure open when a navigation link holds focus; otherwise start collapsed. Preserve focus on a visible link. Allow text to wrap instead of clipping when space is constrained. |
 | G5 | Page transitions | For client-side navigation to a different internal page, update title/current-page state, close Menu, and place focus at the destination’s main heading or main start without obscuring it. Selecting the current page closes Menu and restores visible focus without creating a duplicate history entry. Fresh document loads use normal browser focus; a first keyboard-accessible skip link reaches main. |
 | G6 | Re-entry | Menu state is transient; no cookie or local-storage preference. Browser Back/Forward may restore page/scroll state; do not override native history restoration with a forced top scroll or heading-focus reset. Restored disclosure state must agree with visibility and focus. |
-| G7 | Link availability | Missing URLs render as text, not disabled or fake links. Available links retain normal browser link behavior. External links use the same tab; no custom leave-site confirmation. The browser/provider owns external failure and Back/reload recovery. |
+| G7 | Link availability | Missing URLs render as text, not disabled or fake links. Available links retain normal browser link behavior. All external links always open in a new tab; no custom leave-site confirmation. The browser/provider owns external failure and Back/reload recovery. |
 | G8 | Unpublished destinations | A shell retains shared navigation, correct title, and destination heading with the approved sentence. It offers no false completion, payment, form, or directions action. Home and other navigation destinations remain usable. |
 
 ## Alternatives and limits
 
 - Inline disclosure keeps navigation in the reading order; a modal drawer would require additional dismissal and focus-trap behavior without an approved need.
-- Same-tab navigation follows the Home spec; revisit if observed visitors repeatedly fail to return from external media.
+- Internal destinations stay same-tab. All external links always open in a new tab (G7); revisit only with evidence that new-tab handoff fails visitors.
 - No automatic retry, custom offline cache, notification, analytics, or saved navigation preference is introduced.
 - Public shells fulfill route availability, not the information or transaction goals of their future pages.
 - Visual direction, content schemas, embed behavior, and future page layouts remain owned by their existing specs and [architecture](../architecture.md).

@@ -145,6 +145,9 @@ h1, h2, h3, p { margin: 0; }
 p { max-width: 65ch; }
 
 .page-width { width: min(100% - 5rem, 76rem); margin-inline: auto; }
+html {
+  scroll-padding-top: 6.5rem;
+}
 .site-header {
   position: sticky;
   top: 0;
@@ -596,6 +599,38 @@ html:has(.about-page) {
   min-width: 0;
 }
 
+.playlists .playlists-unavailable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.playlists .playlists-unavailable p {
+  margin: 0;
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+.playlists .playlists-unavailable a {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  max-width: 36rem;
+  min-height: 44px;
+  color: var(--acid);
+  scroll-margin-top: 6.5rem;
+}
+.playlists .playlists-unavailable a img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 .visit h2 { font-size: 80px; max-width: 65ch; }
 .visit-grid {
   display: grid;
@@ -636,6 +671,155 @@ html:has(.about-page) {
   margin: 0 0 1.5rem;
 }
 .shell-page p { max-width: 65ch; font-size: 1.125rem; line-height: 1.6; margin: 0; }
+
+/* Give leaflet: docs/features/give-page/spec.md — scoped; do not restyle other routes */
+.give-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 5.5rem);
+}
+.give-page .give-main {
+  margin: 0;
+  padding: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.give-page .give-leaflet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.give-page .give-scripture {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.5rem;
+  background: var(--cobalt);
+  color: var(--paper);
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.5rem);
+}
+.give-page .give-scripture-text {
+  max-width: 28ch;
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.85rem, 3.6vw, 3.15rem);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: pretty;
+}
+.give-page .give-scripture-citation {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.give-page .give-why {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.75rem);
+}
+.give-page .give-why h1 {
+  max-width: none;
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.give-page .give-why p {
+  max-width: 36ch;
+  margin: 0;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  line-height: 1.55;
+}
+.give-page .give-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  min-height: 44px;
+  margin-top: 0.75rem;
+  padding: 0.85rem 2.75rem;
+  background: var(--acid);
+  color: var(--ink);
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.give-page .give-cta:hover {
+  text-decoration: none;
+}
+.give-page .give-help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.75rem);
+  flex: 0 0 auto;
+  background: var(--band);
+  color: var(--band-ink);
+  padding: clamp(1.35rem, 2.5vw, 1.85rem) clamp(1.25rem, 4vw, 3rem);
+}
+.give-page .give-help-label {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.give-page .give-help a {
+  color: inherit;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.4;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.give-page .give-help a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+@media (max-width: 50rem) {
+  .give-page {
+    min-height: 0;
+  }
+  .give-page .give-leaflet {
+    grid-template-columns: 1fr;
+    flex: 0 0 auto;
+  }
+  .give-page .give-scripture {
+    min-height: min(70svh, 36rem);
+  }
+  .give-page .give-scripture-text {
+    max-width: 28ch;
+  }
+  .give-page .give-why {
+    min-height: min(60svh, 28rem);
+  }
+  .give-page .give-help {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+}
 
 .timeline .mast {
   padding-top: 64px;

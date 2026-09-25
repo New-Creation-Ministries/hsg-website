@@ -143,7 +143,7 @@ Service `text` is the language, a newline, then the time. The view keeps those t
 | Contact Us | `/contact` | New to HSG |
 | Give | `/give` | — |
 
-Each path other than `/` is a static page: shared header and footer, an `h1` of the nav label, and “This page will be published here.” Give is nav only. External URLs open in the same tab. The reference’s `?page=` addresses are not routes.
+Each path other than `/` is a static page: shared header and footer, an `h1` of the nav label, and “This page will be published here.” Give is nav only. External URLs always open in a new tab ([ADR 0002](../../adr/0002-public-navigation-and-recovery.md) G7). The reference’s `?page=` addresses are not routes.
 
 ## Acceptance
 

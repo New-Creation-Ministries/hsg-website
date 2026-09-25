@@ -116,6 +116,10 @@ test("shows scripture, request-time event slots, and testimony scripture", async
 
   const videoLinks = sermons.locator('a[href^="https://www.youtube.com/watch?v="]')
   await expect(videoLinks).toHaveCount(5)
+  await expect(sermons.getByRole("link", { name: "Fixture sermon one" })).toHaveAttribute(
+    "href",
+    "https://www.youtube.com/watch?v=fix001",
+  )
   for (const link of await videoLinks.all()) {
     const href = await link.getAttribute("href")
     expect(href).toMatch(/^https:\/\/www\.youtube\.com\/watch\?v=/)

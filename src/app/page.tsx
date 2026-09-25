@@ -9,6 +9,8 @@ import {
   pageNotes,
   sections,
   sermonPlaylistId,
+  sermonPlaylistUnavailable,
+  sermonPlaylistUrl,
   type HomeItem,
   type HomeSection,
 } from "@/content/home"
@@ -19,12 +21,17 @@ import {
 import {
   firstPlaylistVideos,
   readYoutubePlaylist,
+  YoutubePlaylistReadError,
   type YoutubeVideo,
 } from "@/lib/youtube-playlist"
 
 export const dynamic = "force-dynamic"
 
 const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-services", "is-sermons"] as const
+
+type SermonListing =
+  | { status: "available"; videos: YoutubeVideo[] }
+  | { status: "unavailable" }
 
 if (church.name !== "Holy Spirit Generation") {
   throw new Error(`Home heading expects “Holy Spirit Generation”, got “${church.name}”`)
@@ -148,10 +155,10 @@ function ClosingQuote({ className }: { className: string }) {
 
 function SermonItems({
   section,
-  videos,
+  listing,
 }: {
   section: HomeSection
-  videos: YoutubeVideo[]
+  listing: SermonListing
 }) {
   const [citation] = section.items
   return (
@@ -164,21 +171,41 @@ function SermonItems({
           <ClosingQuote className="quote-mark quote-mark-end" />
         </blockquote>
       </li>
-      {videos.map((video) => (
-        <li key={video.id}>
-          <a href={video.url} target="_blank" rel="noopener noreferrer">
-            {/* eslint-disable-next-line @next/next/no-img-element -- remote YouTube thumbnail URL, not next/image */}
+      {listing.status === "available" ? (
+        listing.videos.map((video) => (
+          <li key={video.id}>
+            <a href={video.url} target="_blank" rel="noopener noreferrer">
+              {/* eslint-disable-next-line @next/next/no-img-element -- remote YouTube thumbnail URL, not next/image */}
+              <img
+                src={video.thumbnailUrl}
+                alt=""
+                referrerPolicy="no-referrer"
+                width={320}
+                height={180}
+              />
+              <span>{video.title}</span>
+            </a>
+          </li>
+        ))
+      ) : (
+        <li className="playlists-unavailable">
+          <p>{sermonPlaylistUnavailable.message}</p>
+          <a
+            href={sermonPlaylistUrl(sermonPlaylistId)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element -- local placeholder, same thumbnail markup as playlist rows */}
             <img
-              src={video.thumbnailUrl}
+              src="/sermons/playlist-placeholder.jpg"
               alt=""
-              referrerPolicy="no-referrer"
-              width={320}
-              height={180}
+              width={1024}
+              height={682}
             />
-            <span>{video.title}</span>
+            <span>{sermonPlaylistUnavailable.linkLabel}</span>
           </a>
         </li>
-      ))}
+      )}
     </ul>
   )
 }
@@ -202,12 +229,30 @@ function ServiceItems({ items }: { items: HomeItem[] }) {
   )
 }
 
+async function readSermonListing(): Promise<SermonListing> {
+  try {
+    const series = await readYoutubePlaylist(sermonPlaylistId)
+    const videos = firstPlaylistVideos(series, 5)
+    return { status: "available", videos }
+  } catch (error) {
+    if (!(error instanceof YoutubePlaylistReadError)) {
+      throw error
+    }
+    console.error({
+      event: "youtube_playlist_read_failed",
+      playlistId: sermonPlaylistId,
+      category: error.category,
+      ...(error.status !== undefined ? { status: error.status } : {}),
+    })
+    return { status: "unavailable" }
+  }
+}
+
 export default async function Home() {
   const sundayItems =
     sections.find((section) => section.heading === "New to HSG?")?.items ?? []
   const slots = homeEventSlots(events, sundayItems, new Date())
-  const series = await readYoutubePlaylist(sermonPlaylistId)
-  const videos = firstPlaylistVideos(series, 5)
+  const listing = await readSermonListing()
 
   return (
     <main id="main-content" className="home-page page-width" tabIndex={-1}>
@@ -258,7 +303,7 @@ export default async function Home() {
                     )}
                   </div>
                   {isSermons ? (
-                    <SermonItems section={section} videos={videos} />
+                    <SermonItems section={section} listing={listing} />
                   ) : index === 0 ? (
                     <HighlightItems items={section.items} slots={slots} />
                   ) : (
