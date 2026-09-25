@@ -4,8 +4,6 @@ export const desktop = { width: 1280, height: 900 }
 export const atMenu = { width: 800, height: 900 }
 export const aboveMenu = { width: 801, height: 900 }
 export const phone = { width: 320, height: 700 }
-/** Evidence / fit size used by About phone regression (spec 390×844). */
-export const phoneLarge = { width: 390, height: 844 }
 
 export function headerNav(page: Page) {
   return page.getByRole("navigation", { name: "Main navigation" })
