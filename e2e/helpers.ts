@@ -4,6 +4,7 @@ export const desktop = { width: 1280, height: 900 }
 export const atMenu = { width: 800, height: 900 }
 export const aboveMenu = { width: 801, height: 900 }
 export const phone = { width: 320, height: 700 }
+export const phoneLarge = { width: 390, height: 844 }
 
 export function headerNav(page: Page) {
   return page.getByRole("navigation", { name: "Main navigation" })
@@ -37,5 +38,57 @@ export async function paintedBackground(locator: Locator) {
       node = node.parentElement
     }
     return ""
+  })
+}
+
+/** Wait until consecutive scroll-position samples agree within tolerance (no fixed sleeps). */
+export async function waitForScrollStable(
+  page: Page,
+  options: { samples?: number; tolerancePx?: number; timeout?: number } = {},
+) {
+  const samples = options.samples ?? 3
+  const tolerancePx = options.tolerancePx ?? 1
+  const timeout = options.timeout ?? 10_000
+
+  await expect(async () => {
+    const readings: number[] = []
+    for (let i = 0; i < samples; i++) {
+      readings.push(
+        await page.evaluate(
+          () =>
+            new Promise<number>((resolve) => {
+              requestAnimationFrame(() => {
+                resolve(document.scrollingElement?.scrollTop ?? window.scrollY)
+              })
+            }),
+        ),
+      )
+    }
+    expect(Math.max(...readings) - Math.min(...readings)).toBeLessThanOrEqual(tolerancePx)
+  }).toPass({ timeout })
+}
+
+export async function sceneBoxMetrics(page: Page, sceneId: string) {
+  return page.evaluate((id) => {
+    const el = document.getElementById(id)
+    if (!el) throw new Error(`missing #${id}`)
+    const rect = el.getBoundingClientRect()
+    return {
+      top: rect.top,
+      bottom: rect.bottom,
+      height: rect.height,
+      viewportHeight: window.innerHeight,
+    }
+  }, sceneId)
+}
+
+export async function plateStyleMetrics(locator: Locator) {
+  return locator.evaluate((el) => {
+    const style = getComputedStyle(el)
+    return {
+      backgroundSize: style.backgroundSize,
+      backgroundPosition: style.backgroundPosition,
+      backgroundColor: style.backgroundColor,
+    }
   })
 }
