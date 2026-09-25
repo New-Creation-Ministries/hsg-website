@@ -7,6 +7,7 @@ Skills: `.agents/skills/capture-intent/SKILL.md`, `.agents/skills/write-spec/SKI
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | chore | praise-reports-removal | Praise reports removal | draft | [intent](chores/praise-reports-removal/intent.md) | [spec](chores/praise-reports-removal/spec.md) | — | [plan](chores/praise-reports-removal/plan.md) |
 | feature | about-page | About page | ready | [intent](features/about-page/intent.md) | [spec](features/about-page/spec.md) | — | [plan](features/about-page/plan.md) |
+| feature | contact-us-page | Contact Us page | ready | [intent](features/contact-us-page/intent.md) | [spec](features/contact-us-page/spec.md) | — | [plan](features/contact-us-page/plan.md) |
 | feature | events-page | Events page | draft | [intent](features/events-page/intent.md) | [spec](features/events-page/spec.md) | [UX](features/events-page/ux.md) | [plan](features/events-page/plan.md) |
 | feature | give-page | Give page | ready | [intent](features/give-page/intent.md) | [spec](features/give-page/spec.md) | — | [plan](features/give-page/plan.md) |
 | feature | home-landing-page | Home landing page | done | [intent](features/home-landing-page/intent.md) | [spec](features/home-landing-page/spec.md) | [UX](features/home-landing-page/ux.md) | [plan](features/home-landing-page/plan.md) |
