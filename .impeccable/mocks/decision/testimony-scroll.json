@@ -1,0 +1,51 @@
+{
+  "title": "Testimony scroll",
+  "question": "Sideways cards stays. Which of the three new scrolls should join it, or should sideways cards be the one we build?",
+  "options": [
+    {
+      "id": "sideways-cards",
+      "label": "Sideways cards",
+      "kicker": "KEPT",
+      "thesis": "One cream band. Cards snap sideways: photo, title, writeup.",
+      "palette": ["#090d15", "#f5f3e8", "#dedfc9", "#141a20", "#173de0", "#dee77f"],
+      "materials": ["flat rectangles", "thin rules", "Oswald caps", "DM Sans"],
+      "viewport": "Thangaraj’s card is fully on screen. Poorvika and Creative Miracle peek in from the right, ready to scroll.",
+      "risk": "The long Creative Miracle writeup has to live inside a card.",
+      "comp": ".impeccable/mocks/decision/testimony-sideways.png"
+    },
+    {
+      "id": "reading-rows",
+      "label": "Reading rows",
+      "kicker": "NEW",
+      "thesis": "A continuous list. Each row is a photo, a title, and the full writeup.",
+      "palette": ["#090d15", "#f5f3e8", "#dedfc9", "#141a20", "#173de0", "#dee77f"],
+      "materials": ["flat rectangles", "thin rules", "Oswald caps", "DM Sans"],
+      "viewport": "Thangaraj, Poorvika, and the start of Creative Miracle are all on screen, separated by thin rules. Scroll down for the rest.",
+      "risk": "Four full writeups make a long list before the sermons.",
+      "comp": ".impeccable/mocks/decision/testimony-rows.png"
+    },
+    {
+      "id": "photo-reel",
+      "label": "Photo reel",
+      "kicker": "NEW",
+      "thesis": "Photos scroll sideways. The title and writeup below belong to the photo in the center.",
+      "palette": ["#090d15", "#f5f3e8", "#dedfc9", "#141a20", "#173de0", "#dee77f"],
+      "materials": ["flat rectangles", "thin rules", "Oswald caps", "DM Sans"],
+      "viewport": "Thangaraj’s photo is large in the center. Poorvika peeks in from the right. His title and writeup sit under the reel.",
+      "risk": "The words change only when the photos move, so a long story is easy to miss.",
+      "comp": ".impeccable/mocks/decision/testimony-reel.png"
+    },
+    {
+      "id": "words-first",
+      "label": "Words first",
+      "kicker": "NEW",
+      "thesis": "The writeup is the large type. The photo and title sit beside it.",
+      "palette": ["#090d15", "#f5f3e8", "#dedfc9", "#141a20", "#173de0", "#dee77f"],
+      "materials": ["flat rectangles", "thin rules", "Oswald caps", "DM Sans"],
+      "viewport": "Thangaraj’s paragraph fills the band, with a small photo and his title at the side. Poorvika’s words begin under a rule.",
+      "risk": "The photos recede, so a visitor may not notice they can be opened.",
+      "comp": ".impeccable/mocks/decision/testimony-words.png"
+    }
+  ],
+  "buildPath": { "value": "comp", "toggle": true }
+}

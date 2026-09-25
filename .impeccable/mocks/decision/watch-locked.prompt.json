@@ -1,0 +1,7 @@
+{
+  "approved": true,
+  "optionId": "witness-first",
+  "amendment": "Testimonies stay witness-first: one name, video, and the post’s words, with the other names as switches. Sermons are not switches. Each playlist title leads a horizontal row of that playlist’s videos. The next playlist is the next row down.",
+  "comp": ".impeccable/mocks/decision/watch-locked.png",
+  "sermonRows": ".impeccable/mocks/decision/watch-sermon-rows.png"
+}

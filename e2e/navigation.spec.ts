@@ -94,6 +94,10 @@ test("opens every shell with its title, heading, and current page", async ({ pag
       await expect(page).toHaveTitle(`Give | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1, name: "Why we give" })).toBeVisible()
       await expect(page.getByText(shellSentence)).toHaveCount(0)
+    } else if (route.path === "/watch") {
+      await expect(page).toHaveTitle(`Watch | ${churchName}`)
+      await expect(page.getByRole("heading", { level: 1, name: "4th Stage Lung Cancer Healed" })).toBeVisible()
+      await expect(page.getByText(shellSentence)).toHaveCount(0)
     } else if (route.path === "/contact") {
       await expect(page).toHaveTitle(`Contact Us | ${churchName}`)
       await expect(

@@ -2,9 +2,20 @@ import { readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
-const PLAYLIST_ID = "PLWX7FFgYGzyU"
-const FEED_URL = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`
+const HOME_PLAYLIST_ID = "PLWX7FFgYGzyU"
+const ALLOWED_PLAYLIST_IDS = new Set([
+  "PL4sLZ9xdjDfid3If1uvOqlTz9WvGYTN1A",
+  "PLKz6Hr2fQ7Nc",
+  "PLTXk7vAHmkA0",
+  "PL5ah6Wbjftr5aLfOd-3F9nSJiG12XRW5f",
+  "PL5ah6Wbjftr4tGpaloXOehqpXB6KwY3zI",
+  HOME_PLAYLIST_ID,
+  "PLC1s9kXkw278",
+  "PLP2xTHxGd68s",
+])
+
 const YOUTUBE_FEED_PREFIX = "https://www.youtube.com/feeds/"
+const YOUTUBE_LIVE_PAGE = "https://www.youtube.com/@EvangelistRambabuRambo/live"
 
 const fixtureDir = dirname(fileURLToPath(import.meta.url))
 const successXml = readFileSync(join(fixtureDir, "youtube-feed.xml"), "utf8")
@@ -88,22 +99,18 @@ function xmlResponse(body, status = 200) {
   })
 }
 
-const originalFetch = globalThis.fetch.bind(globalThis)
-
-globalThis.fetch = async function youtubeFeedFetch(input, init) {
-  const url = requestUrl(input)
-  if (url.startsWith(YOUTUBE_FEED_PREFIX) && url !== FEED_URL) {
-    throw new Error(
-      `YouTube feed fixture blocked unexpected feed URL: ${url}`,
-    )
+function playlistIdFromFeedUrl(url) {
+  if (!url.startsWith(YOUTUBE_FEED_PREFIX)) return null
+  try {
+    const parsed = new URL(url)
+    if (parsed.pathname !== "/feeds/videos.xml") return null
+    return parsed.searchParams.get("playlist_id")
+  } catch {
+    return null
   }
-  if (url !== FEED_URL) {
-    return originalFetch(input, init)
-  }
+}
 
-  const mode = readMode()
-  const signal = init?.signal
-
+function feedResponse(mode, signal) {
   switch (mode) {
     case "success":
       return xmlResponse(successXml)
@@ -125,4 +132,29 @@ globalThis.fetch = async function youtubeFeedFetch(input, init) {
     default:
       throw new Error(`Unknown YouTube feed fixture mode: ${mode}`)
   }
+}
+
+const originalFetch = globalThis.fetch.bind(globalThis)
+
+globalThis.fetch = async function youtubeFeedFetch(input, init) {
+  const url = requestUrl(input)
+
+  if (url === YOUTUBE_LIVE_PAGE || url.startsWith("https://www.youtube.com/oembed?")) {
+    return new Response('{"videoId":"finished000"}', {
+      status: 200,
+      headers: { "content-type": "text/html" },
+    })
+  }
+
+  const playlistId = playlistIdFromFeedUrl(url)
+  if (url.startsWith(YOUTUBE_FEED_PREFIX)) {
+    if (!playlistId || !ALLOWED_PLAYLIST_IDS.has(playlistId)) {
+      throw new Error(
+        `YouTube feed fixture blocked unexpected feed URL: ${url}`,
+      )
+    }
+    return feedResponse(readMode(), init?.signal)
+  }
+
+  return originalFetch(input, init)
 }

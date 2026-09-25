@@ -1,0 +1,18 @@
+{
+  "title": "Watch page",
+  "question": "Locked. Witness first for testimonies. Sermons are playlist rows: side scroll within a playlist, scroll down to the next.",
+  "options": [
+    {
+      "id": "witness-first",
+      "label": "Witness first",
+      "kicker": "LOCKED",
+      "thesis": "One testimony fills the first screen. Sermons follow as playlist rows, sideways for videos and down for the next theme.",
+      "palette": ["#090d15", "#f5f3e8", "#173de0", "#dee77f", "#dedfc9"],
+      "materials": ["flat rectangles", "thin rules", "Oswald caps", "DM Sans"],
+      "viewport": "Live is one line: No live events ongoing. Thangaraj, the video, and the post’s words fill the cream band. Poorvika, Creative Miracle, and the YouTube testimony are name switches. Below, each sermon playlist is a title plus a sideways row of its videos.",
+      "risk": "A visitor who came for a sermon meets a story first.",
+      "comp": ".impeccable/mocks/decision/watch-locked.png"
+    }
+  ],
+  "buildPath": { "value": "comp", "toggle": false }
+}
