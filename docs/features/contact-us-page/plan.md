@@ -26,7 +26,7 @@ Wave 2 depends on content and footer chrome. Wave 3 depends on the published pag
 
 id: contact-us-page_1_1
 title: Add typed contact content with Home/Give ownership imports
-status: pending
+status: done
 acceptance_criteria:
 - `src/content/contact/` exports the Content blocks and ownership wiring from [spec Content](./spec.md#content) and [intent Proposed outcome](./intent.md#proposed-outcome).
 - `contact.test.ts` fails if those ownership links or locked strings/hrefs drift.
@@ -37,7 +37,7 @@ depends_on: []
 
 id: contact-us-page_1_2
 title: Omit SiteFooter on /contact only
-status: pending
+status: done
 acceptance_criteria:
 - `/contact` does not render shared `SiteFooter` (pathname gate via `site-footer-gate.tsx`; not CSS-hidden). Other routes still render it.
 - Shared `SiteHeader` remains on `/contact`.
@@ -54,7 +54,7 @@ depends_on: []
 
 id: contact-us-page_2_1
 title: Replace /contact shell with visit-desk layout and cream strip
-status: pending
+status: done
 acceptance_criteria:
 - Page body matches [spec Page](./spec.md#page) and [Acceptance](./spec.md#acceptance). Tokens and type follow [spec Page](./spec.md#page).
 - CSS is scoped so Home, About, Events, Give, and remaining shells are unchanged.
@@ -71,7 +71,7 @@ depends_on:
 
 id: contact-us-page_3_1
 title: Cover published /contact in Playwright
-status: pending
+status: done
 acceptance_criteria:
 - `e2e/navigation.spec.ts` treats `/contact` like `/give`: title `Contact Us | Holy Spirit Generation`, mock `h1`, no shell sentence; Menu → Contact Us lands on `/contact`; Contact Us is `aria-current="page"`.
 - `e2e/contact.spec.ts` covers [spec Acceptance](./spec.md#acceptance): locked copy and hrefs, G7 on http(s) links, live-translation visible text (not raw Glossa URL), WhatsApp label without link, no `footer.site-footer`, cream strip at page bottom, narrow stack shows all blocks.

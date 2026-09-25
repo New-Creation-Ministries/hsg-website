@@ -13,7 +13,6 @@ export function SiteHeader() {
   const menu = useRef<HTMLButtonElement>(null)
   const navigation = useRef<HTMLElement>(null)
   const pendingPath = useRef<string | null>(null)
-  const returning = useRef(false)
   const scrollByPath = useRef(new Map<string, number>())
 
   useEffect(() => {
@@ -53,7 +52,13 @@ export function SiteHeader() {
     }
     function restoreHistory() {
       pendingPath.current = null
-      returning.current = true
+      // Restore from popstate directly so React Strict Mode effect remounts
+      // cannot clear a deferred scroll before it runs.
+      const path = window.location.pathname
+      const y = scrollByPath.current.get(path) ?? 0
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y)
+      })
     }
     document.addEventListener("click", navigate, true)
     window.addEventListener("popstate", restoreHistory)
@@ -64,14 +69,6 @@ export function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
-    if (returning.current) {
-      returning.current = false
-      const y = scrollByPath.current.get(pathname) ?? 0
-      const id = window.setTimeout(() => {
-        window.scrollTo(0, y)
-      }, 0)
-      return () => window.clearTimeout(id)
-    }
     if (pendingPath.current !== pathname) return
     pendingPath.current = null
     const frame = requestAnimationFrame(() => {
