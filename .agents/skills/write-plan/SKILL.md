@@ -67,11 +67,13 @@ List every path that will be added, edited, or deleted. One line per path: actio
 
 Group independent tasks into waves. Wave N may depend only on earlier waves. Max 5 tasks per wave. Every task uses this schema in markdown (not JSON):
 
+Each implementation task owns its expected test paths and test scenarios. Do not create a separate task whose only purpose is to test another task; the build and test gates split that work by status.
+
 | Field | Rules |
 | --- | --- |
 | `id` | `{slug}_{wave}_{n}` e.g. `csv-export_1_1`. `n` is 1-indexed within the wave. |
 | `title` | One line. What to do. |
-| `status` | `pending` on write. Later: `pending` \| `blocked` \| `code_review` \| `done`. Use `blocked` when the task needs human intervention. |
+| `status` | `pending` on write. Lifecycle: `pending` → `testing` → `code_review` → `done`; `blocked` means human intervention is required. |
 | `acceptance_criteria` | Concrete, falsifiable bullets for this task only. |
 | `files` | Paths this task adds, edits, or deletes. |
 | `depends_on` | Task ids. Same plan or another feature (`featureslug_wave_task`). `[]` if none. |
@@ -90,11 +92,12 @@ files:
 depends_on: []
 
 id: csv-export_1_2
-title: Add unit tests for filename helper
+title: Add CSV filename formatting helper
 status: pending
 acceptance_criteria:
 - Helper covers midnight, single-digit day/month, and sanitized name
 files:
+- src/lib/csvFilename.ts
 - src/lib/csvFilename.test.ts
 depends_on:
 - other-feature_2_1
