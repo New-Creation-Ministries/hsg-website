@@ -105,7 +105,7 @@ acceptance_criteria:
 - `portrait-field.tsx` is a client component. A supplied portrait uses `next/image` and `leader.portrait.alt`. Image `onError` removes the image and shows the same HSG field. The heading and blurb stay in the document
 - What’s going on and Sermons each put the `h2` and the section link in one header row, then the items. Highlighted testimonies puts the `h2` alone, then the items. New to HSG puts the heading, intro, and Contact Us in one column beside the service records
 - Section link text is the destination label. An inline arrow SVG is `aria-hidden` and is not in the accessible name. Minimum height 44px
-- Items with `href` are one same-tab link whose name is the title. Items without `href` are text with no link styling
+- Items with `href` are one link whose name is the title (internal same-tab; external new-tab per ADR 0002 G7). Items without `href` are text with no link styling
 - Sermons puts `intro` and the first item in the Cobalt panel; the other two items are plain lines. No iframe
 - Testimony text is one paragraph. New to HSG splits `text` on the newline into language, then time, inside the same record. “onwards” stays
 - `pageNotes.testimonies` follows the three stories. `pageNotes.sunday` follows the two records
@@ -141,7 +141,7 @@ depends_on:
 - Shipping `design-reference/assets` font files. Production fonts come from `next/font/google`.
 - Replacing the Menu button with the reference `<details>`. ADR 0002 already specifies the button.
 - Copying the reference caption, highlight subtitles, playlist subtitles, sermon tagline, preview note, `?page=` shells, or “Return Home”.
-- A modal drawer, new-tab external links, embeds, or a Word Fest time of 8:00–8:45am.
+- A modal drawer, embeds, or a Word Fest time of 8:00–8:45am.
 - Content folders or published copy for About, Events, Watch, Contact Us, or Give.
 - A WebKit project, screenshot or aria-snapshot baseline, GitHub Actions workflow, or a committed broken-portrait URL. Chromium via `make e2e` is the automated browser.
 
@@ -164,7 +164,7 @@ A deployed Vercel preview is still required before release sign-off. Supplied an
 
 | Spec | Asserts |
 | --- | --- |
-| `e2e/home.spec.ts` | A1–A3, A8. Church `h1`, blurb, four regions, source line, Sunday note, footer line. Unpublished rows are not links. Channel opens in the same tab and Back returns Home. Wide portrait sits beside the heading; at 800px it follows About. Highlight titles stack. Testimony columns share a row and the first parent is wider. Sermon panel sits beside playlists. Sunday time sits beside Contact Us |
+| `e2e/home.spec.ts` | A1–A3, A8. Church `h1`, blurb, four regions, source line, Sunday note, footer line. Unpublished rows are not links. Channel opens in a new tab (ADR 0002 G7). Wide portrait sits beside the heading; at 800px it follows About. Highlight titles stack. Testimony columns share a row and the first parent is wider. Sermon panel sits beside playlists. Sunday time sits beside Contact Us |
 | `e2e/navigation.spec.ts` | A4–A6. At 800px, Tab from Menu skips hidden links, Escape returns focus to Menu, and About closes the disclosure. Widening from a focused Menu focuses Home. Narrowing from Events keeps that link visible. 320px has no horizontal page scroll. Skip link focuses `#main-content`. Every route has the shell title, heading, and `aria-current="page"` on the header link. The footer has no links. Back from Give restores scroll above 100px |
 | `e2e/accessibility.spec.ts` | A9. Axe reports no critical or serious violations on `/` and the five shells, at desktop and at 800px for Home. Menu, header links, and section links are at least 44px tall. Body is Ink `#090d15`, Paper `#f5f3e8`, 16px, DM Sans. `h1` is Oswald, uppercase, weight 500, on Cobalt `#173de0`. Current Home link and Events are Acid `#dee77f`. Testimony heading is Band ink `#141a20` on Band `#dedfc9`. Service time is Acid. The sermon link sits on Cobalt |
 

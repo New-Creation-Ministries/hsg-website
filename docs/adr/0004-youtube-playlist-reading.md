@@ -8,7 +8,7 @@
 
 [docs/architecture.md](../architecture.md) leaves the YouTube mechanism to the first slice that needs it, and says later slices follow that pattern. A page that shows a sermon series needs titles and thumbnails from a public playlist. YouTube remains the media host. Video files are not stored in this repository.
 
-[ADR 0003](0003-spirit-in-blue-visual-direction.md) keeps sermon surfaces flat and static: no autoplay, no entrance motion. [ADR 0002](0002-public-navigation-and-recovery.md) opens external URLs in the same tab.
+[ADR 0003](0003-spirit-in-blue-visual-direction.md) keeps sermon surfaces flat and static: no autoplay, no entrance motion. [ADR 0002](0002-public-navigation-and-recovery.md) opens all external URLs in a new tab.
 
 ## Decision
 
@@ -16,7 +16,7 @@
 - No YouTube API credential, no persisted copy of the feed, and no per-request read when the page is served.
 - The read runs while the page is produced for deploy. The shipped HTML contains the series title and, for each video the surface shows, the title, a thumbnail URL, and a watch link. A change on YouTube appears on the next deploy.
 - The public feed returns at most 15 entries. A listing shows a prefix of that list, in feed order. The slice chooses the prefix length. The playlist URL is how a visitor opens the rest of the series on YouTube.
-- Each video is a same-tab link to `https://www.youtube.com/watch?v={id}`. The thumbnail is `https://i.ytimg.com/vi/{id}/mqdefault.jpg`, loaded by the browser from YouTube. The image is not committed to the repo.
+- Each video is a new-tab link to `https://www.youtube.com/watch?v={id}`. The thumbnail is `https://i.ytimg.com/vi/{id}/mqdefault.jpg`, loaded by the browser from YouTube. The image is not committed to the repo.
 - A playlist listing does not mount a YouTube player, iframe, or script. Playback happens on YouTube.
 - The visible series name is the feed title. The feed author is not shown.
 - If the feed cannot be read, has no title, or has no usable entries, page production fails. The page does not substitute placeholder rows.

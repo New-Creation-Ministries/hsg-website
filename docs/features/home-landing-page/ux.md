@@ -126,7 +126,7 @@
 | Visible lists in approved order — Spec Page | Carousel or tabs save initial space but hide items and require additional navigation | Readers cannot locate visit information; Udeet reviews hierarchy with a future scope change |
 | Inline navigation disclosure — ADR 0002 design decision | Modal drawer separates navigation but adds dismissal/focus-trap behavior | Expanded links obscure orientation or Menu is not discovered; engineer and Udeet revisit header |
 | Destination labels on section links — Spec Page | Action labels could clarify intent but diverge from accepted labels | Readers cannot connect Sermons to Watch; Udeet resolves terminology |
-| Same-tab external links — Spec Routes | New tabs retain Home visibly but add context-switching and closing work | Visitors cannot resume after external navigation; Udeet revisits with evidence |
+| New-tab external links — ADR 0002 G7 | Same-tab leaves Home and makes return depend on Back | Visitors lose Home context or struggle to close extra tabs; Udeet revisits with evidence |
 | Retain explicit placeholders — Spec Copy | Hiding unpublished groups reduces clutter but removes approved lead-ins | Visitors interpret placeholders as malfunction or live activity; Udeet reviews publication readiness |
 
 - Cognitive-demand hypotheses: adjacent summaries reduce recall; fixed section/destination pairs aid recognition; browser Back supports media re-entry.

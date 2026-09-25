@@ -39,12 +39,12 @@
 
 - Actors: visitors and members, same public permissions. Editors publish through the repo; they have no page role.
 - Calendar apps are external. Saving, sign-in, and refresh there are not site completion.
-- Internal navigation, focus, and history follow ADR 0002. External Google navigation follows ADR G7 (same tab).
+- Internal navigation, focus, and history follow ADR 0002. External Google navigation follows ADR G7 (new tab).
 
 | ID | Entry and actions | Decision or alternative | Completion evidence | Interruption and recovery |
 | --- | --- | --- | --- | --- |
 | F1 / O1, O2, O6 | Open `/events` → read IST times → compare flagged events with the later list | Skip to main; leave via nav or Home | Names and IST starts are visible; flagged events precede the others; past events are absent | Reload or Back. No saved filters or drafts |
-| F2 / O3 | Read a Sunday service → Add to Google Calendar or Add to Apple Calendar | Either service; either calendar. Not “next Sunday only” | The handoff starts with that service’s weekly IST time. The site does not show “Added” | Google: Back returns to Events. Apple: Events stays in the browser if the device only opens a calendar file. Cancel on the calendar app leaves the site unchanged |
+| F2 / O3 | Read a Sunday service → Add to Google Calendar or Add to Apple Calendar | Either service; either calendar. Not “next Sunday only” | The handoff starts with that service’s weekly IST time. The site does not show “Added” | Google: Events stays open; calendar opens in a new tab. Apple: Events stays in the browser if the device only opens a calendar file. Cancel on the calendar app leaves the site unchanged |
 | F3 / O4 | Read one upcoming event → Add to Google Calendar or Add to Apple Calendar | That event only | The handoff starts for that occurrence. The site does not show “Added” | Same as F2 |
 | F4 / O5 | After a handoff, the church publishes a new time | No visitor path until question 2 is decided | Unresolved. Do not treat a new deploy as proof the external entry changed | Owner Udeet; gate before any update wording or update implementation |
 
@@ -79,7 +79,7 @@
 - The group states that an add applies to that date only.
 - Missing end: same rule as Miracles and Healing. List the event; do not invent an end; withhold add until an end exists or Udeet allows an open-ended item.
 - Place is omitted from the handoff unless question 1 includes it and the event has one. Do not invent a venue.
-- Activating Google leaves `/events` in the same tab. Activating Apple asks the device to take the calendar file and does not navigate away when the browser stays on the page.
+- Activating Google opens the calendar handoff in a new tab; `/events` stays. Activating Apple asks the device to take the calendar file and does not navigate away when the browser stays on the page.
 - No “Added”, “Saved”, or “Subscribed” status. The site cannot see the external calendar.
 - No bulk add, third calendar, or site account step.
 
@@ -133,7 +133,7 @@
 | Upcoming, then Sunday services — intent order and Home “What’s going on” entry | Sunday services first favors the weekly add and repeats Home | People from Home cannot find dated events; Udeet reorders |
 | One page, flagged events expanded in place — intent | Detail pages give each event a URL but add a return path this intent does not ask for | Published content does not fit or cannot be shared; Udeet adds a route |
 | Separate weekly and one-time adds — intent | One “add” control hides whether the calendar repeats | People add every Sunday when they wanted one date, or the reverse; Udeet revises labels |
-| Same-tab Google handoff — ADR G7 | A new tab keeps Events visible and adds a window to close | People cannot return from Google; Udeet revisits with evidence |
+| New-tab Google handoff — ADR G7 | Same-tab leaves Events and makes return depend on Back | People lose Events context or struggle to close extra tabs; Udeet revisits with evidence |
 | No success status — external save is invisible | “Added” reduces uncertainty and is false when the calendar app cancels | People repeat adds because they cannot tell the handoff started; Udeet may add a “continue in Google Calendar / Apple Calendar” note that still does not claim a save |
 | Static upcoming set — architecture and intent | Per-request filtering drops past events without a deploy | Visitors treat a passed event as still scheduled; Udeet allows a non-static page |
 | Update mechanism unresolved — intent question 2 | Subscribe to a feed (updates after the calendar app refreshes; no per-user store). One-time copy (no backend; does not update). Provider write APIs (can update Google only with stored consent; conflicts with no accounts; no equivalent Apple path) | Udeet picks one. A one-time copy cannot satisfy O5. A feed must be described as a subscription, not as a detached copy |
@@ -172,7 +172,7 @@
 | --- | --- | --- |
 | A1 | Open `/events` with two flagged events and other upcoming events | `h1` Events; IST note; flagged events first with name, date, and IST start; other upcoming events after them in earlier-start order; Sunday services after that, matching Home records |
 | A2 | Publish zero upcoming events, then one flagged event | Empty copy and Sunday services; then the single flagged event leads and is not padded to two |
-| A3 | Read Sunday services and start Google, then Apple, for Word Fest | Weekly Sunday IST 8–9am is what the handoff carries; Miracles and Healing has no add while “onwards” has no approved end; no “Added” on the site; Google is same-tab; Back returns |
+| A3 | Read Sunday services and start Google, then Apple, for Word Fest | Weekly Sunday IST 8–9am is what the handoff carries; Miracles and Healing has no add while “onwards” has no approved end; no “Added” on the site; Google opens in a new tab; Events stays |
 | A4 | Start Google and Apple for one dated event | That occurrence only; the other event is not included; cancel or external failure leaves Events unchanged and makes no success claim |
 | A5 | Narrow width, 400% zoom, keyboard | Names, IST times, and add labels wrap without horizontal page scroll; actions are reachable and named with their event or service |
 | A6 | Change a published start and reload after deploy | The page shows the new IST start. It does not say Google or Apple already changed. Mark O5 blocked |

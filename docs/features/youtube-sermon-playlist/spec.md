@@ -11,7 +11,7 @@ Home Sermons shows one series from playlist `PLWX7FFgYGzyU`, with its YouTube ti
 
 How the site reads a public YouTube playlist is [ADR 0004](../../adr/0004-youtube-playlist-reading.md). This slice applies that decision to Home only. `/watch` stays the unpublished shell in [ADR 0001](../../adr/0001-public-pages.md).
 
-Visual direction stays [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md): cobalt channel panel, Oswald and DM Sans, flat rectangles, no autoplay. External links stay same-tab per [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
+Visual direction stays [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md): cobalt channel panel, Oswald and DM Sans, flat rectangles, no autoplay. External links always open in a new tab per [ADR 0002](../../adr/0002-public-navigation-and-recovery.md) G7.
 
 ## Resolved questions
 
@@ -86,7 +86,7 @@ Serving `/` does not request YouTube. The HTML already contains titles, links, a
 
 - Home shows the channel link and no “Playlist to be published” text.
 - The series link’s name is the feed title and its href is the playlist URL.
-- The first 4 feed entries are same-tab links. Each name is that video’s title, each href is that video’s watch URL, and each has a thumbnail from `i.ytimg.com`. Later entries are absent.
+- The first 4 feed entries are new-tab links. Each name is that video’s title, each href is that video’s watch URL, and each has a thumbnail from `i.ytimg.com`. Later entries are absent.
 - Order matches the feed. A feed shorter than 4 shows every entry it has.
 - The cobalt panel still contains the intro and the channel link. At wide width it sits beside the series; at 800px and below the series follows it.
 - Watch still opens `/watch`. Highlights and testimony URLs are unchanged.
