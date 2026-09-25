@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015"
+      xmlns:media="http://search.yahoo.com/mrss/"
+      xmlns="http://www.w3.org/2005/Atom">
+  <title>Fixture sermon playlist</title>
+  <author>
+    <name>Fixture Channel</name>
+    <uri>https://www.youtube.com/channel/UCFIXTURE</uri>
+  </author>
+  <published>2020-01-01T00:00:00+00:00</published>
+  <entry>
+    <id>yt:video:fix001</id>
+    <yt:videoId>fix001</yt:videoId>
+    <title>Fixture sermon one</title>
+    <author><name>Fixture Speaker</name></author>
+    <published>2024-06-01T00:00:00+00:00</published>
+    <media:group>
+      <media:title>Wrong media title one</media:title>
+      <media:thumbnail url="https://i.ytimg.com/vi/fix001/hqdefault.jpg" width="480" height="360"/>
+    </media:group>
+  </entry>
+  <entry>
+    <id>yt:video:fix002</id>
+    <yt:videoId>fix002</yt:videoId>
+    <title>Fixture sermon two</title>
+    <published>2024-05-01T00:00:00+00:00</published>
+    <media:group>
+      <media:thumbnail url="https://i.ytimg.com/vi/fix002/hqdefault.jpg"/>
+    </media:group>
+  </entry>
+  <entry>
+    <yt:videoId>fix003</yt:videoId>
+    <title>Fixture sermon three</title>
+    <published>2024-04-01T00:00:00+00:00</published>
+  </entry>
+  <entry>
+    <yt:videoId>fix004</yt:videoId>
+    <title>Fixture sermon four</title>
+    <published>2024-03-01T00:00:00+00:00</published>
+  </entry>
+  <entry>
+    <yt:videoId>fix005</yt:videoId>
+    <title>Fixture sermon five</title>
+    <published>2024-02-01T00:00:00+00:00</published>
+  </entry>
+  <entry>
+    <yt:videoId>fix006</yt:videoId>
+    <title>Fixture sermon six</title>
+    <published>2024-01-01T00:00:00+00:00</published>
+  </entry>
+</feed>

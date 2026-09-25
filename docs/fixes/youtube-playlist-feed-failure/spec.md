@@ -1,6 +1,6 @@
 # Spec: YouTube playlist feed failure
 
-Status: draft
+Status: ready
 Author: Udeet Gulati
 Intent: [intent.md](./intent.md)
 Skills: write-spec, frontend-design, doc-review
@@ -8,7 +8,7 @@ Skills: write-spec, frontend-design, doc-review
 ## Scope
 
 - Outcomes, constraints, and deferred work: [accepted intent](./intent.md).
-- Read lifecycle and failure boundary: proposed [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md).
+- Read lifecycle and failure boundary: accepted [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md).
 
 ## Reader and failure boundary
 
@@ -29,7 +29,7 @@ Skills: write-spec, frontend-design, doc-review
 | State | Visible result |
 | --- | --- |
 | Available | Existing scripture panel and up to five video rows; existing thumbnails, full titles, feed order, and outbound video playback. |
-| Unavailable | Existing Sermons heading, Watch link to `/watch`, and scripture panel; replace video rows with “Sermons are temporarily unavailable here.” and “View playlist on YouTube”. |
+| Unavailable | Existing Sermons heading, Watch link to `/watch`, and scripture panel; replace video rows with “Sermons are temporarily unavailable here.”, the playlist placeholder thumbnail, and “Listen to the word on Youtube”. |
 
 - Fallback link: `https://www.youtube.com/playlist?list=PLWX7FFgYGzyU`, derived from the configured playlist ID without relying on fetched metadata.
 - Open the fallback link in a new tab with `rel="noopener noreferrer"`, following [ADR 0002](../../adr/0002-public-navigation-and-recovery.md).
@@ -59,7 +59,7 @@ Skills: write-spec, frontend-design, doc-review
 
 ## Contract precedence and concerns
 
-- On acceptance, ADR 0007 governs Home's read lifecycle and failure handling in place of the conflicting requirements in [playlist spec](../../features/youtube-sermon-playlist/spec.md).
-- On acceptance, **Sermons states** supersedes that spec's four-video, series-title/channel layout contract for Home; the selected layout matches `src/app/page.test.ts` and `src/content/home/home.test.ts`.
+- ADR 0007 governs Home's read lifecycle and failure handling in place of the conflicting requirements in [playlist spec](../../features/youtube-sermon-playlist/spec.md).
+- **Sermons states** supersedes that spec's four-video, series-title/channel layout contract for Home; the selected layout matches `src/app/page.test.ts` and `src/content/home/home.test.ts`.
 - A fallback link provides a direct route to YouTube; this site cannot guarantee the external playlist page's availability.
 - Unresolved decisions: none.

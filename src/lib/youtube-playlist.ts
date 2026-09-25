@@ -11,6 +11,58 @@ export type YoutubePlaylist = {
   videos: YoutubeVideo[]
 }
 
+export type YoutubePlaylistReadFailureCategory =
+  | "http"
+  | "timeout"
+  | "network"
+  | "invalid-feed"
+
+export class YoutubePlaylistReadError extends Error {
+  readonly category: YoutubePlaylistReadFailureCategory
+  readonly status?: number
+
+  constructor(
+    message: string,
+    category: YoutubePlaylistReadFailureCategory,
+    status?: number,
+  ) {
+    super(message)
+    this.name = "YoutubePlaylistReadError"
+    this.category = category
+    if (status !== undefined) {
+      this.status = status
+    }
+  }
+}
+
+const READ_DEADLINE_MS = 3000
+
+function isAbortError(error: unknown): boolean {
+  return (
+    (typeof DOMException !== "undefined" &&
+      error instanceof DOMException &&
+      error.name === "AbortError") ||
+    (error instanceof Error && error.name === "AbortError")
+  )
+}
+
+function asTransportError(
+  error: unknown,
+  fallbackMessage: string,
+): YoutubePlaylistReadError {
+  if (isAbortError(error)) {
+    return new YoutubePlaylistReadError(
+      "YouTube playlist feed request timed out",
+      "timeout",
+    )
+  }
+  const message =
+    error instanceof Error && error.message
+      ? error.message
+      : fallbackMessage
+  return new YoutubePlaylistReadError(message, "network")
+}
+
 const TITLE_RE = /<title(?:\s[^>]*)?>([\s\S]*?)<\/title>/i
 const VIDEO_ID_RE = /<yt:videoId>([\s\S]*?)<\/yt:videoId>/i
 const ENTRY_RE = /<entry(?:\s[^>]*)?>[\s\S]*?<\/entry>/gi
@@ -100,17 +152,49 @@ function parseFeed(xml: string, playlistId: string): YoutubePlaylist {
 export async function readYoutubePlaylist(
   id: string,
 ): Promise<YoutubePlaylist> {
-  const response = await fetch(
-    `https://www.youtube.com/feeds/videos.xml?playlist_id=${id}`,
-    { cache: "force-cache" },
-  )
-  if (!response.ok) {
-    throw new Error(
-      `YouTube playlist feed request failed with status ${response.status}`,
-    )
+  const controller = new AbortController()
+  const timer = setTimeout(() => {
+    controller.abort()
+  }, READ_DEADLINE_MS)
+
+  try {
+    let response: Response
+    try {
+      response = await fetch(
+        `https://www.youtube.com/feeds/videos.xml?playlist_id=${id}`,
+        { cache: "no-store", signal: controller.signal },
+      )
+    } catch (error) {
+      throw asTransportError(error, "YouTube playlist feed request failed")
+    }
+
+    if (!response.ok) {
+      throw new YoutubePlaylistReadError(
+        `YouTube playlist feed request failed with status ${response.status}`,
+        "http",
+        response.status,
+      )
+    }
+
+    let body: string
+    try {
+      body = await response.text()
+    } catch (error) {
+      throw asTransportError(error, "YouTube playlist feed body read failed")
+    }
+
+    try {
+      return parseFeed(body, id)
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "YouTube playlist feed is invalid"
+      throw new YoutubePlaylistReadError(message, "invalid-feed")
+    }
+  } finally {
+    clearTimeout(timer)
   }
-  const body = await response.text()
-  return parseFeed(body, id)
 }
 
 export function firstPlaylistVideos(

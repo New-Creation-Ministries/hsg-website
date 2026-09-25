@@ -145,6 +145,9 @@ h1, h2, h3, p { margin: 0; }
 p { max-width: 65ch; }
 
 .page-width { width: min(100% - 5rem, 76rem); margin-inline: auto; }
+html {
+  scroll-padding-top: 6.5rem;
+}
 .site-header {
   position: sticky;
   top: 0;
@@ -594,6 +597,38 @@ html:has(.about-page) {
 }
 .playlists a span {
   min-width: 0;
+}
+
+.playlists .playlists-unavailable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.playlists .playlists-unavailable p {
+  margin: 0;
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+.playlists .playlists-unavailable a {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  max-width: 36rem;
+  min-height: 44px;
+  color: var(--acid);
+  scroll-margin-top: 6.5rem;
+}
+.playlists .playlists-unavailable a img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .visit h2 { font-size: 80px; max-width: 65ch; }

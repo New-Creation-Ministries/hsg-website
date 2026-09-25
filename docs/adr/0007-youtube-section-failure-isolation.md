@@ -1,6 +1,6 @@
 # 0007 YouTube section failure isolation
 
-- Status: proposed.
+- Status: accepted.
 - Date: 2026-09-25.
 - Decision owner: Udeet Gulati.
 - Amends: [ADR 0004](0004-youtube-playlist-reading.md), read timing and failure handling.

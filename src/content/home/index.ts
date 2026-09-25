@@ -40,6 +40,15 @@ export const pageNotes = {
 
 export const sermonPlaylistId = "PLWX7FFgYGzyU"
 
+export const sermonPlaylistUnavailable = {
+  message: "Sermons are temporarily unavailable here.",
+  linkLabel: "Listen to the word on Youtube",
+} as const
+
+export function sermonPlaylistUrl(playlistId: string = sermonPlaylistId): string {
+  return `https://www.youtube.com/playlist?list=${playlistId}`
+}
+
 export const sections: HomeSection[] = [
   {
     heading: "What’s going on",
