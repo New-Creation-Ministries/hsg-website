@@ -9,4 +9,4 @@
 | [0005](0005-event-records.md) | Event records | accepted |
 | [0006](0006-calendar-subscription.md) | Calendar subscription | accepted |
 | [0007](0007-youtube-section-failure-isolation.md) | YouTube section failure isolation | accepted |
-| [0008](0008-watch-playlist-continuation.md) | Watch playlist titles and continuation | accepted |
+| [0008](0008-watch-playlist-continuation.md) | Watch playlist titles | accepted |

@@ -9,13 +9,13 @@ Status: ready
 ## Proposed outcome
 
 - `/watch` is a full public Watch page matching the locked UI (`.impeccable/mocks/decision/watch-locked.png`). Decision: witness-first testimonies; sermons are playlist rows (`.impeccable/mocks/decision/watch-locked.prompt.json`, `.impeccable/mocks/decision/watch-options.json`). Horizontal row structure from `.impeccable/mocks/decision/watch-sermon-rows.png`.
-- **Live:** one centered status line under the header. Source channel `UC9cuAo1Qtd2vdAix7EQT7Xw`. On page load, check the channel and populate the line (not a build-time-only snapshot). If nothing is live, show `LIVE • No live events ongoing.` When a service is live, that status line is enough — no player, title treatment, or other live UI. Live does not play on `/watch`.
+- **Live:** one centered status under the header. When `https://www.youtube.com/@EvangelistRambabuRambo/live` reports a broadcast live now, show its title and thumbnail as a link to that URL. Otherwise the line is plain text `No ongoing service` with no link. No player. Live does not play on `/watch`.
 - **Testimonies (cream band, first content):** one active witness at a time — large name, video surface, writeup from the post. Activating the video opens the post externally (does not play on `/watch`). Name switches among:
   - Thangaraj — `https://www.instagram.com/reel/DT-AMm_kewV/`
   - Poorvika — `https://www.instagram.com/reel/DQ__yFACVim/`
   - Creative Miracle — `https://www.instagram.com/reel/DSaHC9JEmiz/`
   - YouTube testimony — `https://www.youtube.com/watch?v=9zmB82CeUj4`
-- **Sermons:** theme rows under a dark ground. Lime playlist titles (locked mock); do not use white titles or the `SERMONS` label from `watch-sermon-rows.png`. Each row is that playlist’s videos as ADR 0004 link + thumbnail (no on-page player); side scroll within a row; next theme is the next row. Initial load uses the feed cap; further scroll loads more videos in the row. Playlists:
+- **Sermons:** theme rows under a dark ground. Lime playlist titles (locked mock); do not use white titles or the `SERMONS` label from `watch-sermon-rows.png`. Each title links to that playlist on YouTube. Each row is that playlist’s videos as ADR 0004 link + thumbnail (no on-page player), at most the Atom feed cap (15); side scroll within a row; next theme is the next row. Playlists:
   - Healing — `https://www.youtube.com/playlist?list=PL4sLZ9xdjDfid3If1uvOqlTz9WvGYTN1A`
   - Live in Health — `https://www.youtube.com/watch?v=ht8-j7mc1qs&list=PLKz6Hr2fQ7Nc`
   - Restoration and Recovery — `https://www.youtube.com/playlist?list=PLTXk7vAHmkA0`

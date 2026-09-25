@@ -821,6 +821,297 @@ html:has(.about-page) {
   }
 }
 
+/* Watch page: docs/features/watch-page/spec.md — scoped to .watch-page */
+.watch-page.page-width {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.watch-page {
+  background: var(--ink);
+  color: var(--paper);
+}
+.watch-page .watch-live {
+  margin: 0;
+  padding: 1.35rem 1.5rem 1.5rem;
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--paper);
+}
+.watch-page .watch-live-heading {
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.watch-page .watch-live a {
+  color: inherit;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 20rem;
+}
+.watch-page .watch-live img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--cobalt);
+}
+.watch-page .watch-live a:hover {
+  color: var(--acid);
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+.watch-page .watch-testimonies {
+  background: var(--band);
+  color: var(--band-ink);
+  padding: 3.5rem 6vw 0;
+}
+.watch-page .watch-testimonies-heading {
+  margin: 0 0 2rem;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--band-ink);
+}
+.watch-page .watch-testimony-rows {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem 4vw;
+  margin: 0;
+  padding: 0 0 3.5rem;
+  align-items: start;
+}
+.watch-page .watch-testimony-row {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 11.5rem) minmax(0, 1fr);
+  gap: 0.85rem 1.15rem;
+  align-items: start;
+  min-width: 0;
+}
+.watch-page .watch-testimony-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+}
+.watch-page .watch-testimony-name {
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 2.4vw, 2.75rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--band-ink);
+}
+.watch-page .watch-testimony-surface {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: none;
+  background: var(--cobalt);
+  min-height: 44px;
+  text-decoration: none;
+  overflow: hidden;
+}
+.watch-page .watch-testimony-surface > * {
+  grid-area: 1 / 1;
+}
+.watch-page .watch-testimony-surface img {
+  display: block;
+  width: 100%;
+  block-size: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  min-width: 0;
+  object-fit: cover;
+  object-position: center;
+  background: var(--cobalt);
+}
+.watch-page .watch-testimony-surface:has(img.is-portrait) {
+  aspect-ratio: 361 / 640;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.watch-page .watch-testimony-surface img.is-portrait {
+  width: 100%;
+  max-width: none;
+  block-size: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  object-fit: cover;
+  object-position: center center;
+}
+.watch-page .watch-play {
+  position: relative;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1.1rem 0 1.1rem 1.85rem;
+  border-color: transparent transparent transparent var(--paper);
+  margin-left: 0.35rem;
+}
+.watch-page .watch-testimony-writeup {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--band-ink);
+  text-wrap: pretty;
+}
+.watch-page .watch-sermon-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  padding: 3rem 0 4.5rem;
+  background: var(--ink);
+}
+.watch-page .watch-sermons-heading {
+  margin: 0;
+  padding-inline: 1.5rem;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.watch-page .watch-sermon-row {
+  min-width: 0;
+}
+.watch-page .watch-sermon-row-head {
+  padding-inline: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.watch-page .watch-sermon-row-title {
+  margin: 0;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--acid);
+}
+.watch-page .watch-sermon-row-title a {
+  color: inherit;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.watch-page .watch-sermon-row-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.watch-page .watch-sermon-scroller {
+  display: flex;
+  gap: 1.15rem;
+  margin: 0;
+  padding: 0 1.5rem 0.35rem;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 1.5rem;
+  scrollbar-color: var(--acid) var(--ink);
+}
+.watch-page .watch-sermon-scroller li {
+  flex: 0 0 min(18rem, 72vw);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.watch-page .watch-sermon-scroller a {
+  display: block;
+  min-height: 44px;
+  color: var(--paper);
+  text-decoration: none;
+}
+.watch-page .watch-sermon-scroller img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--cobalt);
+}
+.watch-page .watch-sermon-empty {
+  margin: 0;
+  padding-inline: 1.5rem;
+  max-width: 48ch;
+  color: var(--mist);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.watch-page .watch-sermon-empty a {
+  color: var(--acid);
+}
+
+@media (max-width: 48rem) {
+  .watch-page .watch-testimonies {
+    padding: 2.5rem 1.5rem 0;
+  }
+  .watch-page .watch-testimony-rows {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 0;
+  }
+  .watch-page .watch-testimony-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--band-ink);
+  }
+  .watch-page .watch-testimony-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .watch-page .watch-testimony-surface {
+    max-width: none;
+  }
+  .watch-page .watch-sermon-row-head,
+  .watch-page .watch-sermon-scroller,
+  .watch-page .watch-sermon-empty {
+    padding-inline: 1.5rem;
+  }
+  .watch-page .watch-sermon-scroller {
+    scroll-padding-inline: 1.5rem;
+  }
+  .watch-page .watch-sermon-rows {
+    gap: 2.25rem;
+    padding-top: 2.25rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
 .timeline .mast {
   padding-top: 64px;
   padding-bottom: 8px;

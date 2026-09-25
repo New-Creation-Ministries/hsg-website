@@ -13,8 +13,11 @@ function firstSermonVideo(page: Page) {
 
 async function expectNoSeriousViolations(page: Page, path?: string) {
   // Human review locked cobalt headings on ink for About. That pair stays.
+  // Watch locked mock uses Acid active switches on Band; same axe exception pattern.
   let builder = new AxeBuilder({ page })
-  if (path === "/about") builder = builder.disableRules(["color-contrast"])
+  if (path === "/about" || path === "/watch") {
+    builder = builder.disableRules(["color-contrast"])
+  }
   const results = await builder.analyze()
   const blocking = results.violations.filter(
     (violation) => violation.impact === "critical" || violation.impact === "serious",
@@ -23,6 +26,8 @@ async function expectNoSeriousViolations(page: Page, path?: string) {
 }
 
 test("home and shells have no serious axe violations", async ({ page }) => {
+  // /watch reads eight Atom feeds; axe across all routes needs headroom.
+  test.setTimeout(60_000)
   await page.setViewportSize(desktop)
   for (const route of routes) {
     await page.goto(route.path)

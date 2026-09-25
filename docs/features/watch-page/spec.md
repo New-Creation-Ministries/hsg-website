@@ -38,11 +38,11 @@ Each record: `name`, `url`, `title`, `writeup`. Title and writeup are adapted fr
 
 ### Sermon playlists
 
-Display names and playlist ids from [intent.md](./intent.md) Proposed outcome (ids from the published playlist URLs). Content stores those display names and ids only. Content owns the visible series name ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)). Video titles, ids, and thumbnails come from the reader / continuation ([ADR 0004](../../adr/0004-youtube-playlist-reading.md), [ADR 0008](../../adr/0008-watch-playlist-continuation.md)).
+Display names and playlist ids from [intent.md](./intent.md) Proposed outcome (ids from the published playlist URLs). Content stores those display names and ids only. Content owns the visible series name ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)). Video titles, ids, and thumbnails come from the Atom reader ([ADR 0004](../../adr/0004-youtube-playlist-reading.md)).
 
 ### Live
 
-Channel id and offline copy: [intent.md](./intent.md) Proposed outcome Live.
+Fixed URL and label: [intent.md](./intent.md) Proposed outcome Live.
 
 ## Page
 
@@ -60,14 +60,14 @@ Channel id and offline copy: [intent.md](./intent.md) Proposed outcome Live.
 ```
 [logo]                         Home  About  Events  Watch  Contact Us  Give
 
-              LIVE • No live events ongoing.   (or live status link)
+              No ongoing service   (or live title + thumbnail link)
 
 THANGARAJ                      [ cobalt video surface ]
                                writeup
 Thangaraj | Poorvika | Creative Miracle | YouTube testimony
 
 HEALING
-[thumb] [thumb] [thumb] …   → horizontal scroll / load more
+[thumb] [thumb] [thumb] …   → horizontal scroll, at most 15
 
 LIVE IN HEALTH
 …
@@ -75,10 +75,10 @@ LIVE IN HEALTH
 
 ## Live status
 
-- On each page load / visit, the site checks the intent channel for an active live broadcast (not a build-time snapshot). Use a trusted server path with a server-only YouTube Data API credential.
-- Offline: show the intent offline copy as plain text (not a link).
-- Live: one centered status line only — no player, title block, or extra live chrome. The line is a link that opens the live watch URL on YouTube (G7). Live does not play on `/watch`.
-- If the live check fails, show the offline copy. Do not block testimonies or sermon rows.
+- One centered status linking to `https://www.youtube.com/@EvangelistRambabuRambo/live` (G7).
+- On each visit, read that page. Show the broadcast title and thumbnail only when it includes `liveBroadcastDetails.isLiveNow`. A finished video on the Live tab is not live.
+- Otherwise, and when the live read fails, the line is plain text `No ongoing service` with no link. No player. Live does not play on `/watch`.
+- A failed live read does not block testimonies or sermon rows.
 
 ## Testimonies UI
 
@@ -90,19 +90,17 @@ LIVE IN HEALTH
 ## Sermon rows
 
 - One row per playlist, in [intent.md](./intent.md) Proposed outcome order, on the ink ground.
-- Row title: content display name, Acid, Oswald uppercase ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)).
+- Row title: content display name, Acid, Oswald uppercase, linking to that playlist on YouTube (G7) ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)).
 - Each video: ADR 0004 link + `mqdefault` thumbnail (no on-page player). Accessible name is the video title; image `alt` empty; `referrerpolicy="no-referrer"`.
-- Initial batch: public Atom feed for that playlist (≤15), feed order ([ADR 0004](../../adr/0004-youtube-playlist-reading.md)). Read at request time with [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md) isolation per row.
-- Further horizontal scroll past the feed prefix loads more via Data API continuation ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)). Free sermons exceeds the Atom feed on YouTube (checked 2026-09-25).
-- Playlist URL remains available for opening the full series on YouTube.
-- A failed row keeps its title and playlist link without video thumbnails; other rows still render ([ADR 0007](../../adr/0007-youtube-section-failure-isolation.md), [ADR 0008](../../adr/0008-watch-playlist-continuation.md)).
+- Videos: public Atom feed for that playlist, at most 15, feed order ([ADR 0004](../../adr/0004-youtube-playlist-reading.md)). Read at request time with [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md) isolation per row.
+- A failed row keeps its title link without video thumbnails; other rows still render ([ADR 0007](../../adr/0007-youtube-section-failure-isolation.md)).
 
 ## Acceptance
 
 - `/watch` does not show the shell sentence.
-- Live line checks the channel on visit; offline copy matches the intent; when live, only the status line appears and it opens YouTube externally.
+- While a broadcast is live now, the line shows its title and thumbnail and links to `https://www.youtube.com/@EvangelistRambabuRambo/live`. Otherwise the line is `No ongoing service` with no link.
 - Four testimonies match the intent URLs; title and writeup come from `src/content/watch/`; activating the surface opens the post externally; switches change the active witness.
-- Eight sermon rows use the intent display names in Acid; initial videos are Atom-feed link+thumbnail rows; further scroll can load past the feed prefix for playlists longer than 15.
+- Eight sermon rows use the intent display names in Acid; each title links to its playlist; videos are Atom-feed link+thumbnail rows, at most 15.
 - No Instagram/YouTube iframe or player script on the page.
 - Shared header/footer; Watch is the current nav item.
 - Layout matches the locked mock except shared header/footer production chrome and the narrow stack rules above.
@@ -113,6 +111,6 @@ LIVE IN HEALTH
 | --- | --- |
 | Visual direction vs ADR 0003 | [ADR 0003](../../adr/0003-spirit-in-blue-visual-direction.md) is Home’s contract. Watch follows the locked mock and reuses matching Home tokens; it does not reopen ADR 0003. |
 | frontend-design vs locked mock | frontend-design flags near-black + acid-green as a generic cluster. The accepted mock uses that look; the brief wins — do not redesign. |
-| YouTube Data API credential | Live check (this spec) and playlist continuation ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)) each need a server-only API key. Architecture allows a trusted server when a secret is required. One credential may serve both. |
+| Playlists longer than 15 | The row stops at the Atom cap. The title link opens the full playlist on YouTube. |
 | Display name vs feed title | Watch applies [ADR 0008](../../adr/0008-watch-playlist-continuation.md) content-authored series names. |
 | Testimony string authorship | Exact title/writeup strings are not fixed in this spec; they are authored in `src/content/watch/` from the source posts before ship. |
