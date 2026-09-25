@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Next Task"
+  short_description: "Add comprehensive tests for one plan task"
+  default_prompt: "Use $test-next-task to test the next implementation-ready task in the current plan."

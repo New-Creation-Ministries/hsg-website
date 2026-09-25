@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Next Wave"
+  short_description: "Test every implementation-ready task in one wave"
+  default_prompt: "Use $test-next-wave to add and run comprehensive tests for the current plan wave."
