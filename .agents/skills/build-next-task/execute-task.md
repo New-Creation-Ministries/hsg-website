@@ -1,9 +1,6 @@
 # Execute one plan task
 
-For each task -
-1. Ask the agent or subagent responsible to first write the tests that form the acceptance criteria of the task.
-2. Attach pointers to relevant context needed for that particular task.
-3. Let them build out the code
+Implement the production behavior for one task. Tests belong to the separate testing gate.
 
 Wave subagents: do not edit `plan.md`.
 
@@ -13,7 +10,7 @@ Paths only; do not paste skill bodies or dump whole files:
 
 - `docs/<folder>/<slug>/intent.md`, `spec.md`, `plan.md` (this `id`)
 - ADRs linked from the spec
-- task `files` plus neighboring tests
+- task production `files`, direct callers, and neighboring implementation patterns
 - matching skills only:
 
 | Work | Skill |
@@ -23,20 +20,18 @@ Paths only; do not paste skill bodies or dump whole files:
 | Backend / Auth / RLS | `.agents/skills/backend-design/SKILL.md` |
 | Supabase | `.agents/skills/supabase/SKILL.md` |
 | Postgres | `.agents/skills/supabase-postgres-best-practices/SKILL.md` |
-| Browser / E2E | `.agents/skills/playwright/SKILL.md` or `.agents/skills/browser-testing-with-devtools/SKILL.md` |
 
-Stay in this task's `files` except a forced adjacent edit (import, type, test helper). No other plan tasks.
+Stay in this task's production files except a forced adjacent implementation edit such as an import or shared type. No other plan tasks.
 
-## Tests, then code
+## Production implementation only
 
-Write tests from `acceptance_criteria` before production code. Run them; they should fail first.
+- Implement every acceptance criterion assigned to this task.
+- Do not add, edit, delete, regenerate, or update tests, test fixtures, snapshots, test-only helpers, test runner configuration, or testing dependencies, even when those paths appear under the task's `files`.
+- Do not weaken existing tests. Run relevant existing checks to catch regressions, but leave all new test authoring to `test-next-task`.
+- If correct implementation requires a product decision, credential, destructive action, or scope outside the task, stop and recommend `blocked` rather than encoding a guess.
 
-Unit for logic; E2E when criteria are flows; browser when UI. If the harness cannot cover a criterion, say what is missing and add the closest automated test. Do not skip tests.
-
-Then implement until those tests pass. Match patterns in the listed files. Load matching skills; do not paste them.
-
-`make build` (must end "Build succeeded"), `make test` (all green; never skip or delete a failing test), `make lint` (zero warnings). Fix code, not tests. For UI, exercise the changed flow in the browser.
+Match patterns in the listed files and load only matching implementation skills. Run `make build` (must end "Build succeeded"), `make test` (all existing tests green), and `make lint` (zero warnings). Fix production code, not tests.
 
 ## Return
 
-`id`, title, test paths, files changed, verify outcomes, unmet criteria, recommended status (`code_review` | `blocked` | `pending`).
+`id`, title, production files changed, verification outcomes, unmet criteria, recommended status (`testing` | `blocked` | `pending`).

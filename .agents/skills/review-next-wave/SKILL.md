@@ -9,15 +9,15 @@ description: Reviews every reviewable code_review task in the next plan.md wave 
 - The parent coordinates fixes and verification after the review batch.
 - Do not start later waves or create follow-up tasks.
 
-Build leaves finished implementation at `code_review`. This skill is the review gate for that wave. Every finding that does not need a human decision is fixed before the reviewed tasks move to `done`, including Optional, Nit, and FYI.
+Testing leaves comprehensively tested implementation at `code_review`. This skill is the review gate for that wave. Every finding that does not need a human decision is fixed before the reviewed tasks move to `done`, including Optional, Nit, and FYI.
 
 ## Pick
 
 Named plan, the one just specified, or `docs/index.md`. Ask once if several match. Read `plan.md` only to choose the wave. Stop if missing or `Status: draft`.
 
-**Next wave:** lowest-numbered wave with a `code_review` task. **Reviewable:** defined in `.agents/skills/review-next-task/resolve-findings.md`.
+**Current wave:** lowest-numbered wave containing any task not `done`. **Reviewable:** a `code_review` task in that wave that meets `.agents/skills/review-next-task/resolve-findings.md`.
 
-Dispatch every reviewable task in that wave. Leave `pending`, `blocked`, and `done` alone. If the wave has `code_review` tasks but none reviewable, stop and name the open review tasks. Do not skip the wave. If nothing is `code_review`, stop and name what is still `pending` or `blocked`.
+Dispatch every reviewable task in that wave. Leave `pending`, `testing`, `blocked`, and `done` alone. If the wave has `code_review` tasks but none reviewable, stop and name the open review tasks. Do not skip the wave. If nothing is `code_review`, stop and name what is still `pending`, `testing`, or `blocked`.
 
 ## Dispatch
 
