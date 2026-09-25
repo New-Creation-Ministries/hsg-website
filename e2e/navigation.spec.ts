@@ -29,9 +29,11 @@ test("opens, escapes, and closes Menu at 800px", async ({ page }) => {
   await expect(nav.getByRole("link", { name: "About" })).toBeHidden()
 
   await menu.click()
-  await nav.getByRole("link", { name: "Give" }).click()
-  await expect(page).toHaveURL("/give")
-  await expect(page.getByRole("heading", { level: 1, name: "Why we give" })).toBeVisible()
+  await nav.getByRole("link", { name: "Contact Us" }).click()
+  await expect(page).toHaveURL("/contact")
+  await expect(
+    page.getByRole("heading", { level: 1, name: "COME AND RECEIVE YOUR MIRACLE" }),
+  ).toBeVisible()
   await expect(page.getByText(shellSentence)).toHaveCount(0)
   await expect(menu).toHaveAttribute("aria-expanded", "false")
 })
@@ -96,6 +98,12 @@ test("opens every shell with its title, heading, and current page", async ({ pag
       await expect(page).toHaveTitle(`Watch | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1, name: "4th Stage Lung Cancer Healed" })).toBeVisible()
       await expect(page.getByText(shellSentence)).toHaveCount(0)
+    } else if (route.path === "/contact") {
+      await expect(page).toHaveTitle(`Contact Us | ${churchName}`)
+      await expect(
+        page.getByRole("heading", { level: 1, name: "COME AND RECEIVE YOUR MIRACLE" }),
+      ).toBeVisible()
+      await expect(page.getByText(shellSentence)).toHaveCount(0)
     } else {
       await expect(page).toHaveTitle(`${route.label} | ${churchName}`)
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(route.label)
@@ -117,11 +125,12 @@ test("returns from a shell with browser Back", async ({ page }) => {
   await page.setViewportSize(desktop)
   await page.goto("/")
   await page.evaluate(() => window.scrollTo(0, 400))
-  // Sticky header links are already on-screen; Playwright scroll-into-view would
-  // jump to y=0 and erase the scroll offset SiteHeader saves for Back (ADR 0002 G6).
-  await headerNav(page).getByRole("link", { name: "Give" }).evaluate((el: HTMLAnchorElement) => {
-    el.click()
-  })
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100)
+  // Programmatic click avoids Playwright scrolling the sticky header into view
+  // (which zeros scrollY before SiteHeader records it for Back restoration).
+  await headerNav(page)
+    .getByRole("link", { name: "Give" })
+    .evaluate((link: HTMLAnchorElement) => link.click())
   await expect(page).toHaveURL("/give")
   await page.goBack()
   await expect(page).toHaveURL("/")

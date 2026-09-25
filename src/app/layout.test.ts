@@ -5,6 +5,7 @@ import { expect, test } from "vitest"
 
 const source = readFileSync(join(import.meta.dirname, "layout.tsx"), "utf8")
 const aboutLayoutPath = join(import.meta.dirname, "about/layout.tsx")
+const footerGatePath = join(import.meta.dirname, "../components/site-footer-gate.tsx")
 const globals = readFileSync(join(import.meta.dirname, "globals.css"), "utf8")
 
 function fontCall(name: string): string {
@@ -38,11 +39,26 @@ test("keeps metadata wired to church.name and leader.blurb", () => {
   expect(source).toMatch(/description:\s*leader\.blurb/)
 })
 
-test("mounts the shared header and footer shell", () => {
+test("mounts the shared header and footer gate shell", () => {
   expect(source).toMatch(/import\s+\{\s*SiteHeader\s*\}\s+from\s+["']@\/components\/site-header["']/)
-  expect(source).toMatch(/import\s+\{\s*SiteFooter\s*\}\s+from\s+["']@\/components\/site-footer["']/)
+  expect(source).toMatch(/import\s+\{\s*SiteFooterGate\s*\}\s+from\s+["']@\/components\/site-footer-gate["']/)
+  expect(source).not.toMatch(/from\s+["']@\/components\/site-footer["']/)
   expect(source).toMatch(/<SiteHeader\s*\/>/)
-  expect(source).toMatch(/<SiteFooter\s*\/>/)
+  expect(source).toMatch(/<SiteFooterGate\s*\/>/)
+  expect(source).not.toMatch(/<SiteFooter\s*\/>/)
+})
+
+test("footer gate omits SiteFooter on /contact and mounts it elsewhere", () => {
+  expect(existsSync(footerGatePath)).toBe(true)
+  const gate = readFileSync(footerGatePath, "utf8")
+  expect(gate).toMatch(/["']use client["']/)
+  expect(gate).toMatch(/import\s+\{\s*usePathname\s*\}\s+from\s+["']next\/navigation["']/)
+  expect(gate).toMatch(/import\s+\{\s*SiteFooter\s*\}\s+from\s+["']@\/components\/site-footer["']/)
+  expect(gate).toMatch(
+    /pathname\s*===\s*["']\/contact["'][\s\S]*?return\s+null[\s\S]*?return\s+<\s*SiteFooter\s*\/>/,
+  )
+  expect(gate).not.toMatch(/display:\s*none/)
+  expect(gate).not.toMatch(/visibility:\s*hidden/)
 })
 
 test("about layout marks the route without replacing shared SiteHeader or SiteFooter", () => {

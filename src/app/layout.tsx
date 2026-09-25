@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { DM_Sans, Oswald } from "next/font/google"
 
 import { church, leader } from "@/content/home"
-import { SiteFooter } from "@/components/site-footer"
+import { SiteFooterGate } from "@/components/site-footer-gate"
 import { SiteHeader } from "@/components/site-header"
 import { cn } from "@/lib/utils"
 
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <SiteHeader />
         {children}
-        <SiteFooter />
+        <SiteFooterGate />
       </body>
     </html>
   )
