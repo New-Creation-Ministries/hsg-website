@@ -14,7 +14,6 @@ const SCOPED_FILES = [
   "src/lib/youtube-live.ts",
   "src/lib/youtube-playlist.ts",
   "src/lib/calendar-feed.ts",
-  "src/lib/home-event-slots.ts",
   "src/app/page.tsx",
   "src/app/watch/page.tsx",
   "src/app/events/page.tsx",

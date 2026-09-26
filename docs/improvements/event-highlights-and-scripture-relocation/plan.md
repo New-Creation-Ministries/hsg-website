@@ -40,7 +40,7 @@ Links: [intent](./intent.md) · [spec](./spec.md)
 
 id: event-highlights-and-scripture-relocation_1_1
 title: Replace Home Highlighted testimonies with event-highlight content records
-status: pending
+status: done
 acceptance_criteria:
 - Home module matches [spec.md](./spec.md) Delta `/` rows and [Home — What’s going on](./spec.md#home--whats-going-on) / [Home — remove Highlighted testimonies](./spec.md#home--remove-highlighted-testimonies) / [Highlight content](./spec.md#highlight-content).
 - Export name is `eventHighlights`; `thumbnailUrl` values are the `public/home/` paths from `_1_4`.
@@ -53,7 +53,7 @@ depends_on: []
 
 id: event-highlights-and-scripture-relocation_1_2
 title: Export Hebrews 2:4 for Watch Featured Testimonies band
-status: pending
+status: done
 acceptance_criteria:
 - Watch content matches [spec.md](./spec.md) [Watch — Hebrews 2:4](./spec.md#watch--hebrews-24) (export outside `testimonies`).
 - Existing four `testimonies` records unchanged.
@@ -65,7 +65,7 @@ depends_on: []
 
 id: event-highlights-and-scripture-relocation_1_3
 title: Drop the Gospel to the Nations family-residence sentence
-status: pending
+status: done
 acceptance_criteria:
 - About module matches [spec.md](./spec.md) [About](./spec.md#about) / Delta `/about` row.
 - `about.test.ts` asserts that exact sentence is absent from `nations`.
@@ -76,7 +76,7 @@ depends_on: []
 
 id: event-highlights-and-scripture-relocation_1_4
 title: Commit Instagram reel poster images for the two home highlights
-status: pending
+status: done
 acceptance_criteria:
 - Add the two `public/home/` posters named in Files that change; paths used as `eventHighlights[].thumbnailUrl` in `_1_1`.
 - [spec.md](./spec.md) [Highlight content](./spec.md#highlight-content) / Concerns Thumbnail assets: no Instagram fetch; do not ship empty `thumbnailUrl` strings.
@@ -91,7 +91,7 @@ depends_on: []
 
 id: event-highlights-and-scripture-relocation_2_1
 title: Move band tokens to New to HSG? and style home highlights on ink
-status: pending
+status: done
 acceptance_criteria:
 - CSS matches [spec.md](./spec.md) [Home — New to HSG?](./spec.md#home--new-to-hsg) and [Event highlight UI](./spec.md#event-highlight-ui); Watch Hebrews styles under `.watch-page` for [Watch — Hebrews 2:4](./spec.md#watch--hebrews-24).
 - `globals.test.ts` locks band-on-visit and drops unused Home `.stories` / testimonies-only rules nothing renders.
@@ -104,7 +104,7 @@ depends_on:
 
 id: event-highlights-and-scripture-relocation_2_2
 title: Rewire Home page for highlights; stop homeEventSlots on What’s going on
-status: pending
+status: done
 acceptance_criteria:
 - `page.tsx` implements [spec.md](./spec.md) Delta `/` rows, [Home — What’s going on](./spec.md#home--whats-going-on), [Event highlight UI](./spec.md#event-highlight-ui), and [Home — remove Highlighted testimonies](./spec.md#home--remove-highlighted-testimonies).
 - Branch sections by heading (not index): What’s going on → New to HSG? (visit/band) → Sermons; remove `TestimonyItems` / `pageNotes.testimonies` render path.
@@ -126,7 +126,7 @@ depends_on:
 
 id: event-highlights-and-scripture-relocation_2_3
 title: Insert Hebrews horizontal block before Watch testimony items
-status: pending
+status: done
 acceptance_criteria:
 - `watch-testimonies.tsx` matches [spec.md](./spec.md) [Watch — Hebrews 2:4](./spec.md#watch--hebrews-24).
 - `watch/page.test.ts` locks Hebrews placement and that it is not rendered from the `testimonies` array.
@@ -140,7 +140,7 @@ depends_on:
 
 id: event-highlights-and-scripture-relocation_3_1
 title: Update Playwright home, watch, and accessibility for the new layout
-status: pending
+status: code_review
 acceptance_criteria:
 - Playwright covers [spec.md](./spec.md) Acceptance on `/`, `/watch`, and `/about` family-residence absence via About content already shipped in `_1_3` (About e2e only if an existing assertion would fail).
 - `e2e/copy.ts` section list matches Delta section order; drop obsolete Highlighted testimonies / RWO source fixtures.
@@ -159,7 +159,7 @@ depends_on:
 
 id: event-highlights-and-scripture-relocation_3_2
 title: Align sibling Home/About planning docs with the shipped layout
-status: pending
+status: code_review
 acceptance_criteria:
 - Sibling docs listed in Files that change match [spec.md](./spec.md) Concerns “Home / Watch docs drift” resolution for this change.
 - `home-planning-docs.test.ts` locks updated Home docs without expecting Highlighted testimonies as a live section.

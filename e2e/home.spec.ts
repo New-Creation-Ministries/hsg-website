@@ -1,8 +1,6 @@
-import { expect, test, type Locator } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
-import { events } from "../src/content/events"
-import { sections as homeContent } from "../src/content/home"
-import { homeEventSlots, type HomeEventSlot } from "../src/lib/home-event-slots"
+import { eventHighlights, sections as homeContent } from "../src/content/home"
 import {
   absentReferenceCopy,
   blurb,
@@ -15,15 +13,11 @@ import {
   sections,
   sundayNote,
   sundayServices,
-  testimonySource,
 } from "./copy"
 import { aboveMenu, atMenu, box, desktop, headerNav, paintedBackground } from "./helpers"
 
 const goingOnScripture = homeContent.find(
   (section) => section.heading === "What’s going on",
-)?.items[0]
-const testimonyScripture = homeContent.find(
-  (section) => section.heading === "Highlighted testimonies",
 )?.items[0]
 
 function curlyQuoted(text: string) {
@@ -34,18 +28,7 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize(desktop)
 })
 
-async function expectEventSlot(region: Locator, slot: HomeEventSlot, index: number) {
-  const row = region.locator("li").nth(index)
-  await expect(row.getByRole("heading", { level: 3 })).toHaveText(slot.name)
-  if (slot.kind === "dated") {
-    await expect(row.getByText(slot.whenLine)).toBeVisible()
-  } else {
-    await expect(row.getByText(slot.language)).toBeVisible()
-    await expect(row.getByText(slot.time)).toBeVisible()
-  }
-}
-
-test("shows the church, the blurb, and the four sections", async ({ page }) => {
+test("shows the church, the blurb, and the three sections", async ({ page }) => {
   await page.goto("/")
 
   await expect(page).toHaveTitle(churchName)
@@ -57,7 +40,8 @@ test("shows the church, the blurb, and the four sections", async ({ page }) => {
   for (const name of sections) {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible()
   }
-  await expect(page.getByText(testimonySource)).toBeVisible()
+  await expect(page.getByRole("heading", { level: 2, name: "Highlighted testimonies" })).toHaveCount(0)
+  await expect(page.getByText("Stories adapted from Rambo World Outreach.")).toHaveCount(0)
   await expect(page.getByText(sundayNote)).toBeVisible()
   await expect(page.getByText(ministryName)).toBeVisible()
   await expect(page.getByText(footerAddress)).toBeVisible()
@@ -68,10 +52,9 @@ test("shows the church, the blurb, and the four sections", async ({ page }) => {
   await expect(page.locator("iframe")).toHaveCount(0)
 })
 
-test("shows scripture, request-time event slots, and testimony scripture", async ({ page }) => {
+test("shows scripture and event highlights without slots or Highlighted testimonies", async ({ page }) => {
   await page.goto("/")
   expect(sundayServices.length).toBeGreaterThan(0)
-  const slots = homeEventSlots(events, new Date())
 
   const highlights = page.getByRole("region", { name: sections[0] })
   await expect(highlights.getByText("Highlight to be published")).toHaveCount(0)
@@ -80,29 +63,27 @@ test("shows scripture, request-time event slots, and testimony scripture", async
   await expect(highlights.getByRole("heading", { level: 3, name: goingOnScripture!.title })).toBeVisible()
   await expect(highlights.getByText(goingOnQuote)).toBeVisible()
   await expect(highlights.getByRole("link", { name: goingOnScripture!.title })).toHaveCount(0)
-  await expect(highlights.locator("li")).toHaveCount(3)
-  const scriptureRow = highlights.locator("li").first()
+  await expect(highlights.locator("ul.highlights > li")).toHaveCount(1)
+  const scriptureRow = highlights.locator("ul.highlights > li").first()
   await expect(scriptureRow.getByRole("heading", { level: 3 })).toHaveText(goingOnScripture!.title)
   await expect(scriptureRow.getByRole("paragraph")).toHaveText(goingOnQuote)
-  await expectEventSlot(highlights, slots[0], 1)
-  await expectEventSlot(highlights, slots[1], 2)
-  await expect(highlights.getByRole("link", { name: slots[0].name })).toHaveCount(0)
-  await expect(highlights.getByRole("link", { name: slots[1].name })).toHaveCount(0)
+
+  const highlightRows = highlights.locator(".home-event-highlight-row")
+  await expect(highlightRows).toHaveCount(eventHighlights.length)
+  for (const highlight of eventHighlights) {
+    const surface = highlights.getByRole("link", { name: `Open ${highlight.title}` })
+    await expect(surface).toHaveAttribute("href", highlight.url)
+    await expect(surface).toHaveAttribute("target", "_blank")
+    await expect(surface).toHaveAttribute("rel", "noopener noreferrer")
+    await expect(surface.locator("img")).toHaveAttribute("src", highlight.thumbnailUrl)
+    await expect(surface.locator(".home-event-play")).toBeVisible()
+    await expect(highlights.getByRole("heading", { level: 3, name: highlight.title })).toBeVisible()
+  }
   await expect(highlights.getByRole("link", { name: "Events" })).toHaveAccessibleName("Events")
 
-  const stories = page.getByRole("region", { name: "Highlighted testimonies" })
-  expect(testimonyScripture).toBeTruthy()
-  const testimonyQuote = curlyQuoted(testimonyScripture!.text!)
-  await expect(stories.getByRole("heading", { level: 3, name: testimonyScripture!.title })).toBeVisible()
-  await expect(stories.getByText(testimonyQuote)).toBeVisible()
-  await expect(stories.locator("article.scripture-tile").getByRole("paragraph")).toHaveText(testimonyQuote)
-  await expect(stories.getByRole("link", { name: testimonyScripture!.title })).toHaveCount(0)
-  await expect(stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })).toBeVisible()
-  await expect(stories.getByRole("link", { name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
-  await expect(stories.getByRole("link", { name: "Testimony from California" })).toHaveCount(0)
-  await expect(stories.getByRole("link", { name: "Miracle from Dallas" })).toHaveCount(0)
-  await expect(stories.getByRole("link", { name: "Praise Reports" })).toHaveCount(0)
-  await expect(stories.getByText(testimonySource)).toBeVisible()
+  await expect(page.getByRole("region", { name: "Highlighted testimonies" })).toHaveCount(0)
+  await expect(page.getByText("Stories adapted from Rambo World Outreach.")).toHaveCount(0)
+  await expect(page.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })).toHaveCount(0)
 
   const sermons = page.getByRole("region", { name: "Sermons" })
   const sermonQuote = sermons.locator("blockquote.scripture")
@@ -221,15 +202,18 @@ test("places the portrait beside the introduction on a wide screen and below Abo
   expect((await box(about)).y).toBeLessThan((await box(portrait)).y)
 })
 
-test("keeps highlight rows stacked and puts the wide section link beside its heading", async ({ page }) => {
+test("puts event highlights beside each other and the Events link beside the heading", async ({ page }) => {
   await page.goto("/")
   const highlights = page.getByRole("region", { name: sections[0] })
-  const titles = highlights.getByRole("heading", { level: 3 })
-  await expect(titles).toHaveCount(3)
-  const tops: number[] = []
-  for (const title of await titles.all()) tops.push((await box(title)).y)
-  expect(tops[0]).toBeLessThan(tops[1])
-  expect(tops[1]).toBeLessThan(tops[2])
+  expect(goingOnScripture).toBeTruthy()
+  const scriptureTitle = highlights.getByRole("heading", { level: 3, name: goingOnScripture!.title })
+  const firstHighlight = highlights.getByRole("heading", { level: 3, name: eventHighlights[0]!.title })
+  const secondHighlight = highlights.getByRole("heading", { level: 3, name: eventHighlights[1]!.title })
+  const firstBox = await box(firstHighlight)
+  const secondBox = await box(secondHighlight)
+  expect((await box(scriptureTitle)).y).toBeLessThan(firstBox.y)
+  expect(Math.abs(firstBox.y - secondBox.y)).toBeLessThan(8)
+  expect(firstBox.x).toBeLessThan(secondBox.x)
 
   const heading = highlights.getByRole("heading", { level: 2 })
   const eventsLink = highlights.getByRole("link", { name: "Events" })
@@ -239,41 +223,20 @@ test("keeps highlight rows stacked and puts the wide section link beside its hea
   expect(Math.abs(eventsBox.y - headingBox.y)).toBeLessThan(48)
 })
 
-test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }) => {
+test("uses the wide event-highlight, sermon, and Sunday compositions", async ({ page }) => {
   await page.goto("/")
-  const stories = page.getByRole("region", { name: "Highlighted testimonies" })
-  expect(testimonyScripture).toBeTruthy()
-  const first = stories.getByRole("heading", { level: 3, name: testimonyScripture!.title })
-  const second = stories.getByRole("heading", { level: 3, name: "Healing story from Sherman, Illinois" })
-  const third = stories.getByRole("heading", { level: 3, name: "Testimony from California" })
-  const fourth = stories.getByRole("heading", { level: 3, name: "Miracle from Dallas" })
+  const goingOn = page.getByRole("region", { name: sections[0] })
+  const highlightRows = goingOn.locator(".home-event-highlight-row")
 
   await page.setViewportSize(aboveMenu)
-  const articles = stories.locator("article")
-  const widths = await articles.evaluateAll((nodes) =>
-    nodes.map((article) => article.getBoundingClientRect().width),
+  const widths = await highlightRows.evaluateAll((nodes) =>
+    nodes.map((row) => row.getBoundingClientRect().width),
   )
-  expect(widths).toHaveLength(4)
-  // Scripture tile bleeds wider via negative margin; the testimony pair stays equal.
-  expect(widths[0]!).toBeGreaterThan(widths[1]!)
-  expect(Math.abs(widths[0]! - widths[1]!)).toBeGreaterThan(16)
-  expect(Math.abs(widths[2]! - widths[3]!)).toBeLessThan(8)
-
-  const [scriptureTile, healing, california, dallas] = await Promise.all([
-    box(articles.nth(0)),
-    box(articles.nth(1)),
-    box(articles.nth(2)),
-    box(articles.nth(3)),
-  ])
-  expect(Math.abs(scriptureTile.y - healing.y)).toBeLessThan(8)
-  expect(scriptureTile.x).toBeLessThan(healing.x)
-  expect(Math.abs(california.y - dallas.y)).toBeLessThan(8)
-  expect(california.x).toBeLessThan(dallas.x)
-  expect(california.y).toBeGreaterThan(scriptureTile.y)
-  await expect(first).toBeVisible()
-  await expect(second).toBeVisible()
-  await expect(third).toBeVisible()
-  await expect(fourth).toBeVisible()
+  expect(widths).toHaveLength(2)
+  expect(Math.abs(widths[0]! - widths[1]!)).toBeLessThan(8)
+  const [firstRow, secondRow] = await Promise.all([box(highlightRows.nth(0)), box(highlightRows.nth(1))])
+  expect(Math.abs(firstRow.y - secondRow.y)).toBeLessThan(8)
+  expect(firstRow.x).toBeLessThan(secondRow.x)
 
   const sermons = page.getByRole("region", { name: "Sermons" })
   const quote = sermons.locator(".channel")
@@ -298,15 +261,13 @@ test("uses the wide testimony, sermon, and Sunday compositions", async ({ page }
   expect((await box(knowMore)).x).toBeLessThan((await box(time)).x)
 
   await page.setViewportSize(atMenu)
-  expect((await box(first)).y).toBeLessThan((await box(second)).y)
-  expect((await box(second)).y).toBeLessThan((await box(third)).y)
-  expect((await box(third)).y).toBeLessThan((await box(fourth)).y)
-  const rules = await stories.locator("article").evaluateAll((articles) =>
-    articles.map((article) => getComputedStyle(article).borderTopWidth),
+  expect((await box(highlightRows.nth(0))).y).toBeLessThan((await box(highlightRows.nth(1))).y)
+  const rules = await highlightRows.evaluateAll((rows) =>
+    rows.map((row) => getComputedStyle(row).borderTopWidth),
   )
-  expect(rules).toHaveLength(4)
+  expect(rules).toHaveLength(2)
   expect(rules[0]).toBe("0px")
-  expect(rules.slice(1).every((width) => width === "1px")).toBe(true)
+  expect(rules[1]).toBe("1px")
   expect((await box(quote)).y).toBeLessThan((await box(videos.first())).y)
   expect((await box(knowMore)).y).toBeLessThan((await box(time)).y)
 })

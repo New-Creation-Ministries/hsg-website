@@ -2,6 +2,7 @@ import { expect, test } from "vitest"
 
 import {
   church,
+  eventHighlights,
   leader,
   nav,
   pageNotes,
@@ -18,20 +19,19 @@ test("names the church and states the blurb", () => {
   expect(leader.portrait).toBeNull()
 })
 
-test("carries the three page notes sections do not", () => {
+test("carries sunday, ministry, and address page notes without testimonies", () => {
   expect(pageNotes).toEqual({
-    testimonies: "Stories adapted from Rambo World Outreach.",
     sunday: "Sunday services · Namma Bengaluru",
     ministry: "New Creation Ministries",
     address:
       "NC Arena #3 Near Legacy School & Moto Mind Shop Byrithi, Village, Kothanur, Bengaluru, Karnataka 560077",
   })
+  expect(pageNotes).not.toHaveProperty("testimonies")
 })
 
-test("lists sections in order", () => {
+test("lists sections in order without Highlighted testimonies", () => {
   expect(sections.map((section) => section.heading)).toEqual([
     "What’s going on",
-    "Highlighted testimonies",
     "New to HSG?",
     "Sermons",
   ])
@@ -89,42 +89,51 @@ test("has no Highlight to be published item titles", () => {
   expect(titles).not.toContain("Highlight to be published")
 })
 
-test("puts Acts 2:46 scripture first in What’s going on", () => {
+test("puts Acts 2:46 scripture alone in What’s going on with Events link", () => {
   const goingOn = sections.find((section) => section.heading === "What’s going on")
   expect(goingOn?.more).toEqual({ label: "Events", href: "/events" })
-  expect(goingOn?.items[0]).toEqual({
-    title: "Acts 2:46 (AMP)",
-    text: "And day after day they regularly assembled in the temple with united purpose... with gladness and simplicity and generous hearts",
-  })
+  expect(goingOn?.items).toEqual([
+    {
+      title: "Acts 2:46",
+      text: "And day after day they regularly assembled in the temple with united purpose... with gladness and simplicity and generous hearts",
+    },
+  ])
   expect(goingOn?.items[0]?.href).toBeUndefined()
 })
 
-test("puts Hebrews 2:4 scripture first in Highlighted testimonies", () => {
-  const testimonies = sections.find(
-    (section) => section.heading === "Highlighted testimonies",
-  )
-  expect(testimonies?.more).toBeUndefined()
-  expect(testimonies?.items).toEqual([
+test("exports eventHighlights in intent order with title, url, and thumbnailUrl", () => {
+  expect(eventHighlights).toEqual([
     {
-      title: "Hebrews 2:4 (KJV)",
-      text: "God also bearing them witness, both with signs and wonders, and with divers miracles, and gifts of the Holy Ghost",
+      title: "Together Youth Night Highlights",
+      url: "https://www.instagram.com/reel/DclzTz2TnWk/",
+      thumbnailUrl: "/home/together-youth-night.jpg",
     },
     {
-      title: "Healing story from Sherman, Illinois",
-      text: "A woman had lived for three decades with double scoliosis, a missing rib, and four back surgeries.",
-    },
-    {
-      title: "Testimony from California",
-      text: "A woman had severe migraine for seven years and could not bear sunlight or ordinary sound. Apostle Rambabu laid hands on her and said “Restore,” and the migraine ended.",
-    },
-    {
-      title: "Miracle from Dallas",
-      text: "A woman had been deaf in her left ear since childhood. She began to hear after Apostle Rambabu called out her condition and cast his shadow on her.",
+      title: "Recent Service Recap",
+      url: "https://www.instagram.com/reel/DdQZhQNTH6S/",
+      thumbnailUrl: "/home/recent-service-recap.jpg",
     },
   ])
-  expect(
-    testimonies?.items.every((item) => item.href === undefined),
-  ).toBe(true)
+})
+
+test("event highlight thumbnails are content-authored public/home paths, not Instagram fetches", () => {
+  expect(eventHighlights).toHaveLength(2)
+  for (const highlight of eventHighlights) {
+    expect(highlight.thumbnailUrl.trim().length).toBeGreaterThan(0)
+    expect(highlight.thumbnailUrl).toMatch(/^\/home\/.+\.(jpe?g|png|webp)$/i)
+    expect(highlight.thumbnailUrl).not.toMatch(/instagram\.com/i)
+    expect(highlight.url).toMatch(/^https:\/\/www\.instagram\.com\/reel\//)
+  }
+})
+
+test("does not keep Hebrews or testimony stories in Home sections", () => {
+  const titles = sections.flatMap((section) =>
+    section.items.map((item) => item.title),
+  )
+  expect(titles).not.toContain("Hebrews 2:4 (KJV)")
+  expect(titles).not.toContain("Healing story from Sherman, Illinois")
+  expect(titles).not.toContain("Testimony from California")
+  expect(titles).not.toContain("Miracle from Dallas")
 })
 
 test("gives section items no URLs", () => {

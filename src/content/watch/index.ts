@@ -11,6 +11,16 @@ export type WatchPlaylistTheme = {
   playlistId: string
 }
 
+export type WatchScripture = {
+  citation: string
+  text: string
+}
+
+export const featuredTestimoniesScripture: WatchScripture = {
+  citation: "Hebrews 2:4",
+  text: "God also bearing them witness, both with signs and wonders, and with divers miracles, and gifts of the Holy Ghost",
+}
+
 export const testimonies: WatchTestimony[] = [
   {
     name: "4th Stage Lung Cancer Healed",

@@ -1,10 +1,15 @@
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
 import { expect, test } from "vitest"
 
+import { sections } from "@/content/home"
+
 const source = readFileSync(join(import.meta.dirname, "page.tsx"), "utf8")
 const homeSource = readFileSync(join(import.meta.dirname, "../page.tsx"), "utf8")
+const repoRoot = join(import.meta.dirname, "../..")
+
+const visitSection = sections.find((section) => section.heading === "New to HSG?")
 
 test("Events revalidates hourly, lists upcoming, and is not force-dynamic", () => {
   expect(source).toMatch(/export\s+const\s+revalidate\s*=\s*3600/)
@@ -13,10 +18,15 @@ test("Events revalidates hourly, lists upcoming, and is not force-dynamic", () =
   expect(source).toMatch(/listUpcoming\s*\(\s*events\s*,\s*new Date\s*\(\s*\)\s*\)/)
 })
 
-test("Home uses event slots at request time; Events lists upcoming directly", () => {
-  expect(homeSource).toMatch(/@\/content\/events/)
-  expect(homeSource).toMatch(/homeEventSlots/)
+test("Home does not use event slots; Events lists upcoming directly", () => {
+  expect(existsSync(join(repoRoot, "src/lib/home-event-slots.ts"))).toBe(false)
+  expect(existsSync(join(repoRoot, "src/lib/home-event-slots.test.ts"))).toBe(
+    false,
+  )
+  expect(homeSource).not.toMatch(/@\/content\/events/)
+  expect(homeSource).not.toMatch(/homeEventSlots/)
   expect(homeSource).not.toMatch(/listUpcoming/)
+  expect(homeSource).not.toMatch(/@\/lib\/home-event-slots/)
   expect(source).toMatch(/listUpcoming\s*\(\s*events\s*,\s*new Date\s*\(\s*\)\s*\)/)
 })
 
@@ -52,12 +62,24 @@ test("zero listed events render empty copy; Sunday services stay without the int
   expect(source).toMatch(/Multilingual · AI Powered/)
 })
 
-test("Sunday services keep Home name, language, and time; page text has no 1:30", () => {
-  expect(source).toMatch(/New to HSG\?|sections/)
+test("Sunday services keep Home New to HSG? names and times after home-event-slots removal", () => {
+  expect(source).toMatch(/sections\.find\(\(section\) => section\.heading === ["']New to HSG\?["']\)/)
   expect(source).toMatch(/item\.text/)
   expect(source).toMatch(/item\.title/)
+  expect(source).toMatch(/sundayClock/)
+  expect(source).toMatch(/onwards/i)
   expect(source).not.toMatch(/1:30/)
   expect(source).not.toMatch(/13:30/)
+  expect(source).not.toMatch(/homeEventSlots/)
+
+  expect(visitSection).toBeDefined()
+  expect(visitSection!.items).toEqual([
+    { title: "Word Fest Service", text: "English\n08:00–09:00" },
+    {
+      title: "Miracles and Healing Service",
+      text: "Multilingual\n09:30 onwards",
+    },
+  ])
 })
 
 test("dated rows do not show the subscribe refresh note; page does not say Added", () => {

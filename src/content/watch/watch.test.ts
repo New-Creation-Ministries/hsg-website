@@ -3,30 +3,62 @@ import { join } from "node:path"
 
 import { expect, test } from "vitest"
 
-import { playlistThemes, testimonies } from "."
+import {
+  featuredTestimoniesScripture,
+  playlistThemes,
+  testimonies,
+} from "."
 
-test("lists the four testimonies in intent order with locked names and URLs", () => {
-  expect(
-    testimonies.map((testimony) => ({
-      name: testimony.name,
-      url: testimony.url,
-    })),
-  ).toEqual([
+test("exports Featured Testimonies Hebrews 2:4 outside the testimonies array", () => {
+  expect(featuredTestimoniesScripture).toEqual({
+    citation: "Hebrews 2:4",
+    text: "God also bearing them witness, both with signs and wonders, and with divers miracles, and gifts of the Holy Ghost",
+  })
+})
+
+test("keeps Hebrews 2:4 out of the testimonies array", () => {
+  expect(testimonies).toHaveLength(4)
+  for (const testimony of testimonies) {
+    expect(testimony).not.toHaveProperty("citation")
+    expect(testimony.name).not.toBe(featuredTestimoniesScripture.citation)
+    expect(testimony.title).not.toBe(featuredTestimoniesScripture.citation)
+    expect(testimony.writeup).not.toBe(featuredTestimoniesScripture.text)
+  }
+})
+
+test("lists the four testimonies in intent order with locked records", () => {
+  expect(testimonies).toEqual([
     {
       name: "4th Stage Lung Cancer Healed",
       url: "https://www.instagram.com/reel/DT-AMm_kewV/",
+      title: "4th Stage Lung Cancer Healed",
+      writeup:
+        "This brother had a collapsed lung. He was unable to walk but can now run also and is able to go to gym. Hallelujah!",
+      thumbnailUrl: "/watch/thangaraj.jpg",
     },
     {
       name: "4th Stage Brain Cancer Healed",
       url: "https://www.instagram.com/reel/DQ__yFACVim/",
+      title: "4th Stage Brain Cancer Healed",
+      writeup:
+        "This girl was suffering severely from Brain Cancer. The Lord healed her completely and she is now able to go to school and enjoy life!",
+      thumbnailUrl: "/watch/poorvika.jpg",
     },
     {
       name: "Creative Miracle",
       url: "https://www.instagram.com/reel/DSaHC9JEmiz/",
+      title: "Is there anything too hard for the Lord?",
+      writeup:
+        "This little child was missing an organ from birth. But after prayer, the organ grew back miraculously!",
+      thumbnailUrl: "/watch/creative-miracle.jpg",
     },
     {
       name: "Cervical Disk Bulge Healed",
       url: "https://www.instagram.com/reel/DP3qzsLiVuB/",
+      title: "Cervical Disk Bulge Healed",
+      writeup:
+        "Worked in an operation theatre and suffered a cervical disc bulge. The left side of the body would not move. Look what the Lord has done. Hallelujah.",
+      thumbnailUrl: "/watch/cervical-disk-bulge.jpg",
     },
   ])
 })
