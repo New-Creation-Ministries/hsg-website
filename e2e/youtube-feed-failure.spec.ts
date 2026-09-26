@@ -105,7 +105,11 @@ async function expectUnavailableSermons(page: Page) {
     sermons.locator('a[href^="https://www.youtube.com/watch?v="]'),
   ).toHaveCount(0)
   await expect(sermons.getByText("Playlist to be published")).toHaveCount(0)
-  await expect(sermons.getByText(/youtube_playlist_read_failed|invalid-feed|YoutubePlaylistReadError/i)).toHaveCount(0)
+  await expect(
+    sermons.getByText(
+      /youtube_playlist_read_failed|invalid-feed|YoutubePlaylistReadError|external_read_failed|ExternalReadError/i,
+    ),
+  ).toHaveCount(0)
   await expect(sermons.getByRole("button", { name: /retry/i })).toHaveCount(0)
 }
 

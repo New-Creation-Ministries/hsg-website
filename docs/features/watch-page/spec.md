@@ -60,7 +60,7 @@ Fixed URL and label: [intent.md](./intent.md) Proposed outcome Live.
 ```
 [logo]                         Home  About  Events  Watch  Contact Us  Give
 
-              No ongoing service   (or live title + thumbnail link)
+              LIVE · title + thumbnail link   (omitted when not live or read fails)
 
 THANGARAJ                      [ cobalt video surface ]
                                writeup
@@ -76,8 +76,8 @@ LIVE IN HEALTH
 ## Live status
 
 - One centered status linking to `https://www.youtube.com/@EvangelistRambabuRambo/live` (G7).
-- On each visit, read that page. Show the broadcast title and thumbnail only when it includes `liveBroadcastDetails.isLiveNow`. A finished video on the Live tab is not live.
-- Otherwise, and when the live read fails, the line is plain text `No ongoing service` with no link. No player. Live does not play on `/watch`.
+- One read per generation. Show the broadcast title and thumbnail only when it includes `liveBroadcastDetails.isLiveNow`. A finished video on the Live tab is not live.
+- When no broadcast is live or the read fails, omit the live line. No player. Live does not play on `/watch`. Failure handling per [ADR 0009](../../adr/0009-site-error-model.md).
 - A failed live read does not block testimonies or sermon rows.
 
 ## Testimonies UI
@@ -92,13 +92,13 @@ LIVE IN HEALTH
 - One row per playlist, in [intent.md](./intent.md) Proposed outcome order, on the ink ground.
 - Row title: content display name, Acid, Oswald uppercase, linking to that playlist on YouTube (G7) ([ADR 0008](../../adr/0008-watch-playlist-continuation.md)).
 - Each video: ADR 0004 link + `mqdefault` thumbnail (no on-page player). Accessible name is the video title; image `alt` empty; `referrerpolicy="no-referrer"`.
-- Videos: public Atom feed for that playlist, at most 15, feed order ([ADR 0004](../../adr/0004-youtube-playlist-reading.md)). Read at request time with [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md) isolation per row.
+- Videos: public Atom feed for that playlist, at most 15, feed order ([ADR 0004](../../adr/0004-youtube-playlist-reading.md)). One read per generation with [ADR 0007](../../adr/0007-youtube-section-failure-isolation.md) isolation per row.
 - A failed row keeps its title link without video thumbnails; other rows still render ([ADR 0007](../../adr/0007-youtube-section-failure-isolation.md)).
 
 ## Acceptance
 
 - `/watch` does not show the shell sentence.
-- While a broadcast is live now, the line shows its title and thumbnail and links to `https://www.youtube.com/@EvangelistRambabuRambo/live`. Otherwise the line is `No ongoing service` with no link.
+- While a broadcast is live now, the line shows its title and thumbnail and links to `https://www.youtube.com/@EvangelistRambabuRambo/live`. When no broadcast is live or the read fails, the live line is omitted.
 - Four testimonies match the intent URLs; title and writeup come from `src/content/watch/`; activating the surface opens the post externally; switches change the active witness.
 - Eight sermon rows use the intent display names in Acid; each title links to its playlist; videos are Atom-feed link+thumbnail rows, at most 15.
 - No Instagram/YouTube iframe or player script on the page.

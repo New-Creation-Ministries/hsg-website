@@ -1,13 +1,13 @@
 import Image from "next/image"
 import type { Metadata } from "next"
-import { headers } from "next/headers"
 
 import { AddToCalendar } from "@/components/add-to-calendar"
 import { events, sundayFeeds } from "@/content/events"
 import { sections } from "@/content/home"
 import { listUpcoming, type UpcomingEventRow } from "@/lib/event-list"
+import { siteHost } from "@/lib/site-host"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600
 
 export const metadata: Metadata = { title: "Events" }
 
@@ -66,13 +66,7 @@ function TickTime({ row }: { row: UpcomingEventRow }) {
   )
 }
 
-function FeaturedRow({
-  row,
-  host,
-}: {
-  row: UpcomingEventRow
-  host: string
-}) {
+function FeaturedRow({ row }: { row: UpcomingEventRow }) {
   return (
     <article className="tick">
       <TickTime row={row} />
@@ -94,7 +88,7 @@ function FeaturedRow({
           <AddToCalendar
             id={row.id}
             name={row.name}
-            host={host}
+            host={siteHost}
             scope={scopePhrase(row.scope)}
           />
         </div>
@@ -103,13 +97,7 @@ function FeaturedRow({
   )
 }
 
-function MinorRow({
-  row,
-  host,
-}: {
-  row: UpcomingEventRow
-  host: string
-}) {
+function MinorRow({ row }: { row: UpcomingEventRow }) {
   return (
     <article className="tick minor">
       <TickTime row={row} />
@@ -119,7 +107,7 @@ function MinorRow({
         <AddToCalendar
           id={row.id}
           name={row.name}
-          host={host}
+          host={siteHost}
           scope={scopePhrase(row.scope)}
         />
       </div>
@@ -127,8 +115,7 @@ function MinorRow({
   )
 }
 
-export default async function Page() {
-  const host = (await headers()).get("host") ?? "localhost:3000"
+export default function Page() {
   const upcoming = listUpcoming(events, new Date())
   const sundayItems = sundaySection?.items ?? []
 
@@ -144,9 +131,9 @@ export default async function Page() {
         <div className="spine">
           {upcoming.map((row) =>
             row.featured ? (
-              <FeaturedRow key={row.id} row={row} host={host} />
+              <FeaturedRow key={row.id} row={row} />
             ) : (
-              <MinorRow key={row.id} row={row} host={host} />
+              <MinorRow key={row.id} row={row} />
             ),
           )}
         </div>
@@ -180,7 +167,7 @@ export default async function Page() {
                     <AddToCalendar
                       id={feed.id}
                       name={item.title}
-                      host={host}
+                      host={siteHost}
                       scope="every Sunday"
                     />
                   </div>

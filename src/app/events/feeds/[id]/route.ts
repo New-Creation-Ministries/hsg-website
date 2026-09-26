@@ -5,6 +5,7 @@ import {
 } from "@/content/events"
 import { sections } from "@/content/home"
 import { calendarFeed } from "@/lib/calendar-feed"
+import { ContentInvariantError } from "@/lib/errors"
 
 /** Deploy-time stamp for every feed in this build. Do not move into modules Home imports. */
 export const BUILD_DTSTAMP = new Date()
@@ -71,19 +72,27 @@ function assertSundayFeedsMatchHome(): void {
   for (const lock of HOME_SUNDAY_LOCKS) {
     const home = services?.items.find((item) => item.title === lock.homeTitle)
     if (home?.text !== lock.homeText) {
-      throw new Error(
-        `Home “New to HSG?” ${lock.homeTitle} text must remain ${JSON.stringify(lock.homeText)}`,
-      )
+      throw new ContentInvariantError({
+        module: "src/app/events/feeds/[id]/route.ts",
+        rule: "sunday-home-text-lock",
+        message: `Home “New to HSG?” ${lock.homeTitle} text must remain ${JSON.stringify(lock.homeText)}`,
+      })
     }
 
     const feed = sundayFeeds.find((item) => item.id === lock.id)
     if (!feed) {
-      throw new Error(`sundayFeeds is missing ${lock.id}`)
+      throw new ContentInvariantError({
+        module: "src/app/events/feeds/[id]/route.ts",
+        rule: "sunday-feed-present",
+        message: `sundayFeeds is missing ${lock.id}`,
+      })
     }
     if (!sameWindow(kolkataWindow(feed.start, feed.end), lock.window)) {
-      throw new Error(
-        `${lock.id} must be Sunday ${lock.window.start}–${lock.window.end} Asia/Kolkata`,
-      )
+      throw new ContentInvariantError({
+        module: "src/app/events/feeds/[id]/route.ts",
+        rule: "sunday-window-lock",
+        message: `${lock.id} must be Sunday ${lock.window.start}–${lock.window.end} Asia/Kolkata`,
+      })
     }
   }
 }

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 
-import { expect, test } from "vitest"
+import { afterEach, expect, test, vi } from "vitest"
 
 import { sections as homeSections } from "../home"
 import {
@@ -15,6 +15,12 @@ const aboutSource = readFileSync(
   join(import.meta.dirname, "index.ts"),
   "utf8",
 )
+
+afterEach(() => {
+  vi.doUnmock("../home")
+  vi.doUnmock("@/content/home")
+  vi.resetModules()
+})
 
 test("lists the six scenes in locked order and titles", () => {
   expect(scenes.map((scene) => ({ id: scene.id, heading: scene.heading }))).toEqual([
@@ -85,4 +91,22 @@ test("uses the locked story-continues intro and visit address", () => {
 
   const storyContinues = scenes.find((scene) => scene.id === "story-continues")
   expect(storyContinues?.paragraphs).toEqual([storyContinuesIntro])
+})
+
+test("missing New to HSG? section rejects ContentInvariantError at module load", async () => {
+  vi.resetModules()
+  vi.doMock("../home", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("../home")>()
+    return {
+      ...actual,
+      sections: actual.sections.filter(
+        (section) => section.heading !== "New to HSG?",
+      ),
+    }
+  })
+
+  const { ContentInvariantError: FreshContentInvariantError } = await import(
+    "@/lib/errors"
+  )
+  await expect(import(".")).rejects.toThrow(FreshContentInvariantError)
 })

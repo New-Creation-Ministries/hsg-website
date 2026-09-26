@@ -6,14 +6,14 @@ import { expect, test } from "vitest"
 const source = readFileSync(join(import.meta.dirname, "page.tsx"), "utf8")
 const homeSource = readFileSync(join(import.meta.dirname, "../page.tsx"), "utf8")
 
-test("Events is force-dynamic, lists upcoming at request time, and does not revalidate", () => {
-  expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/)
+test("Events revalidates hourly, lists upcoming, and is not force-dynamic", () => {
+  expect(source).toMatch(/export\s+const\s+revalidate\s*=\s*3600/)
+  expect(source).not.toMatch(/export\s+const\s+dynamic\s*=/)
+  expect(source).not.toMatch(/force-dynamic/)
   expect(source).toMatch(/listUpcoming\s*\(\s*events\s*,\s*new Date\s*\(\s*\)\s*\)/)
-  expect(source).not.toMatch(/\brevalidate\b/)
 })
 
 test("Home uses event slots at request time; Events lists upcoming directly", () => {
-  expect(homeSource).toMatch(/export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/)
   expect(homeSource).toMatch(/@\/content\/events/)
   expect(homeSource).toMatch(/homeEventSlots/)
   expect(homeSource).not.toMatch(/listUpcoming/)
@@ -68,10 +68,18 @@ test("dated rows do not show the subscribe refresh note; page does not say Added
   expect(source).not.toMatch(/["']Added["']|>Added</)
 })
 
-test("Host header seeds AddToCalendar; one control per dated row and Sunday service", () => {
-  expect(source).toMatch(/from\s+["']next\/headers["']/)
-  expect(source).toMatch(/headers\s*\(/)
-  expect(source).toMatch(/["']host["']/)
+test("siteHost seeds AddToCalendar; no request headers; one control per dated row and Sunday service", () => {
+  expect(source).toMatch(/from\s+["']@\/lib\/site-host["']/)
+  expect(source).not.toMatch(/from\s+["']next\/headers["']/)
+  expect(source).not.toMatch(/headers\s*\(/)
   expect(source).toMatch(/<AddToCalendar\b/)
   expect(source).toMatch(/sundayFeeds|word-fest/)
+
+  const calendars = [...source.matchAll(/<AddToCalendar\b[\s\S]*?\/>/g)].map(
+    (match) => match[0],
+  )
+  expect(calendars.length).toBeGreaterThan(0)
+  for (const calendar of calendars) {
+    expect(calendar).toMatch(/host=\{siteHost\}/)
+  }
 })

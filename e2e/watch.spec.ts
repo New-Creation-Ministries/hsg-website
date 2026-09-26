@@ -26,7 +26,7 @@ test("opens Watch with no ongoing service and no on-page players", async ({ page
   await expect(page).toHaveTitle(`Watch | ${churchName}`)
   await expect(page.getByText(shellSentence)).toHaveCount(0)
   await expect(page.getByText(YOUTUBE_LIVE_OFFLINE_COPY)).toHaveCount(0)
-  await expect(page.getByRole("heading", { name: "Live" })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "Live", exact: true })).toHaveCount(0)
   await expect(page.locator(".watch-live")).toHaveCount(0)
   await expect(page.getByRole("heading", { level: 1, name: "4th Stage Lung Cancer Healed" })).toBeVisible()
   await expect(page.getByRole("heading", { level: 1, name: "Watch" })).toHaveCount(0)
@@ -106,7 +106,7 @@ test("narrow viewport stacks and still shows testimonies and sermon rows", async
   await page.goto("/watch")
 
   await expect(page.getByText(YOUTUBE_LIVE_OFFLINE_COPY)).toHaveCount(0)
-  await expect(page.getByRole("heading", { name: "Live" })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "Live", exact: true })).toHaveCount(0)
   await expect(page.locator(".watch-live")).toHaveCount(0)
   await expect(page.getByRole("region", { name: "Featured Testimonies" })).toBeVisible()
   await expect(page.getByRole("heading", { level: 1, name: "4th Stage Lung Cancer Healed" })).toBeVisible()

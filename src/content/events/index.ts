@@ -1,3 +1,5 @@
+import { ContentInvariantError } from "@/lib/errors"
+
 export type EventPhoto = {
   src: string
   alt: string
@@ -64,27 +66,37 @@ export function assertEventsPublishable(
 
   for (const record of records) {
     if (!record.name || !record.start || !record.end) {
-      throw new Error(
-        `Event "${record.id}" requires name, start, and end`,
-      )
+      throw new ContentInvariantError({
+        module: "src/content/events/index.ts",
+        rule: "required-fields",
+        message: `Event "${record.id}" requires name, start, and end`,
+      })
     }
 
     const startMs = Date.parse(record.start)
     const endMs = Date.parse(record.end)
     if (!(endMs > startMs)) {
-      throw new Error(`Event "${record.id}" end must be after start`)
+      throw new ContentInvariantError({
+        module: "src/content/events/index.ts",
+        rule: "end-after-start",
+        message: `Event "${record.id}" end must be after start`,
+      })
     }
 
     if (!Number.isInteger(record.revision) || record.revision < 1) {
-      throw new Error(
-        `Event "${record.id}" revision must be an integer ≥ 1`,
-      )
+      throw new ContentInvariantError({
+        module: "src/content/events/index.ts",
+        rule: "revision-integer-ge-1",
+        message: `Event "${record.id}" revision must be an integer ≥ 1`,
+      })
     }
 
     if (record.photo?.src && !record.photo.alt) {
-      throw new Error(
-        `Event "${record.id}" photo requires alt when src is set`,
-      )
+      throw new ContentInvariantError({
+        module: "src/content/events/index.ts",
+        rule: "photo-alt-required",
+        message: `Event "${record.id}" photo requires alt when src is set`,
+      })
     }
 
     if (record.featured && endMs > nowMs) {
@@ -93,8 +105,11 @@ export function assertEventsPublishable(
   }
 
   if (featuredUpcoming > 2) {
-    throw new Error(
-      "At most two featured events may still be listed (end after now)",
-    )
+    throw new ContentInvariantError({
+      module: "src/content/events/index.ts",
+      rule: "max-two-featured-upcoming",
+      message:
+        "At most two featured events may still be listed (end after now)",
+    })
   }
 }

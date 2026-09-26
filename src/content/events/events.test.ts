@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url"
 
 import { expect, test } from "vitest"
 
+import { ContentInvariantError } from "@/lib/errors"
+
 import { sections } from "../home"
 import {
   assertEventsPublishable,
@@ -143,29 +145,29 @@ test("miracles-and-healing is 09:30–13:30 and Home uses 09:30 onwards", () => 
   })
 })
 
-test("assertEventsPublishable throws for missing name, start, or end", () => {
+test("assertEventsPublishable throws ContentInvariantError for missing name, start, or end", () => {
   const now = new Date("2026-09-01T00:00:00+05:30")
   expect(() =>
     assertEventsPublishable(
       [baseEvent({ id: "a", name: "" })],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable(
       [baseEvent({ id: "a", start: "" })],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable(
       [baseEvent({ id: "a", end: "" })],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
 })
 
-test("assertEventsPublishable throws when end is not after start", () => {
+test("assertEventsPublishable throws ContentInvariantError when end is not after start", () => {
   const now = new Date("2026-09-01T00:00:00+05:30")
   expect(() =>
     assertEventsPublishable(
@@ -178,7 +180,7 @@ test("assertEventsPublishable throws when end is not after start", () => {
       ],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable(
       [
@@ -190,30 +192,30 @@ test("assertEventsPublishable throws when end is not after start", () => {
       ],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
 })
 
-test("assertEventsPublishable throws when revision is not an integer ≥ 1", () => {
+test("assertEventsPublishable throws ContentInvariantError when revision is not an integer ≥ 1", () => {
   const now = new Date("2026-09-01T00:00:00+05:30")
   expect(() =>
     assertEventsPublishable([baseEvent({ id: "a", revision: 0 })], now),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable([baseEvent({ id: "a", revision: 1.5 })], now),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable([baseEvent({ id: "a", revision: -1 })], now),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
 })
 
-test("assertEventsPublishable throws when photo.src is set without alt", () => {
+test("assertEventsPublishable throws ContentInvariantError when photo.src is set without alt", () => {
   const now = new Date("2026-09-01T00:00:00+05:30")
   expect(() =>
     assertEventsPublishable(
       [baseEvent({ id: "a", photo: { src: "/x.jpg", alt: "" } })],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
   expect(() =>
     assertEventsPublishable(
       [
@@ -224,10 +226,10 @@ test("assertEventsPublishable throws when photo.src is set without alt", () => {
       ],
       now,
     ),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
 })
 
-test("assertEventsPublishable throws when more than two featured events end after now, without dropping extras", () => {
+test("assertEventsPublishable throws ContentInvariantError when more than two featured events end after now, without dropping extras", () => {
   const now = new Date("2026-09-01T00:00:00+05:30")
   const threeFeatured = [
     baseEvent({
@@ -249,7 +251,9 @@ test("assertEventsPublishable throws when more than two featured events end afte
       end: "2026-10-03T12:00:00+05:30",
     }),
   ]
-  expect(() => assertEventsPublishable(threeFeatured, now)).toThrow()
+  expect(() => assertEventsPublishable(threeFeatured, now)).toThrow(
+    ContentInvariantError,
+  )
   expect(threeFeatured).toHaveLength(3)
 
   expect(() =>

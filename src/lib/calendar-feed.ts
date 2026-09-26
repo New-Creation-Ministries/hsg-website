@@ -5,6 +5,7 @@ import {
   type SundayFeedRecord,
 } from "@/content/events"
 import { sections } from "@/content/home"
+import { ContentInvariantError } from "@/lib/errors"
 
 import { kolkataDateKey } from "./kolkata-date"
 
@@ -46,7 +47,11 @@ function formatDtstamp(instant: Date): string {
 function formatLocalFromIso(iso: string): string {
   const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/.exec(iso)
   if (!match) {
-    throw new Error(`Invalid ISO datetime: ${iso}`)
+    throw new ContentInvariantError({
+      module: "src/lib/calendar-feed.ts",
+      rule: "iso-local-datetime",
+      message: `Invalid ISO datetime: ${iso}`,
+    })
   }
   return `${match[1]}${match[2]}${match[3]}T${match[4]}${match[5]}${match[6]}`
 }
@@ -80,10 +85,22 @@ function escapeText(value: string): string {
 function sundaySummary(id: string): string {
   const expected =
     SUNDAY_HOME_TITLE[id as keyof typeof SUNDAY_HOME_TITLE]
-  if (!expected) throw new Error(`Unknown Sunday feed id: ${id}`)
+  if (!expected) {
+    throw new ContentInvariantError({
+      module: "src/lib/calendar-feed.ts",
+      rule: "known-sunday-feed-id",
+      message: `Unknown Sunday feed id: ${id}`,
+    })
+  }
   const services = sections.find((section) => section.heading === "New to HSG?")
   const title = services?.items.find((item) => item.title === expected)?.title
-  if (!title) throw new Error(`${expected} Home title missing`)
+  if (!title) {
+    throw new ContentInvariantError({
+      module: "src/lib/calendar-feed.ts",
+      rule: "sunday-home-title",
+      message: `${expected} Home title missing`,
+    })
+  }
   return title
 }
 
@@ -169,7 +186,11 @@ export function calendarFeed(
   } else {
     const record = dated.find((event) => event.id === id)
     if (!record) {
-      throw new Error(`Unknown calendar feed id: ${id}`)
+      throw new ContentInvariantError({
+        module: "src/lib/calendar-feed.ts",
+        rule: "known-feed-id",
+        message: `Unknown calendar feed id: ${id}`,
+      })
     }
     vevents = datedEvents(record, dtstamp)
     calName = record.name

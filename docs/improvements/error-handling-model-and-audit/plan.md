@@ -41,7 +41,7 @@ Choices fixed by this plan (the spec leaves them open):
 
 id: error-handling-model-and-audit_1_1
 title: Audit `src/` against the model and write audit.md
-status: pending
+status: done
 acceptance_criteria:
 - One row per `throw`, `catch`, `fetch`, and `null`-on-failure return in the spec §Audit procedure scope plus the four files added above; columns and classes per spec
 - Missing-boundary rows for `src/app/not-found.tsx`, `error.tsx`, `global-error.tsx`, `src/instrumentation.ts`; every non-`conforming` row names the owning task id
@@ -52,7 +52,7 @@ depends_on: []
 
 id: error-handling-model-and-audit_1_2
 title: Add typed error hierarchy in `src/lib/errors.ts`
-status: pending
+status: done
 acceptance_criteria:
 - Classes, fields, `isOperational`, `name`, and exported types match spec §Error hierarchy
 - Tests: each class sets `name`, `code`, `isOperational`, `cause`, own fields; `instanceof` chain holds; `YoutubePlaylistReadError.dependency === "youtube-playlist"`
@@ -64,7 +64,7 @@ depends_on: []
 
 id: error-handling-model-and-audit_1_3
 title: Add `not-found.tsx`, `error.tsx`, `global-error.tsx`
-status: pending
+status: done
 acceptance_criteria:
 - Per spec §Route boundaries and visitor copy; `error.tsx` and `global-error.tsx` start with `"use client"` and never render `error.digest` or `error.name`
 - Tests render each component: heading, sentence, `href="/"`, button text; `<main id="main-content" class="page-width" tabIndex={-1}>` in `not-found` and `error` only; `error.tsx` given `new Error("secret-marker")` outputs no `secret-marker`; `not-found` `metadata.title === "Page not found"`
@@ -82,7 +82,7 @@ depends_on: []
 
 id: error-handling-model-and-audit_2_1
 title: Add `diagnostics.ts`, `readExternal`, and `onRequestError`
-status: pending
+status: done
 acceptance_criteria:
 - `src/lib/diagnostics.ts` per spec §Logging; `src/lib/external-read.ts` per spec §Shared read boundary; `src/instrumentation.ts` per spec §Logging with the signature in `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/instrumentation.md`
 - Tests: exact object shape per log function; `readExternal` success (no log), `ExternalReadError` (one `warn`), `new Error("x")` and thrown string (rethrow, no `warn`); `onRequestError` with plain `Error` (no `code`/`isOperational`) and with `ContentInvariantError` (`code`, `isOperational: false`)
@@ -98,7 +98,7 @@ depends_on: [error-handling-model-and-audit_1_2]
 
 id: error-handling-model-and-audit_2_2
 title: Retype playlist reader errors; drop `cache: "no-store"`
-status: pending
+status: done
 acceptance_criteria:
 - `parseFeed`/`parseEntry` throw `YoutubePlaylistReadError` (`invalid-feed`, `resource` = playlist id); rewrapping `catch` around `parseFeed` removed; `asTransportError` sets `resource` and `cause`; `fetch` options contain only `signal`
 - Tests: existing cases pass; every rejection `instanceof YoutubePlaylistReadError` with `dependency` and `resource`; `page.render.test.tsx` constructor calls use the options object
@@ -111,7 +111,7 @@ depends_on: [error-handling-model-and-audit_1_2]
 
 id: error-handling-model-and-audit_2_3
 title: Make `readYoutubeLiveBroadcast` throw `YoutubeLiveReadError`
-status: pending
+status: done
 acceptance_criteria:
 - `readText` returns `string` and throws `YoutubeLiveReadError` with `resource` = URL; `parseOEmbed` throws `invalid-feed` with `dependency: "youtube-oembed"`; outer swallow-all `catch` removed; `fetch` options contain only `signal`; `null` only when the live page lacks `isLiveNow`; tests assert the mapped category per spec §Regression verification row
 - Verify: `npx vitest run src/lib/youtube-live.test.ts`
@@ -124,7 +124,7 @@ depends_on: [error-handling-model-and-audit_1_2]
 
 id: error-handling-model-and-audit_3_1
 title: Retype events content and feed invariants to `ContentInvariantError`
-status: pending
+status: done
 acceptance_criteria:
 - Throw sites become `ContentInvariantError` with `module` and `rule`: `src/content/events/index.ts:67,75,79,85,96`; `src/lib/calendar-feed.ts:49,83,86,172`; `src/app/events/feeds/[id]/route.ts:74,81,84`; `generateStaticParams` order and `assertEventsPublishable(events, new Date())` unchanged
 - Each `toThrow()` in the three test files asserts `ContentInvariantError`; one case per throw site not yet covered
@@ -140,7 +140,7 @@ depends_on: [error-handling-model-and-audit_1_2]
 
 id: error-handling-model-and-audit_3_2
 title: Resolve Home service slots at module load; retype About invariant
-status: pending
+status: done
 acceptance_criteria:
 - `homeServiceSlots` resolved at module load, throwing `ContentInvariantError` when a service is missing; `homeEventSlots(events, now)` has no throwing branch; `src/content/about/index.ts:20` throws `ContentInvariantError`
 - `src/app/page.tsx` calls `homeEventSlots(events, new Date())`; `page.render.test.tsx` mocks the new signature
@@ -157,7 +157,7 @@ depends_on: [error-handling-model-and-audit_1_2, error-handling-model-and-audit_
 
 id: error-handling-model-and-audit_3_3
 title: Add `siteHost`; move `/events` to `revalidate = 3600`
-status: pending
+status: done
 acceptance_criteria:
 - `src/lib/site-host.ts` per spec §Rendering modes; tests use `vi.stubEnv` + `vi.resetModules` + dynamic import for explicit host, production URL, preview `VERCEL_URL`, `localhost:3000`, Vercel-empty throw
 - `src/app/events/page.tsx`: `export const revalidate = 3600`; no `dynamic` export; no `next/headers` import; `host={siteHost}` on every `AddToCalendar`
@@ -174,7 +174,7 @@ depends_on: [error-handling-model-and-audit_1_2]
 
 id: error-handling-model-and-audit_4_1
 title: Wire `/` to `readExternal` and `revalidate = 3600`
-status: pending
+status: done
 acceptance_criteria:
 - `export const revalidate = 3600`; no `dynamic` export; heading check throws `ContentInvariantError`; `readSermonListing` uses `readExternal({ route: "/", dependency: "youtube-playlist", resource: sermonPlaylistId }, ...)`; local `try/catch` and `console.error` removed
 - `page.render.test.tsx`: failure renders the unavailable state and one `console.warn` `external_read_failed`; success logs nothing; `console.error` never called; non-`ExternalReadError` rejection propagates; `page.test.ts` asserts `revalidate` and no `force-dynamic`
@@ -187,7 +187,7 @@ depends_on: [error-handling-model-and-audit_2_1, error-handling-model-and-audit_
 
 id: error-handling-model-and-audit_4_2
 title: Wire `/watch` to `readExternal` and `revalidate = 300` (most risky)
-status: pending
+status: done
 acceptance_criteria:
 - `export const revalidate = 300`; no `dynamic` export; `readThemeListing` and the live read use `readExternal` with `route: "/watch"`; local `try/catch` and `console.error` removed
 - Live `{ ok: false }` and `{ ok: true, value: null }` render no live section (no `.watch-live`, no copy, no link, as today); `{ ok: true, value }` renders the link as today; `YOUTUBE_LIVE_OFFLINE_COPY` stays unreferenced by the page
@@ -204,7 +204,7 @@ depends_on: [error-handling-model-and-audit_2_1, error-handling-model-and-audit_
 
 id: error-handling-model-and-audit_5_1
 title: Add e2e not-found coverage; update leak assertions
-status: pending
+status: done
 acceptance_criteria:
 - `e2e/errors.spec.ts`: `/no-such-page` and `/events/feeds/unknown.ics` respond 404 with `h1` "Page not found", main navigation, footer, "Return to Home" link; `/` responds 200; no horizontal scroll at 320px on the not-found page
 - `e2e/youtube-feed-failure.spec.ts` leak assertion also excludes `external_read_failed` and `ExternalReadError`
@@ -216,7 +216,7 @@ depends_on: [error-handling-model-and-audit_1_3, error-handling-model-and-audit_
 
 id: error-handling-model-and-audit_5_2
 title: Add success-criteria source tests; reconcile audit.md; full verification
-status: pending
+status: done
 acceptance_criteria:
 - `src/site-error-model.test.ts` scans `src/**` excluding `*.test.*`: no `force-dynamic`; `/`, `/events`, `/watch` export the spec `revalidate` values; no `from "next/headers"`; no `throw new Error(`; no `catch` block lacking `instanceof` or `throw`; no `cache: "no-store"`
 - Every `audit.md` Action is applied or the row records why it remains; rows added for files this plan created, all `conforming`

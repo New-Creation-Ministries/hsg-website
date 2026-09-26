@@ -1,3 +1,5 @@
+import { YoutubeLiveReadError } from "./errors"
+
 export const YOUTUBE_LIVE_URL =
   "https://www.youtube.com/@EvangelistRambabuRambo/live"
 export const YOUTUBE_LIVE_OFFLINE_COPY = "No ongoing service"
@@ -6,6 +8,8 @@ export type YoutubeLiveBroadcast = {
   title: string
   thumbnailUrl: string
 }
+
+type YoutubeLiveDependency = "youtube-live" | "youtube-oembed"
 
 const READ_DEADLINE_MS = 3000
 const OEMBED_ENDPOINT = "https://www.youtube.com/oembed"
@@ -26,14 +30,65 @@ function isAbortError(error: unknown): boolean {
   )
 }
 
-async function readText(url: string, signal: AbortSignal): Promise<string | null> {
+function asTransportError(
+  error: unknown,
+  dependency: YoutubeLiveDependency,
+  resource: string,
+  fallbackMessage: string,
+): YoutubeLiveReadError {
+  if (isAbortError(error)) {
+    return new YoutubeLiveReadError({
+      dependency,
+      resource,
+      category: "timeout",
+      message: "YouTube live request timed out",
+      cause: error,
+    })
+  }
+  const message =
+    error instanceof Error && error.message
+      ? error.message
+      : fallbackMessage
+  return new YoutubeLiveReadError({
+    dependency,
+    resource,
+    category: "network",
+    message,
+    cause: error,
+  })
+}
+
+async function readText(
+  url: string,
+  dependency: YoutubeLiveDependency,
+  signal: AbortSignal,
+): Promise<string> {
+  let response: Response
   try {
-    const response = await fetch(url, { cache: "no-store", signal })
-    if (!response.ok) return null
+    response = await fetch(url, { signal })
+  } catch (error) {
+    throw asTransportError(error, dependency, url, "YouTube live request failed")
+  }
+
+  if (!response.ok) {
+    throw new YoutubeLiveReadError({
+      dependency,
+      resource: url,
+      category: "http",
+      message: `YouTube live request failed with status ${response.status}`,
+      status: response.status,
+    })
+  }
+
+  try {
     return await response.text()
   } catch (error) {
-    if (isAbortError(error)) throw error
-    return null
+    throw asTransportError(
+      error,
+      dependency,
+      url,
+      "YouTube live body read failed",
+    )
   }
 }
 
@@ -49,16 +104,38 @@ function oEmbedUrl(videoId: string): string {
   return url.toString()
 }
 
-function parseOEmbed(body: string): YoutubeLiveBroadcast | null {
-  let parsed: OEmbedResponse
+function parseOEmbed(body: string, resource: string): YoutubeLiveBroadcast {
+  let parsed: unknown
   try {
-    parsed = JSON.parse(body) as OEmbedResponse
-  } catch {
-    return null
+    parsed = JSON.parse(body)
+  } catch (error) {
+    throw new YoutubeLiveReadError({
+      dependency: "youtube-oembed",
+      resource,
+      category: "invalid-feed",
+      message: "YouTube oEmbed response is invalid JSON",
+      cause: error,
+    })
   }
-  const title = parsed.title?.trim()
-  const thumbnailUrl = parsed.thumbnail_url?.trim()
-  if (!title || !thumbnailUrl) return null
+  if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+    throw new YoutubeLiveReadError({
+      dependency: "youtube-oembed",
+      resource,
+      category: "invalid-feed",
+      message: "YouTube oEmbed response is not a JSON object",
+    })
+  }
+  const record = parsed as OEmbedResponse
+  const title = record.title?.trim()
+  const thumbnailUrl = record.thumbnail_url?.trim()
+  if (!title || !thumbnailUrl) {
+    throw new YoutubeLiveReadError({
+      dependency: "youtube-oembed",
+      resource,
+      category: "invalid-feed",
+      message: "YouTube oEmbed response is missing title or thumbnail_url",
+    })
+  }
   return { title, thumbnailUrl }
 }
 
@@ -69,17 +146,17 @@ export async function readYoutubeLiveBroadcast(): Promise<YoutubeLiveBroadcast |
   }, READ_DEADLINE_MS)
 
   try {
-    const html = await readText(YOUTUBE_LIVE_URL, controller.signal)
-    if (!html) return null
-
+    const html = await readText(
+      YOUTUBE_LIVE_URL,
+      "youtube-live",
+      controller.signal,
+    )
     const videoId = liveVideoId(html)
     if (!videoId) return null
 
-    const body = await readText(oEmbedUrl(videoId), controller.signal)
-    if (!body) return null
-    return parseOEmbed(body)
-  } catch {
-    return null
+    const embedUrl = oEmbedUrl(videoId)
+    const body = await readText(embedUrl, "youtube-oembed", controller.signal)
+    return parseOEmbed(body, embedUrl)
   } finally {
     clearTimeout(timer)
   }

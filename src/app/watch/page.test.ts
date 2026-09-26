@@ -1,7 +1,35 @@
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 
-import { expect, test } from "vitest"
+import { renderToStaticMarkup } from "react-dom/server"
+import { afterEach, beforeEach, expect, test, vi } from "vitest"
+
+import { playlistThemes, testimonies } from "@/content/watch"
+import { YoutubeLiveReadError } from "@/lib/errors"
+import {
+  YOUTUBE_LIVE_URL,
+  type YoutubeLiveBroadcast,
+} from "@/lib/youtube-live"
+import {
+  YoutubePlaylistReadError,
+  type YoutubePlaylist,
+} from "@/lib/youtube-playlist"
+
+vi.mock("@/lib/youtube-playlist", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/youtube-playlist")>()
+  return {
+    ...actual,
+    readYoutubePlaylist: vi.fn(),
+  }
+})
+
+vi.mock("@/lib/youtube-live", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/youtube-live")>()
+  return {
+    ...actual,
+    readYoutubeLiveBroadcast: vi.fn(),
+  }
+})
 
 const source = readFileSync(join(import.meta.dirname, "page.tsx"), "utf8")
 const liveSource = readFileSync(
@@ -21,6 +49,63 @@ const globalsSource = readFileSync(
   "utf8",
 )
 
+const { default: WatchPage, revalidate } = await import("./page")
+const { readYoutubePlaylist } = await import("@/lib/youtube-playlist")
+const { readYoutubeLiveBroadcast } = await import("@/lib/youtube-live")
+
+const playlistMock = vi.mocked(readYoutubePlaylist)
+const liveMock = vi.mocked(readYoutubeLiveBroadcast)
+
+const FAILED_PLAYLIST_ID = playlistThemes[0]!.playlistId
+const LIVE_BROADCAST: YoutubeLiveBroadcast = {
+  title: "Sunday Service Live",
+  thumbnailUrl: "https://i.ytimg.com/vi/livevid/mqdefault.jpg",
+}
+
+function playlistFor(playlistId: string, title: string): YoutubePlaylist {
+  return {
+    title,
+    url: `https://www.youtube.com/playlist?list=${playlistId}`,
+    videos: [
+      {
+        id: `${playlistId}-v1`,
+        title: `${title} video 1`,
+        url: `https://www.youtube.com/watch?v=${playlistId}-v1`,
+        thumbnailUrl: `https://i.ytimg.com/vi/${playlistId}-v1/mqdefault.jpg`,
+      },
+      {
+        id: `${playlistId}-v2`,
+        title: `${title} video 2`,
+        url: `https://www.youtube.com/watch?v=${playlistId}-v2`,
+        thumbnailUrl: `https://i.ytimg.com/vi/${playlistId}-v2/mqdefault.jpg`,
+      },
+    ],
+  }
+}
+
+function mockAllPlaylistsSuccess() {
+  playlistMock.mockImplementation(async (playlistId: string) => {
+    const theme = playlistThemes.find((row) => row.playlistId === playlistId)
+    return playlistFor(playlistId, theme?.name ?? playlistId)
+  })
+}
+
+async function renderWatch(): Promise<string> {
+  const tree = await WatchPage()
+  return renderToStaticMarkup(tree)
+}
+
+beforeEach(() => {
+  playlistMock.mockReset()
+  liveMock.mockReset()
+  mockAllPlaylistsSuccess()
+  liveMock.mockResolvedValue(null)
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
+
 test("hides the live panel unless a broadcast is live", () => {
   expect(source).toMatch(/if \(!broadcast\) return null/)
   expect(source).toMatch(/id=["']watch-live-heading["']/)
@@ -34,10 +119,13 @@ test("document title is Watch; page has no shell sentence", () => {
   expect(source).not.toMatch(/<h1[^>]*>\s*Watch\s*<\/h1>/)
 })
 
-test("anchors #main-content and is force-dynamic for Atom reads", () => {
+test("anchors #main-content and revalidates every 300s for Atom reads", () => {
   expect(source).toMatch(/id=["']main-content["']/)
-  expect(source).toMatch(/export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/)
-  expect(source).not.toMatch(/\brevalidate\b/)
+  expect(source).toMatch(/export\s+const\s+revalidate\s*=\s*300/)
+  expect(source).not.toMatch(
+    /export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/,
+  )
+  expect(revalidate).toBe(300)
   expect(liveSource).toMatch(
     /https:\/\/www\.youtube\.com\/@EvangelistRambabuRambo\/live/,
   )
@@ -45,8 +133,11 @@ test("anchors #main-content and is force-dynamic for Atom reads", () => {
   expect(source).toMatch(/firstPlaylistVideos\(series,\s*15\)/)
   expect(source).toMatch(/readYoutubeLiveBroadcast/)
   expect(source).toMatch(/readYoutubePlaylist/)
-  expect(source).toMatch(/YoutubePlaylistReadError/)
+  expect(source).toMatch(/readExternal/)
+  expect(source).toMatch(/route:\s*["']\/watch["']/)
   expect(source).toMatch(/Promise\.all/)
+  expect(source).not.toMatch(/try\s*\{/)
+  expect(source).not.toMatch(/console\.error/)
   expect(source).not.toMatch(/readYoutubeLiveStatus/)
   expect(source).not.toMatch(/playlist-continuation/)
 })
@@ -118,4 +209,118 @@ test("Watch CSS is scoped under .watch-page", () => {
   expect(globalsSource).not.toMatch(/^\.watch-testimonies\s*\{/m)
   expect(globalsSource).not.toMatch(/^\.watch-sermon-row\s*\{/m)
   expect(globalsSource).not.toMatch(/^\.watch-live\s*\{/m)
+})
+
+test("success renders live link and theme videos without logging", async () => {
+  liveMock.mockResolvedValue(LIVE_BROADCAST)
+  const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+  const html = await renderWatch()
+
+  expect(html).toContain('class="watch-live"')
+  expect(html).toContain(`href="${YOUTUBE_LIVE_URL}"`)
+  expect(html).toContain(`LIVE · ${LIVE_BROADCAST.title}`)
+  expect(html).toContain(LIVE_BROADCAST.thumbnailUrl)
+  expect(html).not.toContain("No ongoing service")
+  for (const theme of playlistThemes) {
+    expect(html).toContain(`${theme.name} video 1`)
+  }
+  for (const testimony of testimonies) {
+    expect(html).toContain(testimony.name)
+  }
+  expect(warn).not.toHaveBeenCalled()
+})
+
+test("live null omits the live section and does not warn", async () => {
+  liveMock.mockResolvedValue(null)
+  const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+  const html = await renderWatch()
+
+  expect(html).not.toContain('class="watch-live"')
+  expect(html).not.toContain("watch-live-heading")
+  expect(html).not.toContain(`LIVE ·`)
+  expect(html).not.toContain(YOUTUBE_LIVE_URL)
+  expect(html).not.toContain("No ongoing service")
+  expect(warn).not.toHaveBeenCalled()
+})
+
+test("live failure omits the live section and logs one warn with dependency", async () => {
+  const error = new YoutubeLiveReadError({
+    dependency: "youtube-live",
+    resource: YOUTUBE_LIVE_URL,
+    category: "http",
+    message: "live page unavailable",
+    status: 503,
+  })
+  liveMock.mockRejectedValue(error)
+  const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+  const html = await renderWatch()
+
+  expect(html).not.toContain('class="watch-live"')
+  expect(html).not.toContain("watch-live-heading")
+  expect(html).not.toContain(`LIVE ·`)
+  expect(html).not.toContain("No ongoing service")
+  expect(html).not.toContain("live page unavailable")
+  expect(html).toContain(playlistThemes[1]!.name)
+  expect(warn).toHaveBeenCalledTimes(1)
+  expect(warn.mock.calls[0]?.[0]).toEqual({
+    event: "external_read_failed",
+    route: "/watch",
+    dependency: error.dependency,
+    resource: YOUTUBE_LIVE_URL,
+    category: "http",
+    status: 503,
+    code: "external_read_failed",
+    message: "live page unavailable",
+  })
+})
+
+test("one failed theme row logs one warn and omits its videos while others render", async () => {
+  liveMock.mockResolvedValue(LIVE_BROADCAST)
+  playlistMock.mockImplementation(async (playlistId: string) => {
+    if (playlistId === FAILED_PLAYLIST_ID) {
+      throw new YoutubePlaylistReadError({
+        resource: FAILED_PLAYLIST_ID,
+        category: "invalid-feed",
+        message: "broken theme feed",
+      })
+    }
+    const theme = playlistThemes.find((row) => row.playlistId === playlistId)
+    return playlistFor(playlistId, theme?.name ?? playlistId)
+  })
+  const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+  const html = await renderWatch()
+
+  expect(html).toContain('class="watch-live"')
+  expect(html).toContain(`LIVE · ${LIVE_BROADCAST.title}`)
+  expect(html).toContain("Videos are temporarily unavailable here.")
+  expect(html).not.toContain(`${playlistThemes[0]!.name} video 1`)
+  expect(html).not.toContain("broken theme feed")
+  for (const theme of playlistThemes.slice(1)) {
+    expect(html).toContain(`${theme.name} video 1`)
+  }
+  expect(warn).toHaveBeenCalledTimes(1)
+  expect(warn.mock.calls[0]?.[0]).toEqual({
+    event: "external_read_failed",
+    route: "/watch",
+    dependency: "youtube-playlist",
+    resource: FAILED_PLAYLIST_ID,
+    category: "invalid-feed",
+    code: "external_read_failed",
+    message: "broken theme feed",
+  })
+})
+
+test("non-ExternalReadError playlist rejection propagates without warn or error", async () => {
+  const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+  const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
+  const boom = new Error("unexpected playlist failure")
+  playlistMock.mockRejectedValue(boom)
+
+  await expect(WatchPage()).rejects.toBe(boom)
+  expect(warnSpy).not.toHaveBeenCalled()
+  expect(errorSpy).not.toHaveBeenCalled()
 })
