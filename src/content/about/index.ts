@@ -1,3 +1,5 @@
+import { ContentInvariantError } from "@/lib/errors"
+
 import { sections as homeSections, type HomeItem } from "../home"
 
 export type AboutPlate = {
@@ -17,7 +19,11 @@ const newToHsg = homeSections.find(
 )
 
 if (!newToHsg) {
-  throw new Error('Home is missing the "New to HSG?" section')
+  throw new ContentInvariantError({
+    module: "src/content/about/index.ts",
+    rule: "new-to-hsg-section",
+    message: 'Home is missing the "New to HSG?" section',
+  })
 }
 
 /** Home “New to HSG?” items — single source; do not copy service facts here. */

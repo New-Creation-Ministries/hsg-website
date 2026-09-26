@@ -19,8 +19,6 @@ import {
 } from "./copy"
 import { aboveMenu, atMenu, box, desktop, headerNav, paintedBackground } from "./helpers"
 
-const sundayItems =
-  homeContent.find((section) => section.heading === "New to HSG?")?.items ?? []
 const goingOnScripture = homeContent.find(
   (section) => section.heading === "What’s going on",
 )?.items[0]
@@ -72,8 +70,8 @@ test("shows the church, the blurb, and the four sections", async ({ page }) => {
 
 test("shows scripture, request-time event slots, and testimony scripture", async ({ page }) => {
   await page.goto("/")
-  expect(sundayItems.length).toBeGreaterThan(0)
-  const slots = homeEventSlots(events, sundayItems, new Date())
+  expect(sundayServices.length).toBeGreaterThan(0)
+  const slots = homeEventSlots(events, new Date())
 
   const highlights = page.getByRole("region", { name: sections[0] })
   await expect(highlights.getByText("Highlight to be published")).toHaveCount(0)

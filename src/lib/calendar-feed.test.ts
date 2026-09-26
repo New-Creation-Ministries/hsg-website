@@ -2,12 +2,18 @@ import { readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { expect, test } from "vitest"
+import { afterEach, expect, test, vi } from "vitest"
 
 import type { EventRecord } from "@/content/events"
 import { sundayFeeds } from "@/content/events"
+import { ContentInvariantError } from "@/lib/errors"
 
 import { calendarFeed } from "./calendar-feed"
+
+afterEach(() => {
+  vi.doUnmock("@/content/home")
+  vi.resetModules()
+})
 
 const moduleSource = readFileSync(
   join(dirname(fileURLToPath(import.meta.url)), "calendar-feed.ts"),
@@ -208,13 +214,73 @@ test("raising revision and changing end on a same-day record keeps the id UID (A
   expect(block).toContain("DTEND;TZID=Asia/Kolkata:20261004T210000")
 })
 
-test("unknown id throws", () => {
+test("unknown id throws ContentInvariantError", () => {
   expect(() =>
     calendarFeed("missing-event", {
       dtstamp: DTSTAMP,
       events: [baseEvent({ id: "inv-demo-042" })],
     }),
-  ).toThrow()
+  ).toThrow(ContentInvariantError)
+})
+
+test("invalid ISO local datetime throws ContentInvariantError", () => {
+  expect(() =>
+    calendarFeed("inv-demo-042", {
+      dtstamp: DTSTAMP,
+      events: [
+        baseEvent({
+          id: "inv-demo-042",
+          start: "2026-10-04T18:00+05:30",
+          end: "2026-10-04T20:30+05:30",
+        }),
+      ],
+    }),
+  ).toThrow(ContentInvariantError)
+})
+
+test("unknown Sunday feed id throws ContentInvariantError", () => {
+  expect(() =>
+    calendarFeed("custom-sunday", {
+      dtstamp: DTSTAMP,
+      sundayFeeds: [
+        {
+          id: "custom-sunday",
+          start: "2026-01-04T08:00:00+05:30",
+          end: "2026-01-04T09:00:00+05:30",
+          revision: 1,
+          weekly: true,
+        },
+      ],
+    }),
+  ).toThrow(ContentInvariantError)
+})
+
+test("missing Sunday Home title throws ContentInvariantError", async () => {
+  vi.resetModules()
+  vi.doMock("@/content/home", () => ({
+    sections: [
+      {
+        heading: "New to HSG?",
+        items: [],
+      },
+    ],
+  }))
+  const { ContentInvariantError: ErrorClass } = await import("@/lib/errors")
+  const { calendarFeed: feed } = await import("./calendar-feed")
+  expect(() =>
+    feed("word-fest", {
+      dtstamp: DTSTAMP,
+      sundayFeeds: [
+        {
+          id: "word-fest",
+          start: "2026-01-04T08:00:00+05:30",
+          end: "2026-01-04T09:00:00+05:30",
+          revision: 1,
+          weekly: true,
+        },
+      ],
+    }),
+  ).toThrow(ErrorClass)
 })
 
 test("calendar-feed does not emit METHOD:CANCEL and does not read the clock", () => {

@@ -33,7 +33,12 @@ function stubFetch(body: string, ok = true, status = 200) {
 
 async function expectReadError(
   playlistId: string,
-  expected: { category: string; status?: number },
+  expected: {
+    category: string
+    status?: number
+    cause?: unknown
+    assertCause?: boolean
+  },
 ) {
   const clearSpy = vi.spyOn(globalThis, "clearTimeout")
   try {
@@ -42,11 +47,16 @@ async function expectReadError(
   } catch (error) {
     expect(error).toBeInstanceOf(YoutubePlaylistReadError)
     const readError = error as YoutubePlaylistReadError
+    expect(readError.dependency).toBe("youtube-playlist")
+    expect(readError.resource).toBe(playlistId)
     expect(readError.category).toBe(expected.category)
     if (expected.status === undefined) {
       expect(readError.status).toBeUndefined()
     } else {
       expect(readError.status).toBe(expected.status)
+    }
+    if (expected.assertCause) {
+      expect(readError.cause).toBe(expected.cause)
     }
   }
   expect(clearSpy).toHaveBeenCalled()
@@ -123,18 +133,17 @@ const SAMPLE_FEED = `<?xml version="1.0" encoding="UTF-8"?>
   </entry>
 </feed>`
 
-test("readYoutubePlaylist requests the Atom feed with no-store and abort signal", async () => {
+test("readYoutubePlaylist requests the Atom feed with abort signal only", async () => {
   const fetchMock = stubFetch(SAMPLE_FEED)
   const clearSpy = vi.spyOn(globalThis, "clearTimeout")
   await readYoutubePlaylist("PLWX7FFgYGzyU")
   expect(fetchMock).toHaveBeenCalledTimes(1)
   expect(fetchMock).toHaveBeenCalledWith(
     "https://www.youtube.com/feeds/videos.xml?playlist_id=PLWX7FFgYGzyU",
-    expect.objectContaining({
-      cache: "no-store",
-      signal: expect.any(AbortSignal),
-    }),
+    { signal: expect.any(AbortSignal) },
   )
+  const init = fetchMock.mock.calls[0]?.[1] as RequestInit
+  expect(Object.keys(init).sort()).toEqual(["signal"])
   expect(clearSpy).toHaveBeenCalled()
 })
 
@@ -256,22 +265,24 @@ test("rejects HTTP 500 as http with status", async () => {
 })
 
 test("rejects a failed fetch as network", async () => {
-  const fetchMock = vi.fn().mockRejectedValue(new TypeError("fetch failed"))
+  const cause = new TypeError("fetch failed")
+  const fetchMock = vi.fn().mockRejectedValue(cause)
   vi.stubGlobal("fetch", fetchMock)
-  await expectReadError("PLX", { category: "network" })
+  await expectReadError("PLX", { category: "network", cause, assertCause: true })
   expect(fetchMock).toHaveBeenCalledTimes(1)
 })
 
 test("rejects a failed body read as network", async () => {
+  const cause = new TypeError("body failed")
   const fetchMock = vi.fn().mockResolvedValue({
     ok: true,
     status: 200,
     text: async () => {
-      throw new TypeError("body failed")
+      throw cause
     },
   } as unknown as Response)
   vi.stubGlobal("fetch", fetchMock)
-  await expectReadError("PLX", { category: "network" })
+  await expectReadError("PLX", { category: "network", cause, assertCause: true })
   expect(fetchMock).toHaveBeenCalledTimes(1)
 })
 
@@ -344,7 +355,7 @@ test("rejects a later bad entry as invalid-feed for the whole read", async () =>
   await expectReadError("PLX", { category: "invalid-feed" })
 })
 
-test("rejects a parser exception as invalid-feed", async () => {
+test("lets unexpected parser exceptions propagate without rewrapping", async () => {
   const fetchMock = vi.fn().mockResolvedValue({
     ok: true,
     status: 200,
@@ -354,8 +365,17 @@ test("rejects a parser exception as invalid-feed", async () => {
   const matchSpy = vi.spyOn(String.prototype, "match").mockImplementation(() => {
     throw new TypeError("parser blew up")
   })
-  await expectReadError("PLX", { category: "invalid-feed" })
+  const clearSpy = vi.spyOn(globalThis, "clearTimeout")
+  try {
+    await readYoutubePlaylist("PLX")
+    expect.unreachable("expected readYoutubePlaylist to reject")
+  } catch (error) {
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).not.toBeInstanceOf(YoutubePlaylistReadError)
+    expect((error as TypeError).message).toBe("parser blew up")
+  }
   expect(fetchMock).toHaveBeenCalledTimes(1)
+  expect(clearSpy).toHaveBeenCalled()
   matchSpy.mockRestore()
 })
 
@@ -372,14 +392,31 @@ test("does not use media:title when an entry title exists", async () => {
   expect(series.videos[0]?.title).toBe("Entry title")
 })
 
-async function expectTimeoutRejection(pending: Promise<unknown>) {
+async function expectTimeoutRejection(
+  pending: Promise<unknown>,
+  playlistId: string,
+) {
   try {
     await pending
     expect.unreachable("expected readYoutubePlaylist to reject")
   } catch (error) {
     expect(error).toBeInstanceOf(YoutubePlaylistReadError)
-    expect((error as YoutubePlaylistReadError).category).toBe("timeout")
+    const readError = error as YoutubePlaylistReadError
+    expect(readError.dependency).toBe("youtube-playlist")
+    expect(readError.resource).toBe(playlistId)
+    expect(readError.category).toBe("timeout")
+    expect(readError.cause).toBeDefined()
+    expect(isAbortLike(readError.cause)).toBe(true)
   }
+}
+
+function isAbortLike(error: unknown): boolean {
+  return (
+    (typeof DOMException !== "undefined" &&
+      error instanceof DOMException &&
+      error.name === "AbortError") ||
+    (error instanceof Error && error.name === "AbortError")
+  )
 }
 
 test("aborts stalled headers at the shared 3,000 ms deadline", async () => {
@@ -394,7 +431,7 @@ test("aborts stalled headers at the shared 3,000 ms deadline", async () => {
   vi.stubGlobal("fetch", fetchMock)
 
   const pending = readYoutubePlaylist("PLX")
-  const expectation = expectTimeoutRejection(pending)
+  const expectation = expectTimeoutRejection(pending, "PLX")
   await vi.advanceTimersByTimeAsync(3000)
   await expectation
   expect(fetchMock).toHaveBeenCalledTimes(1)
@@ -421,7 +458,7 @@ test("aborts stalled body at the shared 3,000 ms deadline", async () => {
   vi.stubGlobal("fetch", fetchMock)
 
   const pending = readYoutubePlaylist("PLX")
-  const expectation = expectTimeoutRejection(pending)
+  const expectation = expectTimeoutRejection(pending, "PLX")
   await vi.advanceTimersByTimeAsync(3000)
   await expectation
   expect(fetchMock).toHaveBeenCalledTimes(1)
@@ -450,7 +487,7 @@ test("shared deadline covers headers delay then body delay without a fresh body 
   vi.stubGlobal("fetch", fetchMock)
 
   const pending = readYoutubePlaylist("PLX")
-  const expectation = expectTimeoutRejection(pending)
+  const expectation = expectTimeoutRejection(pending, "PLX")
   await vi.advanceTimersByTimeAsync(2000)
   await Promise.resolve()
   await vi.advanceTimersByTimeAsync(999)

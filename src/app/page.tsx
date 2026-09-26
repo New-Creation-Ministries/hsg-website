@@ -14,6 +14,8 @@ import {
   type HomeItem,
   type HomeSection,
 } from "@/content/home"
+import { ContentInvariantError } from "@/lib/errors"
+import { readExternal } from "@/lib/external-read"
 import {
   homeEventSlots,
   type HomeEventSlot,
@@ -21,11 +23,10 @@ import {
 import {
   firstPlaylistVideos,
   readYoutubePlaylist,
-  YoutubePlaylistReadError,
   type YoutubeVideo,
 } from "@/lib/youtube-playlist"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600
 
 const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-services", "is-sermons"] as const
 
@@ -34,7 +35,11 @@ type SermonListing =
   | { status: "unavailable" }
 
 if (church.name !== "Holy Spirit Generation") {
-  throw new Error(`Home heading expects “Holy Spirit Generation”, got “${church.name}”`)
+  throw new ContentInvariantError({
+    module: "src/app/page.tsx",
+    rule: "home-heading-church-name",
+    message: `Home heading expects “Holy Spirit Generation”, got “${church.name}”`,
+  })
 }
 
 function ArrowIcon() {
@@ -230,28 +235,25 @@ function ServiceItems({ items }: { items: HomeItem[] }) {
 }
 
 async function readSermonListing(): Promise<SermonListing> {
-  try {
-    const series = await readYoutubePlaylist(sermonPlaylistId)
-    const videos = firstPlaylistVideos(series, 5)
-    return { status: "available", videos }
-  } catch (error) {
-    if (!(error instanceof YoutubePlaylistReadError)) {
-      throw error
-    }
-    console.error({
-      event: "youtube_playlist_read_failed",
-      playlistId: sermonPlaylistId,
-      category: error.category,
-      ...(error.status !== undefined ? { status: error.status } : {}),
-    })
+  const result = await readExternal(
+    {
+      route: "/",
+      dependency: "youtube-playlist",
+      resource: sermonPlaylistId,
+    },
+    () => readYoutubePlaylist(sermonPlaylistId),
+  )
+  if (!result.ok) {
     return { status: "unavailable" }
+  }
+  return {
+    status: "available",
+    videos: firstPlaylistVideos(result.value, 5),
   }
 }
 
 export default async function Home() {
-  const sundayItems =
-    sections.find((section) => section.heading === "New to HSG?")?.items ?? []
-  const slots = homeEventSlots(events, sundayItems, new Date())
+  const slots = homeEventSlots(events, new Date())
   const listing = await readSermonListing()
 
   return (

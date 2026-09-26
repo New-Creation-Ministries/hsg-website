@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { expect, test } from "vitest"
+import { afterEach, expect, test, vi } from "vitest"
 
 import { events, sundayFeeds } from "@/content/events"
 import { calendarFeed } from "@/lib/calendar-feed"
@@ -18,6 +18,12 @@ import {
 
 const routeDir = dirname(fileURLToPath(import.meta.url))
 const routeSource = readFileSync(join(routeDir, "route.ts"), "utf8")
+
+afterEach(() => {
+  vi.doUnmock("@/content/home")
+  vi.doUnmock("@/content/events")
+  vi.resetModules()
+})
 
 function maxAgeSeconds(cacheControl: string | null): number | null {
   if (!cacheControl) return null
@@ -70,6 +76,66 @@ test("generateStaticParams calls assertEventsPublishable and Home time-text chec
   expect(routeSource).toMatch(/9:30am onwards|13:30/)
   expect(routeSource).toMatch(/New to HSG\?/)
   expect(() => generateStaticParams()).not.toThrow()
+})
+
+test("generateStaticParams throws ContentInvariantError when Home Sunday text drifts", async () => {
+  vi.resetModules()
+  vi.doMock("@/content/home", () => ({
+    sections: [
+      {
+        heading: "New to HSG?",
+        items: [
+          { title: "Word Fest Service", text: "English\nwrong-time" },
+          {
+            title: "Miracles and Healing Service",
+            text: "Multilingual\n09:30 onwards",
+          },
+        ],
+      },
+    ],
+  }))
+  const { ContentInvariantError: ErrorClass } = await import("@/lib/errors")
+  const { generateStaticParams: generate } = await import("./route")
+  expect(() => generate()).toThrow(ErrorClass)
+})
+
+test("generateStaticParams throws ContentInvariantError when a Sunday feed is missing", async () => {
+  vi.resetModules()
+  vi.doMock("@/content/events", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("@/content/events")>()
+    const miracles = actual.sundayFeeds.find(
+      (feed) => feed.id === "miracles-and-healing",
+    )
+    return {
+      ...actual,
+      sundayFeeds: miracles ? [miracles] : [],
+    }
+  })
+  const { ContentInvariantError: ErrorClass } = await import("@/lib/errors")
+  const { generateStaticParams: generate } = await import("./route")
+  expect(() => generate()).toThrow(ErrorClass)
+})
+
+test("generateStaticParams throws ContentInvariantError when a Sunday window drifts", async () => {
+  vi.resetModules()
+  vi.doMock("@/content/events", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("@/content/events")>()
+    return {
+      ...actual,
+      sundayFeeds: actual.sundayFeeds.map((feed) =>
+        feed.id === "word-fest"
+          ? {
+              ...feed,
+              start: "2026-01-04T10:00:00+05:30",
+              end: "2026-01-04T11:00:00+05:30",
+            }
+          : feed,
+      ),
+    }
+  })
+  const { ContentInvariantError: ErrorClass } = await import("@/lib/errors")
+  const { generateStaticParams: generate } = await import("./route")
+  expect(() => generate()).toThrow(ErrorClass)
 })
 
 test("route is force-static; DTSTAMP is build-once; handler avoids request APIs", async () => {

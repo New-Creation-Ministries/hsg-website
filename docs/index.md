@@ -13,8 +13,10 @@ Skills: `.agents/skills/capture-intent/SKILL.md`, `.agents/skills/write-spec/SKI
 | feature | home-landing-page | Home landing page | done | [intent](features/home-landing-page/intent.md) | [spec](features/home-landing-page/spec.md) | [UX](features/home-landing-page/ux.md) | [plan](features/home-landing-page/plan.md) |
 | feature | watch-page | Watch page | ready | [intent](features/watch-page/intent.md) | [spec](features/watch-page/spec.md) | — | [plan](features/watch-page/plan.md) |
 | feature | youtube-sermon-playlist | YouTube sermon playlist | draft | [intent](features/youtube-sermon-playlist/intent.md) | [spec](features/youtube-sermon-playlist/spec.md) | — | [plan](features/youtube-sermon-playlist/plan.md) |
+| fix | about-scene-dot-navigation | About scene-dot navigation | draft | [intent](fixes/about-scene-dot-navigation/intent.md) | — | — | — |
 | fix | about-scene-snapping | About scene snapping | ready | [intent](fixes/about-scene-snapping/intent.md) | [spec](fixes/about-scene-snapping/spec.md) | — | [plan](fixes/about-scene-snapping/plan.md) |
 | fix | youtube-playlist-feed-failure | YouTube playlist feed failure | ready | [intent](fixes/youtube-playlist-feed-failure/intent.md) | [spec](fixes/youtube-playlist-feed-failure/spec.md) | — | [plan](fixes/youtube-playlist-feed-failure/plan.md) |
+| improvement | error-handling-model-and-audit | Error handling model and audit | ready | [intent](improvements/error-handling-model-and-audit/intent.md) | [spec](improvements/error-handling-model-and-audit/spec.md) | — | [plan](improvements/error-handling-model-and-audit/plan.md) |
 | improvement | home-events-and-scripture-tiles | Home events and scripture tiles | ready | [intent](improvements/home-events-and-scripture-tiles/intent.md) | [spec](improvements/home-events-and-scripture-tiles/spec.md) | — | [plan](improvements/home-events-and-scripture-tiles/plan.md) |
 | improvement | youtube-playlist-snapshots | YouTube playlist snapshots | draft | [intent](improvements/youtube-playlist-snapshots/intent.md) | — | — | — |
 

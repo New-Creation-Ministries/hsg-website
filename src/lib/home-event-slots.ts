@@ -1,7 +1,8 @@
 import type { EventRecord } from "@/content/events"
-import type { HomeItem } from "@/content/home"
+import { sections, type HomeItem } from "@/content/home"
 
 import { listUpcoming, type UpcomingEventRow } from "./event-list"
+import { ContentInvariantError } from "./errors"
 
 export type HomeDatedSlot = {
   kind: "dated"
@@ -27,17 +28,40 @@ function serviceSlot(item: HomeItem): HomeServiceSlot {
   return { kind: "service", name: item.title, language, time }
 }
 
-function findService(services: HomeItem[], title: string): HomeServiceSlot {
+function requireService(services: HomeItem[], title: string): HomeServiceSlot {
   const item = services.find((service) => service.title === title)
   if (!item) {
-    throw new Error(`Missing New to HSG? service: ${title}`)
+    throw new ContentInvariantError({
+      module: "src/lib/home-event-slots.ts",
+      rule: "new-to-hsg-service",
+      message: `Missing New to HSG? service: ${title}`,
+    })
   }
   return serviceSlot(item)
 }
 
+const newToHsg = sections.find(
+  (section) => section.heading === "New to HSG?",
+)
+
+if (!newToHsg) {
+  throw new ContentInvariantError({
+    module: "src/lib/home-event-slots.ts",
+    rule: "new-to-hsg-section",
+    message: 'Home is missing the "New to HSG?" section',
+  })
+}
+
+export const homeServiceSlots = {
+  miraclesAndHealing: requireService(
+    newToHsg.items,
+    "Miracles and Healing Service",
+  ),
+  wordFest: requireService(newToHsg.items, "Word Fest Service"),
+}
+
 export function homeEventSlots(
   events: EventRecord[],
-  services: HomeItem[],
   now: Date,
 ): [HomeEventSlot, HomeEventSlot] {
   const upcoming = listUpcoming(events, now)
@@ -48,22 +72,13 @@ export function homeEventSlots(
     return [datedSlot(featured[0]!), datedSlot(featured[1]!)]
   }
   if (featured.length === 1) {
-    return [
-      datedSlot(featured[0]!),
-      findService(services, "Miracles and Healing Service"),
-    ]
+    return [datedSlot(featured[0]!), homeServiceSlots.miraclesAndHealing]
   }
   if (rest.length >= 2) {
     return [datedSlot(rest[0]!), datedSlot(rest[1]!)]
   }
   if (rest.length === 1) {
-    return [
-      datedSlot(rest[0]!),
-      findService(services, "Miracles and Healing Service"),
-    ]
+    return [datedSlot(rest[0]!), homeServiceSlots.miraclesAndHealing]
   }
-  return [
-    findService(services, "Miracles and Healing Service"),
-    findService(services, "Word Fest Service"),
-  ]
+  return [homeServiceSlots.miraclesAndHealing, homeServiceSlots.wordFest]
 }

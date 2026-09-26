@@ -98,8 +98,35 @@ function expectUnrelatedHomeContent(html: string) {
   expect(html).toContain("Watch")
   expect(html).not.toContain("Playlist to be published")
   expect(html).not.toContain("youtube_playlist_read_failed")
+  expect(html).not.toContain("external_read_failed")
   expect(html).not.toContain("invalid-feed")
   expect(html).not.toContain("YoutubePlaylistReadError")
+  expect(html).not.toContain("ExternalReadError")
+}
+
+function expectExternalReadFailedWarn(
+  warnSpy: ReturnType<typeof vi.spyOn>,
+  {
+    category,
+    status,
+    message,
+  }: {
+    category: YoutubePlaylistReadFailureCategory
+    status?: number
+    message: string
+  },
+) {
+  expect(warnSpy).toHaveBeenCalledTimes(1)
+  expect(warnSpy).toHaveBeenCalledWith({
+    event: "external_read_failed",
+    route: "/",
+    dependency: "youtube-playlist",
+    resource: sermonPlaylistId,
+    category,
+    ...(status !== undefined ? { status } : {}),
+    code: "external_read_failed",
+    message,
+  })
 }
 
 function expectUnavailableState(html: string) {
@@ -156,6 +183,7 @@ test("content stores fallback message and link label", () => {
 
 test("success with six videos renders the first five rows", async () => {
   readMock.mockResolvedValue(playlistWithVideos(6))
+  const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
   const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
 
   const html = await renderHome()
@@ -164,6 +192,7 @@ test("success with six videos renders the first five rows", async () => {
   expectAvailableVideos(html, 5)
   expect(html).toContain("Sermon title 5")
   expect(html).not.toContain("Sermon title 6")
+  expect(warnSpy).not.toHaveBeenCalled()
   expect(errorSpy).not.toHaveBeenCalled()
 })
 
@@ -180,13 +209,16 @@ const failureCases: Array<{
 
 for (const { category, status } of failureCases) {
   test(`unavailable state for ${category}${status !== undefined ? ` ${status}` : ""}`, async () => {
+    const message = `diagnostic ${category} ${status ?? ""}`.trim()
     readMock.mockRejectedValue(
-      new YoutubePlaylistReadError(
-        `diagnostic ${category} ${status ?? ""}`.trim(),
+      new YoutubePlaylistReadError({
+        resource: sermonPlaylistId,
         category,
-        status,
-      ),
+        message,
+        ...(status !== undefined ? { status } : {}),
+      }),
     )
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
     const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
 
     const html = await renderHome()
@@ -194,38 +226,42 @@ for (const { category, status } of failureCases) {
     expectUnrelatedHomeContent(html)
     expectUnavailableState(html)
     expect(html).not.toContain(`diagnostic ${category}`)
-    expect(errorSpy).toHaveBeenCalledTimes(1)
-    expect(errorSpy.mock.calls[0]?.[0]).toEqual({
-      event: "youtube_playlist_read_failed",
-      playlistId: sermonPlaylistId,
-      category,
-      ...(status !== undefined ? { status } : {}),
-    })
+    expectExternalReadFailedWarn(warnSpy, { category, status, message })
+    expect(errorSpy).not.toHaveBeenCalled()
   })
 }
 
 test("failed render then success restores rows and logs once per failure", async () => {
+  const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
   const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
 
   readMock.mockRejectedValueOnce(
-    new YoutubePlaylistReadError("feed down", "http", 404),
+    new YoutubePlaylistReadError({
+      resource: sermonPlaylistId,
+      category: "http",
+      message: "feed down",
+      status: 404,
+    }),
   )
   const failedHtml = await renderHome()
   expectUnavailableState(failedHtml)
-  expect(errorSpy).toHaveBeenCalledTimes(1)
+  expectExternalReadFailedWarn(warnSpy, {
+    category: "http",
+    status: 404,
+    message: "feed down",
+  })
+  expect(errorSpy).not.toHaveBeenCalled()
 
   readMock.mockResolvedValueOnce(playlistWithVideos(6))
   const successHtml = await renderHome()
   expectAvailableVideos(successHtml, 5)
-  expect(errorSpy).toHaveBeenCalledTimes(1)
+  expect(warnSpy).toHaveBeenCalledTimes(1)
+  expect(errorSpy).not.toHaveBeenCalled()
 })
 
 test("frozen clock around event end matches homeEventSlots output", async () => {
   readMock.mockResolvedValue(playlistWithVideos(6))
   const { events } = await import("@/content/events")
-  const { sections } = await import("@/content/home")
-  const sundayItems =
-    sections.find((section) => section.heading === "New to HSG?")?.items ?? []
   const { homeEventSlots: realSlots } = await vi.importActual<
     typeof import("@/lib/home-event-slots")
   >("@/lib/home-event-slots")
@@ -233,7 +269,7 @@ test("frozen clock around event end matches homeEventSlots output", async () => 
   const beforeEnd = new Date("2026-10-03T20:59:00+05:30")
   vi.useFakeTimers()
   vi.setSystemTime(beforeEnd)
-  const expectedBefore = realSlots(events, sundayItems, beforeEnd)
+  const expectedBefore = realSlots(events, beforeEnd)
   const htmlBefore = await renderHome()
   for (const slot of expectedBefore) {
     expect(htmlBefore).toContain(slot.name)
@@ -247,7 +283,7 @@ test("frozen clock around event end matches homeEventSlots output", async () => 
 
   const afterEnd = new Date("2026-10-03T21:01:00+05:30")
   vi.setSystemTime(afterEnd)
-  const expectedAfter = realSlots(events, sundayItems, afterEnd)
+  const expectedAfter = realSlots(events, afterEnd)
   const htmlAfter = await renderHome()
   for (const slot of expectedAfter) {
     expect(htmlAfter).toContain(slot.name)
@@ -260,7 +296,9 @@ test("frozen clock around event end matches homeEventSlots output", async () => 
   }
   expect(expectedBefore[0]?.kind).toBe("dated")
   expect(expectedAfter.every((slot) => slot.kind === "service")).toBe(true)
+  expect(slotsMock).toHaveBeenCalledWith(events, expect.any(Date))
 })
+
 
 test("event-selection exceptions still propagate", async () => {
   readMock.mockResolvedValue(playlistWithVideos(6))
@@ -269,4 +307,15 @@ test("event-selection exceptions still propagate", async () => {
   })
 
   await expect(Home()).rejects.toThrow("event selection failed")
+})
+
+test("non-ExternalReadError playlist rejection propagates without warn or error", async () => {
+  const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+  const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
+  const boom = new Error("unexpected playlist failure")
+  readMock.mockRejectedValue(boom)
+
+  await expect(Home()).rejects.toBe(boom)
+  expect(warnSpy).not.toHaveBeenCalled()
+  expect(errorSpy).not.toHaveBeenCalled()
 })

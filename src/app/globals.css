@@ -469,6 +469,13 @@ html:has(.about-page) {
   text-decoration: underline;
   text-underline-offset: 0.28em;
 }
+button.text-link {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
 .section-head {
   display: flex;
   justify-content: space-between;
@@ -701,6 +708,7 @@ html:has(.about-page) {
 .content-list a { display: inline-flex; align-items: center; min-height: 44px; }
 
 .shell-page { padding-top: 4.5rem; padding-bottom: 6rem; min-height: calc(100dvh - 5.5rem); }
+.shell-page.full-viewport { min-height: 100dvh; }
 .shell-page h1 {
   max-width: 65ch;
   font-size: clamp(2.75rem, 5vw, 4.25rem);
