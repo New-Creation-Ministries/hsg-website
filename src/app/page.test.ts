@@ -1,9 +1,10 @@
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
 import { expect, test } from "vitest"
 
 const source = readFileSync(join(import.meta.dirname, "page.tsx"), "utf8")
+const repoRoot = join(import.meta.dirname, "../..")
 
 test("h1 accessible name is Holy Spirit Generation on two lines, not leader.name", () => {
   expect(source).toMatch(/from\s+["']@\/content\/home["']/)
@@ -28,7 +29,7 @@ test("hero order is heading, blurb, About link, then portrait field", () => {
 test("section heads put h2 with the section link before items; New to HSG is intro beside records", () => {
   expect(source).toMatch(/section-head|className=["'][^"']*section-head/)
   expect(source).toMatch(/visit-grid|visit-intro|className=["'][^"']*visit/)
-  expect(source).toMatch(/pageNotes\.testimonies/)
+  expect(source).not.toMatch(/pageNotes\.testimonies/)
   expect(source).toMatch(/pageNotes\.sunday/)
 })
 
@@ -78,8 +79,9 @@ test("Home revalidates hourly, reads playlist through readExternal, first five v
   expect(source).toMatch(/ContentInvariantError/)
   expect(source).toMatch(/throw new ContentInvariantError\s*\(/)
   expect(source).toMatch(/rule:\s*["']home-heading-church-name["']/)
-  expect(source).toMatch(/homeEventSlots\s*\(\s*events\s*,\s*new\s+Date\s*\(\s*\)\s*\)/)
-  expect(source).toMatch(/new\s+Date\s*\(\s*\)/)
+  expect(source).not.toMatch(/homeEventSlots/)
+  expect(source).not.toMatch(/@\/content\/events/)
+  expect(source).not.toMatch(/@\/lib\/home-event-slots/)
   expect(source).toMatch(/async\s+function\s+Home/)
   expect(source).toMatch(/readExternal\s*\(/)
   expect(source).toMatch(/route:\s*["']\/["']/)
@@ -94,23 +96,49 @@ test("Home revalidates hourly, reads playlist through readExternal, first five v
   expect(source).not.toMatch(/Playlist to be published/)
 })
 
-test("What’s going on renders scripture text and slot name, whenLine, language, time", () => {
-  const highlightsStart = source.indexOf('className="highlights content-list"')
-  const slotsMap = source.indexOf("slots.map", highlightsStart)
-  const highlightItemsEnd = source.indexOf("function TestimonyItems", slotsMap)
-  expect(highlightsStart).toBeGreaterThan(-1)
-  expect(slotsMap).toBeGreaterThan(highlightsStart)
-  expect(highlightItemsEnd).toBeGreaterThan(slotsMap)
-  const scriptureRows = source.slice(highlightsStart, slotsMap)
-  expect(scriptureRows).toMatch(/scripture-tile/)
-  expect(scriptureRows).toMatch(/<h3>[\s\S]*<ItemTitle item=\{item\} \/>/)
-  expect(scriptureRows).toMatch(/“\{item\.text\}”/)
-  const slotRows = source.slice(slotsMap, highlightItemsEnd)
-  expect(slotRows).toMatch(/slot\.name/)
-  expect(slotRows).toMatch(/slot\.whenLine/)
-  expect(slotRows).toMatch(/slot\.language/)
-  expect(slotRows).toMatch(/slot\.time/)
-  expect(slotRows).toMatch(/kind\s*===\s*["']dated["']|kind\s*!==\s*["']dated["']|kind\s*===\s*["']service["']/)
+test("What’s going on renders scripture text then event highlights; no homeEventSlots", () => {
+  expect(existsSync(join(repoRoot, "src/lib/home-event-slots.ts"))).toBe(false)
+  expect(existsSync(join(repoRoot, "src/lib/home-event-slots.test.ts"))).toBe(
+    false,
+  )
+  expect(source).toMatch(
+    /from\s+["']@\/components\/home-event-highlights["']/,
+  )
+  expect(source).toMatch(/className=["']highlights content-list["']/)
+  expect(source).toMatch(/scripture-tile/)
+  expect(source).toMatch(/“\{item\.text\}”/)
+  expect(source).toMatch(/HomeEventHighlights/)
+  expect(source).toMatch(/eventHighlights/)
+  expect(source).not.toMatch(/homeEventSlots/)
+  expect(source).not.toMatch(/slot\.name/)
+  expect(source).not.toMatch(/slot\.whenLine/)
+  expect(source).not.toMatch(/TestimonyItems/)
+  expect(source).not.toMatch(/pageNotes\.testimonies/)
+  expect(source).toMatch(/section\.heading\s*===\s*["']What’s going on["']/)
+  expect(source).toMatch(/section\.heading\s*===\s*["']New to HSG\?["']/)
+  expect(source).toMatch(/section\.heading\s*===\s*["']Sermons["']/)
+})
+
+test("section classes branch by heading so visit is banded and Sermons is not", () => {
+  expect(source).toMatch(
+    /if\s*\(\s*heading\s*===\s*["']What’s going on["']\s*\)\s*return\s+["']home-section is-bulletin["']/,
+  )
+  expect(source).toMatch(
+    /if\s*\(\s*heading\s*===\s*["']New to HSG\?["']\s*\)\s*return\s+["']home-section is-services visit["']/,
+  )
+  expect(source).toMatch(
+    /if\s*\(\s*heading\s*===\s*["']Sermons["']\s*\)\s*return\s+["']home-section is-sermons["']/,
+  )
+  expect(source).toMatch(/sectionClassName\s*\(\s*section\.heading\s*\)/)
+  expect(source).not.toMatch(
+    /sections\[\s*0\s*\]|sections\[\s*1\s*\]|sections\[\s*2\s*\]/,
+  )
+  expect(source).not.toMatch(
+    /heading\s*===\s*["']Sermons["']\s*\)\s*return\s+["'][^"']*\bvisit\b/,
+  )
+  expect(source).not.toMatch(
+    /heading\s*===\s*["']New to HSG\?["']\s*\)\s*return\s+["'][^"']*is-sermons/,
+  )
 })
 
 test("sermon video links: empty alt, no-referrer, new tab, no iframe", () => {
@@ -131,7 +159,7 @@ test("testimony text is one paragraph; Sunday splits language and time; onwards 
   expect(source).not.toMatch(/Leader portrait placeholder/)
 })
 
-test("four regions named by visible h2; testimony h3 parent is the story column; no carousel tabs disclosure motion", () => {
+test("three regions named by visible h2; New to HSG uses articles; no carousel tabs disclosure motion", () => {
   expect(source).toMatch(/aria-labelledby=/)
   expect(source).toMatch(/<h2\b/)
   expect(source).toMatch(/<h3\b/)

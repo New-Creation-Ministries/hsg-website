@@ -1,13 +1,14 @@
 import { expect, test, type Page } from "@playwright/test"
 
 import {
+  featuredTestimoniesScripture,
   playlistThemes,
   testimonies,
 } from "../src/content/watch"
 import { YOUTUBE_LIVE_OFFLINE_COPY } from "../src/lib/youtube-live"
 import { churchName, shellSentence } from "./copy"
 import fixtureVideos from "./fixtures/youtube-fixture-videos.json"
-import { desktop, headerNav, phone } from "./helpers"
+import { box, desktop, headerNav, phone } from "./helpers"
 const FIXTURE_VIDEO_TITLES = fixtureVideos.prefix.map((video) => video.title)
 
 const ACID = "rgb(222, 231, 127)"
@@ -37,6 +38,36 @@ test("opens Watch with no ongoing service and no on-page players", async ({ page
   await expect(page.locator("iframe")).toHaveCount(0)
   await expect(page.locator('script[src*="youtube.com"]')).toHaveCount(0)
   await expect(page.locator('script[src*="instagram.com"]')).toHaveCount(0)
+})
+
+test("places Hebrews 2:4 after Featured Testimonies heading and before items", async ({ page }) => {
+  await page.goto("/watch")
+
+  const region = page.getByRole("region", { name: "Featured Testimonies" })
+  const heading = region.getByRole("heading", { level: 2, name: "Featured Testimonies" })
+  const citation = region.getByRole("heading", {
+    level: 3,
+    name: featuredTestimoniesScripture.citation,
+  })
+  const verse = region.getByText(`“${featuredTestimoniesScripture.text}”`)
+  const firstTestimony = region.getByRole("heading", {
+    level: 1,
+    name: testimonies[0]!.name,
+  })
+
+  await expect(heading).toBeVisible()
+  await expect(citation).toBeVisible()
+  await expect(verse).toBeVisible()
+  await expect(region.getByRole("link", { name: featuredTestimoniesScripture.citation })).toHaveCount(0)
+  await expect(region.locator(".watch-scripture a")).toHaveCount(0)
+
+  expect((await box(heading)).y).toBeLessThan((await box(citation)).y)
+  expect((await box(citation)).y).toBeLessThan((await box(firstTestimony)).y)
+  expect((await box(verse)).y).toBeLessThan((await box(firstTestimony)).y)
+
+  const scriptureBox = await box(region.locator(".watch-scripture"))
+  const regionBox = await box(region)
+  expect(scriptureBox.width).toBeGreaterThan(regionBox.width * 0.7)
 })
 
 test("scrolls four testimonies, each with name, writeup, and photo", async ({ page }) => {

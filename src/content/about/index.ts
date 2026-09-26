@@ -77,7 +77,6 @@ export const scenes: AboutScene[] = [
     heading: "Gospel to the Nations",
     paragraphs: [
       "Open-air Gospel campaigns followed, across India and the world, with hundreds of thousands in attendance. He has preached in 89 nations, including endangered and unreached places, with miracles, words of knowledge, and the gifts of the Holy Spirit.",
-      "He lives in Bangalore with his wife Vinita Rambabu, and his two children Ankit and Annika.",
     ],
     plate: {
       src: "/about/nations.jpg",

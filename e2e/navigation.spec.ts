@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test"
 
+import { sections as homeSections } from "../src/content/home"
 import { churchName, navLabels, routes, shellSentence, sundayServices } from "./copy"
+
+const goingOnVerse = homeSections.find((section) => section.heading === "What’s going on")?.items[0]?.text
 import { aboveMenu, atMenu, desktop, expectNoHorizontalScroll, headerNav, phone } from "./helpers"
 
 const routeLabels = [...navLabels]
@@ -62,7 +65,7 @@ test("does not scroll the page sideways at 320px", async ({ page }) => {
   await expectNoHorizontalScroll(page)
   await expect(page.getByRole("heading", { level: 1, name: churchName })).toBeVisible()
   await expect(page.getByText(sundayServices[0]!.time)).toBeVisible()
-  await expect(page.getByText("A woman had lived for three decades with double scoliosis, a missing rib, and four back surgeries.")).toBeVisible()
+  await expect(page.getByText(goingOnVerse!)).toBeVisible()
 })
 
 test("skip link moves focus to main", async ({ page }) => {

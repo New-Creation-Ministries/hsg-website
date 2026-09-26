@@ -16,9 +16,9 @@
 | ID | User outcome | Evidence and limitation | Design/flow | Observable experience goal |
 | --- | --- | --- | --- | --- |
 | O1 | Understand the church and identify its leader | Intent Problem and Proposed outcome; no comprehension research | C1, F1 | Name, church identity, Bengaluru, and leadership relationship are available without opening another page |
-| O2 | Find church activity and testimony information | Spec Copy and Page; live highlights and media absent | C2, F2 | Each group is identifiable; unpublished items cannot be mistaken for working links |
+| O2 | Find church activity and event highlights | Spec Copy and Page; What’s going on scripture + two Instagram highlights | C2, F2 | Each group is identifiable; highlight surfaces open externally; no Home Highlighted testimonies section |
 | O3 | Reach available messages | Spec Sermons; channel supplied, playlists absent | C2, F3 | One available channel link is distinguishable from two unpublished playlists |
-| O4 | Find Sunday service information and the visit-information destination | Spec New to HSG and Concerns; address absent | C3, F4 | Both service names, languages, and times can be read together; directions remain an explicit unmet outcome |
+| O4 | Find Sunday service information and the visit-information destination | Spec New to HSG? and Concerns; address absent | C3, F4 | Both service names, languages, and times can be read together; directions remain an explicit unmet outcome |
 | O5 | Move between public pages and recover from a shell | Spec Routes; ADR 0001 | C4, F2 | Every destination is reachable; current location and a route back Home remain available |
 
 ## Information architecture
@@ -27,12 +27,11 @@
 | --- | --- | --- | --- |
 | Shared header | Church identity and public navigation | Brand returns Home; route labels/order come from Spec Routes | Shared navigation contract in ADR 0002 |
 | 1 | Leader identity and church introduction | Page heading identifies HSG; adjacent blurb identifies its leaders | Read onward; navigation remains available |
-| 2 | What’s going on | Bounded list of three highlights; current fixture is unpublished content, not “no events” | Events |
-| 3 | Highlighted testimonies | Three story summaries; titles retain locations and do not attribute stories to HSG gatherings | — |
+| 2 | What’s going on | Acts 2:46 scripture tile, then two event highlights (title + thumbnail; Watch testimonies pattern) | Events |
+| 3 | New to HSG? | Sunday introduction and two service records on the visit Band; each retaining name/language/time | Contact Us |
 | 4 | Sermons | Channel introduction, one channel link, two unpublished playlist items | Watch |
-| 5 | New to HSG | Sunday introduction and two service records, each retaining name/language/time | Contact Us |
 
-- Keep all four sections visible in the reading flow; no carousel, tabs, filters, or section disclosure.
+- Keep all three sections visible in the reading flow; no Highlighted testimonies section; no carousel, tabs, filters, or section disclosure.
 - Preserve the spec’s distinction between Home headings and destination labels; their adjacency supplies the relationship.
 - Support direct entry to `/` and every destination; returning visitors need no onboarding or separate member view.
 - No search or detail routes are introduced for this bounded content set.
@@ -48,7 +47,7 @@
 | F1 / O1 | Open Home → read leader name and blurb | Skip header to main; continue to sections or use About | Identity facts are visible together; no portrait is required to understand the name | Reload or return to Home; missing image does not remove identity text |
 | F2 / O2, O5 | Read a section → activate its destination link when Spec Page lists one, or use shared navigation | Unlinked summaries/placeholders remain readable; do not activate | Destination heading matches link label when a section link exists; shell accurately states unpublished status | Browser Back returns to prior page; Home link recovers from any shell |
 | F3 / O3 | Read Sermons → activate Evangelist Rambabu | Choose Watch for the site’s media destination; unpublished playlists have no action | Browser navigates to supplied channel URL; successful playback is external and unverified | If external page fails, browser Back returns to HSG; reload external page is browser-owned |
-| F4 / O4 | Read New to HSG → compare services → activate Contact Us | Choose either service using visible language/time; no booking is implied | Sunday information is readable; Contact Us opens its shell | Back returns to service information; no directions or attendance confirmation can be completed in this slice |
+| F4 / O4 | Read New to HSG? → compare services → activate Contact Us | Choose either service using visible language/time; no booking is implied | Sunday information is readable; Contact Us opens its shell | Back returns to service information; no directions or attendance confirmation can be completed in this slice |
 
 ## Interface contracts
 
@@ -61,20 +60,20 @@
 - A supplied portrait uses its specified text alternative; a failed image retains space and identity text without a retry control.
 - Text remains available when images fail; no timed reveal or motion is required.
 
-### C2 — Highlights, testimonies, and sermons
+### C2 — What’s going on and sermons
 
-- Entry: Home’s static content is available; exact titles, descriptions, intro text, and item counts come from Spec Copy.
-- Each section exposes a heading, optional intro, and list in that reading order, plus one destination link where Spec Page lists one (Highlighted testimonies has none).
-- An item with a URL has one descriptive text link using its title; text without a URL has no focus target, hover action, play icon, or link styling.
-- Keep any item description adjacent to its title; do not truncate testimony summaries or invent a healing outcome for an incomplete source summary.
-- Keep the supplied unpublished-item wording visible; do not substitute loading indicators or claim there are no events, playlists, or stories.
+- Entry: Home’s static content is available; exact titles, intro text, and item counts come from Spec Copy.
+- Each section exposes a heading, optional intro, and list in that reading order, plus one destination link where Spec Page lists one.
+- What’s going on: scripture tile has no `href`; each event highlight opens externally with the Watch Featured Testimonies surface pattern (title only; no writeup or name-switcher).
+- Sermons: an item with a URL has one descriptive text link using its title; text without a URL has no focus target, hover action, play icon, or link styling.
+- Keep supplied unpublished playlist wording visible; do not substitute loading indicators or claim there are no playlists.
 - Section links use the destination label; normal browser link actions remain available.
-- External media is reached by link; no embedded player, autoplay, account requirement, or provider request is initiated merely by reading Home.
+- External media is reached by link; no on-page Instagram or YouTube player on Home What’s going on.
 - Ownership/freshness: content changes only through the repo publishing process; no “latest” status or automatic freshness guarantee is added.
 
 ### C3 — Sunday information
 
-- Entry: New to HSG section; source: Spec New to HSG table.
+- Entry: New to HSG? section; source: Spec New to HSG? table.
 - Keep each service name, language, and time associated in both reading and visual order.
 - Preserve “onwards” without inventing an end time; service times describe the Bengaluru church’s local schedule, not a viewer-timezone conversion.
 - Each service is informational, with no selection state, reservation action, or confirmation.
@@ -91,7 +90,7 @@
 
 | State | Force / entry trigger | Visible behavior and available action | Exit/recovery | Contract / verification |
 | --- | --- | --- | --- | --- |
-| Home ready | Successful static document load | Identity and all four sections; links enabled only where URLs exist | Navigate or keep reading | C1–C3 / A1–A3 |
+| Home ready | Successful static document load | Identity and all three sections; links enabled only where URLs exist | Navigate or keep reading | C1–C3 / A1–A3 |
 | Menu collapsed / expanded | Header cannot use the wide navigation arrangement; Menu toggled | Same six destinations; expansion state and focus follow ADR 0002 | Toggle, Escape, activate link, or widen viewport | C4 / A4–A5 |
 | Content unpublished | Null portrait or absent item URL | Decorative portrait field and specified text placeholders; no fake controls | Follow section destination; content owner publishes later | C1–C2 / A2 |
 | Destination shell | Internal destination lacks published copy | Destination heading and approved shell sentence; shared nav remains usable | Home, another destination, or browser Back | C4 / A6 |
@@ -139,7 +138,7 @@
 
 | Dependency / decision | Owner | Current fallback and impact | Gate |
 | --- | --- | --- | --- |
-| Portrait, live highlights, playlists, testimony URLs | Udeet / church content provider | Accepted placeholders; no fabricated facts or media | Before replacing each placeholder, verify text, URL, asset, and publication permission |
+| Portrait, event-highlight thumbnails, playlists | Udeet / church content provider | Authored highlights and posters in repo; no Instagram fetch at build/request time | Before replacing each asset, verify text, URL, thumbnail, and publication permission |
 | Service schedule correctness | Udeet / church content provider | Accepted spec values; no independent validation claimed | Confirm before public release and whenever schedule changes |
 | Contact Us visit information | Udeet / future Contact Us feature | Shell; complete visit planning is blocked | Before claiming the website supports directions or full visit planning |
 | Empty destination usefulness | Udeet | Shells are authorized; broader information-seeking outcomes remain unmet | Public release review explicitly considers the shell experience |
@@ -157,15 +156,15 @@
 
 | ID | Given / action | Observable acceptance evidence |
 | --- | --- | --- |
-| A1 | Open Home directly and read in document order | Church-name heading, blurb, and four sections match the spec; no old summary sentence; headings and service associations remain understandable |
-| A2 | Inspect unpublished items with keyboard and pointer | Three highlight placeholders and two playlist placeholders remain text; null portrait is unannounced and unfocusable; only supplied URLs produce item links |
-| A3 | Read New to HSG at normal and narrow widths | Both service records match the spec, with complete language/time associations; Contact Us is present; no directions or booking claim |
+| A1 | Open Home directly and read in document order | Church-name heading, blurb, and three sections in order What’s going on → New to HSG? → Sermons; Highlighted testimonies absent; headings and service associations remain understandable |
+| A2 | Inspect What’s going on and Sermons with keyboard and pointer | Scripture tile is not a link; two event highlights open externally; two playlist placeholders remain text; null portrait is unannounced and unfocusable |
+| A3 | Read New to HSG? at normal and narrow widths | Both service records match the spec, with complete language/time associations; Contact Us is present; Band visit treatment; no directions or booking claim |
 | A4 | At narrow width, Tab to Menu; activate, traverse, Escape, reopen, navigate | Expansion is announced; links occur in route order; Escape closes and returns focus; route activation closes disclosure and identifies destination |
 | A5 | Resize across header threshold with focus inside navigation; test zoom, portrait/landscape, and expanded text | Focus never remains hidden; every destination remains reachable; no clipped labels, horizontal page scroll, or altered section order |
 | A6 | Open every route directly and through navigation; use Back, Home, and skip link | Correct heading/title/current-page state; exact shell copy; skip reaches main; Back respects browser restoration without forced top reset |
 | A7 | In preview, test null, supplied, and broken portrait fixtures | Null is decorative; supplied image has specified alternative; failure leaves name/blurb readable and layout usable |
 | A8 | Open channel then return; disconnect after Home loads; simulate unavailable document/provider | Same-tab navigation; native Back/reload recovery remains possible; loaded text survives disconnect; no false loading, playback, or success claim |
-| A9 | Run the agreed keyboard, touch, contrast, and assistive-technology checks | Visible focus, identifiable links/current page, required target sizes, readable accent and body text on ink, cobalt, and the testimony band, correct disclosure state, and logical headings; findings recorded rather than inferred from appearance |
+| A9 | Run the agreed keyboard, touch, contrast, and assistive-technology checks | Visible focus, identifiable links/current page, required target sizes, readable accent and body text on ink, cobalt, and the New to HSG? visit band, correct disclosure state, and logical headings; findings recorded rather than inferred from appearance |
 
 ## Design walkthrough
 

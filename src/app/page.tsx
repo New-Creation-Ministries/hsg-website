@@ -1,10 +1,11 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
+import { HomeEventHighlights } from "@/components/home-event-highlights"
 import { PortraitField } from "@/components/portrait-field"
-import { events } from "@/content/events"
 import {
   church,
+  eventHighlights,
   leader,
   pageNotes,
   sections,
@@ -17,18 +18,12 @@ import {
 import { ContentInvariantError } from "@/lib/errors"
 import { readExternal } from "@/lib/external-read"
 import {
-  homeEventSlots,
-  type HomeEventSlot,
-} from "@/lib/home-event-slots"
-import {
   firstPlaylistVideos,
   readYoutubePlaylist,
   type YoutubeVideo,
 } from "@/lib/youtube-playlist"
 
 export const revalidate = 3600
-
-const SECTION_CLASS = ["is-bulletin", "is-testimonies", "is-services", "is-sermons"] as const
 
 type SermonListing =
   | { status: "available"; videos: YoutubeVideo[] }
@@ -82,70 +77,37 @@ function isScriptureItem(item: HomeItem) {
   return /\d+:\d+/.test(item.title)
 }
 
-function HighlightItems({
-  items,
-  slots,
-}: {
-  items: HomeItem[]
-  slots: [HomeEventSlot, HomeEventSlot]
-}) {
-  return (
-    <ul className="highlights content-list">
-      {items.map((item, itemIndex) =>
-        isScriptureItem(item) ? (
-          <li className="scripture-tile" key={`${item.title}-${itemIndex}`}>
-            <h3>
-              <ItemTitle item={item} />
-            </h3>
-            {item.text ? <p>“{item.text}”</p> : null}
-          </li>
-        ) : (
-          <li key={`${item.title}-${itemIndex}`}>
-            <h3>
-              <ItemTitle item={item} />
-            </h3>
-            {item.text ? <p>{item.text}</p> : null}
-          </li>
-        ),
-      )}
-      {slots.map((slot, slotIndex) => (
-        <li key={`${slot.kind}-${slot.name}-${slotIndex}`}>
-          <h3>{slot.name}</h3>
-          {slot.kind === "dated" ? (
-            <p>{slot.whenLine}</p>
-          ) : (
-            <>
-              <p>{slot.language}</p>
-              <p>{slot.time}</p>
-            </>
-          )}
-        </li>
-      ))}
-    </ul>
-  )
+function sectionClassName(heading: string): string {
+  if (heading === "What’s going on") return "home-section is-bulletin"
+  if (heading === "New to HSG?") return "home-section is-services visit"
+  if (heading === "Sermons") return "home-section is-sermons"
+  return "home-section"
 }
 
-function TestimonyItems({ items }: { items: HomeItem[] }) {
+function HighlightItems({ items }: { items: HomeItem[] }) {
   return (
-    <div className="stories">
-      {items.map((item, itemIndex) =>
-        isScriptureItem(item) ? (
-          <article className="scripture-tile" key={`${item.title}-${itemIndex}`}>
-            <h3>
-              <ItemTitle item={item} />
-            </h3>
-            {item.text ? <p>“{item.text}”</p> : null}
-          </article>
-        ) : (
-          <article key={`${item.title}-${itemIndex}`}>
-            <h3>
-              <ItemTitle item={item} />
-            </h3>
-            {item.text ? <p>{item.text}</p> : null}
-          </article>
-        ),
-      )}
-    </div>
+    <>
+      <ul className="highlights content-list">
+        {items.map((item, itemIndex) =>
+          isScriptureItem(item) ? (
+            <li className="scripture-tile" key={`${item.title}-${itemIndex}`}>
+              <h3>
+                <ItemTitle item={item} />
+              </h3>
+              {item.text ? <p>“{item.text}”</p> : null}
+            </li>
+          ) : (
+            <li key={`${item.title}-${itemIndex}`}>
+              <h3>
+                <ItemTitle item={item} />
+              </h3>
+              {item.text ? <p>{item.text}</p> : null}
+            </li>
+          ),
+        )}
+      </ul>
+      <HomeEventHighlights highlights={eventHighlights} />
+    </>
   )
 }
 
@@ -253,7 +215,6 @@ async function readSermonListing(): Promise<SermonListing> {
 }
 
 export default async function Home() {
-  const slots = homeEventSlots(events, new Date())
   const listing = await readSermonListing()
 
   return (
@@ -272,17 +233,17 @@ export default async function Home() {
       <div className="home-sections">
         {sections.map((section, index) => {
           const headingId = `section-${index}`
-          const isSunday = index === 2
-          const isSermons = index === 3
-          const isTestimonies = index === 1
+          const isVisit = section.heading === "New to HSG?"
+          const isSermons = section.heading === "Sermons"
+          const isBulletin = section.heading === "What’s going on"
 
           return (
             <section
               key={section.heading}
               aria-labelledby={headingId}
-              className={`home-section ${SECTION_CLASS[index]}${isSunday ? " visit" : ""}${isTestimonies ? " testimony-section" : ""}`}
+              className={sectionClassName(section.heading)}
             >
-              {isSunday ? (
+              {isVisit ? (
                 <div className="visit-grid">
                   <div className="visit-intro">
                     <h2 id={headingId}>{section.heading}</h2>
@@ -306,13 +267,8 @@ export default async function Home() {
                   </div>
                   {isSermons ? (
                     <SermonItems section={section} listing={listing} />
-                  ) : index === 0 ? (
-                    <HighlightItems items={section.items} slots={slots} />
-                  ) : (
-                    <TestimonyItems items={section.items} />
-                  )}
-                  {isTestimonies ? (
-                    <p className="source-note page-note">{pageNotes.testimonies}</p>
+                  ) : isBulletin ? (
+                    <HighlightItems items={section.items} />
                   ) : null}
                 </>
               )}

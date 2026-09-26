@@ -2,11 +2,11 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { afterEach, beforeEach, expect, test, vi } from "vitest"
 
 import {
+  eventHighlights,
   sermonPlaylistId,
   sermonPlaylistUnavailable,
   sermonPlaylistUrl,
 } from "@/content/home"
-import { homeEventSlots } from "@/lib/home-event-slots"
 import {
   YoutubePlaylistReadError,
   type YoutubePlaylist,
@@ -47,19 +47,10 @@ vi.mock("@/lib/youtube-playlist", async (importOriginal) => {
   }
 })
 
-vi.mock("@/lib/home-event-slots", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@/lib/home-event-slots")>()
-  return {
-    ...actual,
-    homeEventSlots: vi.fn(actual.homeEventSlots),
-  }
-})
-
 const { default: Home } = await import("./page")
 const { readYoutubePlaylist } = await import("@/lib/youtube-playlist")
 
 const readMock = vi.mocked(readYoutubePlaylist)
-const slotsMock = vi.mocked(homeEventSlots)
 
 const PLAYLIST_URL = sermonPlaylistUrl()
 
@@ -90,18 +81,59 @@ function expectUnrelatedHomeContent(html: string) {
   expect(html).toContain("Holy Spirit")
   expect(html).toContain("Generation")
   expect(html).toContain("What’s going on")
-  expect(html).toContain("Highlighted testimonies")
+  expect(html).not.toContain("Highlighted testimonies")
+  expect(html).not.toContain("Stories adapted from Rambo World Outreach")
+  expect(html).not.toContain("Hebrews 2:4")
   expect(html).toContain("New to HSG?")
   expect(html).toContain("Sermons")
   expect(html).toContain("Proverbs 4:20-21")
   expect(html).toContain('href="/watch"')
   expect(html).toContain("Watch")
+  expect(html).toContain("Acts 2:46")
+  expect(html).toContain('href="/events"')
+  expect(html).toContain("Events")
+  for (const highlight of eventHighlights) {
+    expect(html).toContain(highlight.title)
+    expect(html).toContain(highlight.url)
+    expect(html).toContain(highlight.thumbnailUrl)
+  }
+  expect(html).toContain('class="home-event-highlight-rows"')
+  expect(html).toContain('class="home-event-play"')
+  expect(html).not.toContain("homeEventSlots")
+  expect(html).not.toMatch(/<iframe\b/)
   expect(html).not.toContain("Playlist to be published")
   expect(html).not.toContain("youtube_playlist_read_failed")
   expect(html).not.toContain("external_read_failed")
   expect(html).not.toContain("invalid-feed")
   expect(html).not.toContain("YoutubePlaylistReadError")
   expect(html).not.toContain("ExternalReadError")
+}
+
+function sectionClassForHeading(html: string, heading: string): string {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  const match = html.match(
+    new RegExp(
+      `<section[^>]*class="([^"]*)"[^>]*>(?:(?!<section\\b)[\\s\\S])*?<h2[^>]*>${escaped}<\\/h2>`,
+    ),
+  )
+  expect(match).not.toBeNull()
+  return match![1]!
+}
+
+function expectHomeSectionBranching(html: string) {
+  const bulletin = html.indexOf("What’s going on")
+  const visit = html.indexOf("New to HSG?")
+  const sermons = html.indexOf("Sermons")
+  expect(bulletin).toBeGreaterThan(-1)
+  expect(visit).toBeGreaterThan(bulletin)
+  expect(sermons).toBeGreaterThan(visit)
+
+  expect(sectionClassForHeading(html, "What’s going on")).toMatch(/is-bulletin/)
+  expect(sectionClassForHeading(html, "What’s going on")).not.toMatch(/\bvisit\b/)
+  expect(sectionClassForHeading(html, "New to HSG?")).toMatch(/\bvisit\b/)
+  expect(sectionClassForHeading(html, "New to HSG?")).not.toMatch(/is-sermons/)
+  expect(sectionClassForHeading(html, "Sermons")).toMatch(/is-sermons/)
+  expect(sectionClassForHeading(html, "Sermons")).not.toMatch(/\bvisit\b/)
 }
 
 function expectExternalReadFailedWarn(
@@ -156,14 +188,8 @@ function expectAvailableVideos(html: string, count: number) {
   expect(html).not.toContain(sermonPlaylistUnavailable.linkLabel)
 }
 
-const { homeEventSlots: realHomeEventSlots } = await vi.importActual<
-  typeof import("@/lib/home-event-slots")
->("@/lib/home-event-slots")
-
 beforeEach(() => {
   readMock.mockReset()
-  slotsMock.mockReset()
-  slotsMock.mockImplementation(realHomeEventSlots)
 })
 
 afterEach(() => {
@@ -189,6 +215,7 @@ test("success with six videos renders the first five rows", async () => {
   const html = await renderHome()
 
   expectUnrelatedHomeContent(html)
+  expectHomeSectionBranching(html)
   expectAvailableVideos(html, 5)
   expect(html).toContain("Sermon title 5")
   expect(html).not.toContain("Sermon title 6")
@@ -257,56 +284,6 @@ test("failed render then success restores rows and logs once per failure", async
   expectAvailableVideos(successHtml, 5)
   expect(warnSpy).toHaveBeenCalledTimes(1)
   expect(errorSpy).not.toHaveBeenCalled()
-})
-
-test("frozen clock around event end matches homeEventSlots output", async () => {
-  readMock.mockResolvedValue(playlistWithVideos(6))
-  const { events } = await import("@/content/events")
-  const { homeEventSlots: realSlots } = await vi.importActual<
-    typeof import("@/lib/home-event-slots")
-  >("@/lib/home-event-slots")
-
-  const beforeEnd = new Date("2026-10-03T20:59:00+05:30")
-  vi.useFakeTimers()
-  vi.setSystemTime(beforeEnd)
-  const expectedBefore = realSlots(events, beforeEnd)
-  const htmlBefore = await renderHome()
-  for (const slot of expectedBefore) {
-    expect(htmlBefore).toContain(slot.name)
-    if (slot.kind === "dated") {
-      expect(htmlBefore).toContain(slot.whenLine)
-    } else {
-      expect(htmlBefore).toContain(slot.language)
-      expect(htmlBefore).toContain(slot.time)
-    }
-  }
-
-  const afterEnd = new Date("2026-10-03T21:01:00+05:30")
-  vi.setSystemTime(afterEnd)
-  const expectedAfter = realSlots(events, afterEnd)
-  const htmlAfter = await renderHome()
-  for (const slot of expectedAfter) {
-    expect(htmlAfter).toContain(slot.name)
-    if (slot.kind === "dated") {
-      expect(htmlAfter).toContain(slot.whenLine)
-    } else {
-      expect(htmlAfter).toContain(slot.language)
-      expect(htmlAfter).toContain(slot.time)
-    }
-  }
-  expect(expectedBefore[0]?.kind).toBe("dated")
-  expect(expectedAfter.every((slot) => slot.kind === "service")).toBe(true)
-  expect(slotsMock).toHaveBeenCalledWith(events, expect.any(Date))
-})
-
-
-test("event-selection exceptions still propagate", async () => {
-  readMock.mockResolvedValue(playlistWithVideos(6))
-  slotsMock.mockImplementationOnce(() => {
-    throw new Error("event selection failed")
-  })
-
-  await expect(Home()).rejects.toThrow("event selection failed")
 })
 
 test("non-ExternalReadError playlist rejection propagates without warn or error", async () => {

@@ -33,9 +33,7 @@ Reconciliation (5_2): every wave-1 Action is applied. Current class is `conformi
 | `src/lib/calendar-feed.ts:89` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |
 | `src/lib/calendar-feed.ts:98` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |
 | `src/lib/calendar-feed.ts:189` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |
-| `src/lib/home-event-slots.ts:34` | throw | conforming | `/` · Content invariant in `src/lib/home-event-slots.ts` | none |
-| `src/lib/home-event-slots.ts:48` | throw | conforming | `/` · Content invariant in `src/lib/home-event-slots.ts` | none |
-| `src/app/page.tsx:38` | throw | conforming | `/` · Content invariant in `src/app/page.tsx` | none |
+| `src/app/page.tsx:33` | throw | conforming | `/` · Content invariant in `src/app/page.tsx` | none |
 | `src/app/events/feeds/[id]/route.ts:75` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |
 | `src/app/events/feeds/[id]/route.ts:84` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |
 | `src/app/events/feeds/[id]/route.ts:91` | throw | conforming | `/events/feeds/[id]` · Content invariant or publish-time rule | none |

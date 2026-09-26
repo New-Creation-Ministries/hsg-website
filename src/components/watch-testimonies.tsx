@@ -1,4 +1,7 @@
-import type { WatchTestimony } from "@/content/watch"
+import {
+  featuredTestimoniesScripture,
+  type WatchTestimony,
+} from "@/content/watch"
 
 export function WatchTestimonies({
   testimonies,
@@ -12,6 +15,14 @@ export function WatchTestimonies({
       <h2 id="watch-testimonies-heading" className="watch-testimonies-heading">
         Featured Testimonies
       </h2>
+      <div className="watch-scripture">
+        <h3 className="watch-scripture-citation">
+          {featuredTestimoniesScripture.citation}
+        </h3>
+        <p className="watch-scripture-text">
+          “{featuredTestimoniesScripture.text}”
+        </p>
+      </div>
       <ol className="watch-testimony-rows">
         {testimonies.map((testimony, index) => {
           const Heading = index === 0 ? "h1" : "h2"

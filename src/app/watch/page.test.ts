@@ -4,7 +4,11 @@ import { join } from "node:path"
 import { renderToStaticMarkup } from "react-dom/server"
 import { afterEach, beforeEach, expect, test, vi } from "vitest"
 
-import { playlistThemes, testimonies } from "@/content/watch"
+import {
+  featuredTestimoniesScripture,
+  playlistThemes,
+  testimonies,
+} from "@/content/watch"
 import { YoutubeLiveReadError } from "@/lib/errors"
 import {
   YOUTUBE_LIVE_URL,
@@ -195,6 +199,64 @@ test("composes client testimonies and sermon rows from watch content", () => {
   expect(sermonRowSource).not.toMatch(/["']use client["']/)
   expect(sermonRowSource).toMatch(/href=\{playlistUrl\}/)
   expect(sermonRowSource).not.toMatch(/playlist-continuation/)
+})
+
+test("Featured Testimonies places Hebrews 2:4 after the heading and before items", () => {
+  expect(testimoniesSource).toMatch(
+    /Featured Testimonies[\s\S]*?className=["']watch-scripture["'][\s\S]*?watch-testimony-rows/,
+  )
+  expect(testimoniesSource).toMatch(/featuredTestimoniesScripture\.citation/)
+  expect(testimoniesSource).toMatch(/featuredTestimoniesScripture\.text/)
+  expect(testimoniesSource).toMatch(
+    /testimonies\.map\(\(testimony(?:,\s*index)?\)\s*=>/,
+  )
+  expect(testimoniesSource).not.toMatch(
+    /testimonies\.map[\s\S]*featuredTestimoniesScripture/,
+  )
+  expect(testimoniesSource).not.toMatch(
+    /featuredTestimoniesScripture[\s\S]*testimonies\.map[\s\S]*featuredTestimoniesScripture/,
+  )
+})
+
+test("renders Hebrews 2:4 as a non-linking block outside the testimonies list", async () => {
+  const html = await renderWatch()
+
+  const headingIdx = html.indexOf("Featured Testimonies")
+  const citationIdx = html.indexOf(featuredTestimoniesScripture.citation)
+  const verseIdx = html.indexOf(featuredTestimoniesScripture.text)
+  const listIdx = html.indexOf('class="watch-testimony-rows"')
+  const firstTestimonyIdx = html.indexOf(testimonies[0]!.name)
+
+  expect(headingIdx).toBeGreaterThan(-1)
+  expect(citationIdx).toBeGreaterThan(headingIdx)
+  expect(verseIdx).toBeGreaterThan(citationIdx)
+  expect(listIdx).toBeGreaterThan(verseIdx)
+  expect(firstTestimonyIdx).toBeGreaterThan(listIdx)
+
+  expect(html).toContain('class="watch-scripture"')
+  expect(html).toContain(
+    `class="watch-scripture-citation">${featuredTestimoniesScripture.citation}</h3>`,
+  )
+  expect(html).toContain(
+    `class="watch-scripture-text">“${featuredTestimoniesScripture.text}”</p>`,
+  )
+
+  const scriptureBlock = html.match(
+    /<div class="watch-scripture">[\s\S]*?<\/div>/,
+  )?.[0]
+  expect(scriptureBlock).toBeDefined()
+  expect(scriptureBlock!).not.toMatch(/<a\b/)
+  expect(scriptureBlock!).not.toMatch(/href=/)
+
+  const listBlock = html.match(
+    /<ol class="watch-testimony-rows">[\s\S]*?<\/ol>/,
+  )?.[0]
+  expect(listBlock).toBeDefined()
+  expect(listBlock!).not.toContain(featuredTestimoniesScripture.citation)
+  expect(listBlock!).not.toContain(featuredTestimoniesScripture.text)
+  for (const testimony of testimonies) {
+    expect(listBlock!).toContain(testimony.name)
+  }
 })
 
 test("Watch CSS is scoped under .watch-page", () => {

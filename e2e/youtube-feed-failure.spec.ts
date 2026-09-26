@@ -17,7 +17,6 @@ import {
   scriptureRef,
   sections,
   sundayNote,
-  testimonySource,
 } from "./copy"
 import {
   expectNoHorizontalScroll,
@@ -137,7 +136,8 @@ async function expectSurroundingHome(page: Page) {
   for (const name of sections) {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible()
   }
-  await expect(page.getByText(testimonySource)).toBeVisible()
+  await expect(page.getByRole("heading", { level: 2, name: "Highlighted testimonies" })).toHaveCount(0)
+  await expect(page.getByText("Stories adapted from Rambo World Outreach.")).toHaveCount(0)
   await expect(page.getByText(sundayNote)).toBeVisible()
   await expect(page.getByText(ministryName)).toBeVisible()
   await expect(page.getByText(footerAddress)).toBeVisible()

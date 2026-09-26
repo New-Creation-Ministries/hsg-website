@@ -43,18 +43,50 @@ test("body is 16px / 1.6; display type is Oswald uppercase weight 500", () => {
   expect(source).toMatch(/--font-display/)
 })
 
-test("hero and sermon panel are Cobalt; testimony is Band with Band ink and Band link", () => {
+test("hero and sermon panel are Cobalt; New to HSG? visit is Band with Band ink and Band link", () => {
   expect(source).toMatch(/\.hero[^{]*\{[^}]*background:\s*var\(--cobalt\)/)
   expect(source).toMatch(/\.channel[^{]*\{[^}]*background:\s*var\(--cobalt\)/)
-  expect(source).toMatch(/\.testimony-section[^{]*\{[^}]*background:\s*var\(--band\)/)
-  expect(source).toMatch(/\.testimony-section[^{]*\{[^}]*color:\s*var\(--band-ink\)/)
-  expect(source).toMatch(/\.testimony-section[\s\S]{0,400}var\(--band-link\)/)
+  expect(source).not.toMatch(/\.channel[^{]*\{[^}]*background:\s*var\(--band\)/)
+  expect(source).not.toMatch(/\.playlists[^{]*\{[^}]*background:\s*var\(--band\)/)
+  expect(source).toMatch(/\.visit[^{]*\{[^}]*background:\s*var\(--band\)/)
+  expect(source).toMatch(/\.visit[^{]*\{[^}]*color:\s*var\(--band-ink\)/)
+  expect(source).toMatch(/\.visit[^{]*\{[^}]*--acid:\s*var\(--band-link\)/)
+  expect(source).toMatch(/\.visit[^{]*\{[^}]*--mist:\s*#424a4e/)
+  expect(source).toMatch(/\.visit[^{]*\{[^}]*--rule:\s*#a6aa9b/)
+  expect(source).toMatch(/\.visit\s+h2[^{]*\{[^}]*color:\s*var\(--band-ink\)/)
+  expect(source).toMatch(
+    /\.visit\s+a,\s*\.visit\s+\.text-link,\s*\.visit\s+\.section-link[^{]*\{[^}]*color:\s*var\(--band-link\)/,
+  )
+  expect(source).toMatch(/\.visit\s+\.source-note[^{]*\{[^}]*color:\s*var\(--mist\)/)
+  expect(source).toMatch(/\.service\s+\.time[^{]*\{[^}]*color:\s*var\(--acid\)/)
+  expect(source).not.toMatch(/\.visit[^{]*\{[^}]*background:\s*var\(--ink\)/)
+  expect(source).not.toMatch(/\.testimony-section\b/)
+  expect(source).not.toMatch(/\.stories\b/)
 })
 
-test("wide region grids: hero two columns, stories two equal columns, sermons and Sunday beside", () => {
+test("home event highlights use ink-ground Home tokens, not the cream band", () => {
+  expect(source).toMatch(
+    /\.home-event-highlight-surface[^{]*\{[^}]*background:\s*var\(--cobalt\)/,
+  )
+  expect(source).toMatch(
+    /\.home-event-highlight-title[^{]*\{[^}]*color:\s*var\(--paper\)/,
+  )
+  expect(source).toMatch(
+    /\.home-event-play[^{]*\{[^}]*border-color:\s*transparent\s+transparent\s+transparent\s+var\(--paper\)/,
+  )
+  expect(source).not.toMatch(
+    /\.home-event-highlight-(?:rows|row|surface|title)[^{]*\{[^}]*background:\s*var\(--band\)/,
+  )
+  expect(source).not.toMatch(
+    /\.home-event-highlight-(?:rows|row|surface|title)[^{]*\{[^}]*color:\s*var\(--band-ink\)/,
+  )
+})
+
+test("wide region grids: hero two columns, event highlights two columns, sermons and visit beside", () => {
   expect(source).toMatch(/\.hero[^{]*\{[^}]*grid-template-columns:\s*1\.6fr\s+0?\.7fr/)
-  expect(source).toMatch(/\.stories[^{]*\{[^}]*grid-template-columns:\s*1fr\s+1fr/)
-  expect(source).not.toMatch(/\.stories[^{]*\{[^}]*grid-template-columns:\s*1\.5fr\s+1fr\s+1fr/)
+  expect(source).toMatch(
+    /\.home-event-highlight-rows[^{]*\{[^}]*grid-template-columns:\s*16rem\s+16rem/,
+  )
   expect(source).toMatch(/\.playlists[^{]*\{[^}]*grid-template-columns:\s*1fr\s+1fr/)
   expect(source).toMatch(/\.visit-grid[^{]*\{[^}]*grid-template-columns:/)
   expect(source).toMatch(/\.highlights[^{]*\{[^}]*display:\s*block/)
@@ -63,16 +95,19 @@ test("wide region grids: hero two columns, stories two equal columns, sermons an
   expect(source).toMatch(/\.site-footer[^{]*\{[^}]*justify-content:\s*space-between/)
 })
 
-test("at 800px regions stack; portrait follows About; testimony stories separated by a rule", () => {
+test("at 800px regions stack; portrait follows About; event highlights separated by a rule", () => {
   const narrow = source.match(/@media\s*\(\s*max-width:\s*800px\s*\)\s*\{([\s\S]*)/)
   expect(narrow).not.toBeNull()
   const block = narrow![1]
   expect(block).toMatch(/\.hero[^{]*\{[^}]*grid-template-columns:\s*1fr/)
-  expect(block).toMatch(/\.stories[^{]*\{[^}]*grid-template-columns:\s*1fr/)
+  expect(block).toMatch(/\.home-event-highlight-rows[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.playlists[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.visit-grid[^{]*\{[^}]*grid-template-columns:\s*1fr/)
   expect(block).toMatch(/\.site-footer[^{]*\{[^}]*flex-direction:\s*column/)
-  expect(block).toMatch(/\.stories\s+article\s*\+\s*article[^{]*\{[^}]*border-top:/)
+  expect(block).toMatch(
+    /\.home-event-highlight-row\s*\+\s*\.home-event-highlight-row[^{]*\{[^}]*border-top:|\.home-event-highlight-row[^{]*\{[^}]*border-top:/,
+  )
+  expect(block).not.toMatch(/\.stories\b/)
   expect(source).not.toMatch(/\.leader-copy\s*\{\s*display:\s*contents/)
 })
 
@@ -91,6 +126,22 @@ test("reference design strings stay out of the stylesheet", () => {
   expect(source).not.toMatch(/Leader portrait placeholder/)
   expect(source).not.toMatch(/Return Home/)
   expect(source).not.toMatch(/Design concept/)
+})
+
+test("Watch Featured Testimonies scripture block sits on band under .watch-page", () => {
+  expect(source).toMatch(
+    /\.watch-page\s+\.watch-scripture[^{]*\{[^}]*width:\s*100%/,
+  )
+  expect(source).toMatch(
+    /\.watch-page\s+\.watch-scripture[^{]*\{[^}]*background:\s*#c5c6b0/,
+  )
+  expect(source).toMatch(
+    /\.watch-page\s+\.watch-scripture-citation[^{]*\{[^}]*color:\s*var\(--band-ink\)/,
+  )
+  expect(source).toMatch(
+    /\.watch-page\s+\.watch-scripture-text[^{]*\{[^}]*color:\s*var\(--band-link\)/,
+  )
+  expect(source).not.toMatch(/(?<!\.watch-page\s+)\.watch-scripture\s*\{/)
 })
 
 test("timeline spine, tick, breakout, and sunday follow the reference with Home tokens", () => {

@@ -43,6 +43,17 @@ test("Born Again keeps birth material and speaks of being born again", () => {
   expect(body).toMatch(/gave (his|their) life to Jesus|giving life to Jesus/i)
 })
 
+test("Gospel to the Nations keeps open-air copy and drops the family-residence sentence", () => {
+  const nations = scenes.find((scene) => scene.id === "nations")
+  const familyResidence =
+    "He lives in Bangalore with his wife Vinita Rambabu, and his two children Ankit and Annika."
+
+  expect(nations?.paragraphs).toEqual([
+    "Open-air Gospel campaigns followed, across India and the world, with hundreds of thousands in attendance. He has preached in 89 nations, including endangered and unreached places, with miracles, words of knowledge, and the gifts of the Holy Spirit.",
+  ])
+  expect(nations?.paragraphs.join(" ")).not.toContain(familyResidence)
+})
+
 test("The story continues has no plate; the other five name public/about plates", () => {
   const withPlates = scenes.filter((scene) => scene.id !== "story-continues")
   const storyContinues = scenes.find((scene) => scene.id === "story-continues")
