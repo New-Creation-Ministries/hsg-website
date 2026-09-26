@@ -1,11 +1,11 @@
 ---
 name: test-next-wave
-description: Writes and runs comprehensive automated tests for every implementation-complete task in one plan.md wave, using one test agent per task and handing green tasks to code review. Use when asked to test the next wave, test all tasks in the current wave, or run the plan testing gate.
+description: Writes and runs comprehensive automated tests for every implementation-complete task in one plan.md wave within one agent, then hands green tasks to code review. Use when asked to test the next wave, test all tasks in the current wave, or run the plan testing gate.
 ---
 
 # Test next wave
 
-Test every testable `testing` task in one wave. Each task gets its own subagent. Do not start a later wave or edit production implementation.
+Test every testable `testing` task in one wave. This agent owns the whole wave and does not delegate individual tasks. Do not start a later wave or edit production implementation.
 
 ## Pick
 
@@ -15,15 +15,16 @@ Use the named plan, the plan just specified, or `docs/index.md`. Ask once if sev
 
 If that wave has `testing` tasks but none are testable, stop and name their blockers. If no task is `testing`, report whether work remains in `pending`, `code_review`, or `blocked`; do not skip to a later wave.
 
-## Dispatch
+## Execute
 
-- Assign expected test and fixture paths before dispatch. Tasks that may edit the same test file, fixture, snapshot, runner config, or dependency manifest run sequentially; all other tasks run in one parallel batch.
-- Use one subagent per task. Pass the repository root, plan and spec paths, the full task block, assigned test paths, and: “Follow `.agents/skills/test-next-task/test-task.md`; do not edit `plan.md` or production files.”
-- Do not paste skill bodies into prompts. Let each task agent load the four testing skills and relevant references named by `test-task.md`.
+- Assign expected test and fixture paths across all testable tasks before editing. Consolidate shared coverage and avoid conflicting or duplicate tests.
+- For each task, follow `.agents/skills/test-next-task/test-task.md` directly. Read the four testing skills and only the relevant references it names.
+- Work through the wave in an efficient order. Process tasks sequentially when they share a test file, fixture, snapshot, runner configuration, dependency manifest, or behavior under test.
+- Keep production defects demonstrated by tests unfixed and record the affected task's recommended status as `pending`.
 
 ## Close
 
-After all agents return, change only dispatched tasks' status lines in `plan.md`:
+After all testable tasks have been handled, change only those tasks' status lines in `plan.md`:
 
 | Result | Status |
 | --- | --- |

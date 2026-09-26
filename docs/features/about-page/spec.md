@@ -30,7 +30,7 @@ Adapt from [rwo.life/about-us](https://www.rwo.life/about-us). Do not invent bio
 | `founders` | Founders | Opening founders / Rambo World Outreach paragraph | Family photo `Screenshot_2026-09-25_at_1.49.35_AM-cf239ee9-57d8-453e-ac63-c0e839eeb497.jpg` |
 | `born-again` | Born Again | Birth in Bellary through the 1983 healing and early street preaching, plus being born again and giving life to Jesus | Born Again photo `image-18d5cfd3-f15d-40f7-810e-d8aea132f612.jpg` |
 | `the-call` | The call | Lecturer years and the 1989 full-time call | Raised-hands photo `image-9063ab83-0af6-437c-8252-de576905cae7.jpg` |
-| `nations` | Gospel to the Nations | Open-air campaigns, 89 nations, family in Bangalore | Globe photo `image-8c1c51f3-98dc-43db-8867-45d3395bd94f.jpg` |
+| `nations` | Gospel to the Nations | Open-air campaigns, 89 nations | Globe photo `image-8c1c51f3-98dc-43db-8867-45d3395bd94f.jpg` |
 | `church` | Namma Bengaluru | HSG founders and senior pastors paragraph | Shepherd photo `Screenshot_2026-09-25_at_1.50.46_AM-05d43de6-4c47-44c8-8c7d-ac0938f6d734.jpg` |
 | `story-continues` | The story continues | Intro and visit line; services from Home (below) | Pale band (no photo) |
 
